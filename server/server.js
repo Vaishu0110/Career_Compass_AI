@@ -12,7 +12,7 @@ import jobRoutes from "./routes/jobRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import resumeGeneratorRoutes from "./routes/resumeGeneratorRoutes.js";
 import interviewRoutes from "./routes/interviewRoutes.js";
-import careerCoachRoutes from "./routes/careerCoachRouted.js";
+import careerCoachRoutes from "./routes/careerCoachRoutes.js";
 
 dotenv.config();
 

@@ -1,6 +1,6 @@
 import express from "express";
-import { generateQuestion } from "../services/interviewAI.js";
-import {evaluateInterview} from ".../services/interviewEvaluationAI.js";
+import { generateQuestions } from "../services/interviewAI.js";
+import {evaluateInterview} from "../services/interviewEvaluationAI.js";
 
 const router = express.Router();
 

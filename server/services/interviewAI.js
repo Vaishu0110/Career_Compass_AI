@@ -1,12 +1,12 @@
 import OpenAI from "openai";
 
-const client = newOpenAI({
+const client = new OpenAI({
     apiKey: process.env.OPENROUTER_API_KEY,
     baseURL: "https://openrouter.ai/api/v1",
 });
 
 export async function generateQuestions(role){
-    const completion = await cient.chat.completions.create({
+    const completion = await client.chat.completions.create({
         model: "google/gemini-2.5-flash",
         max_tokens: 300,
         temperature: 0.4,
