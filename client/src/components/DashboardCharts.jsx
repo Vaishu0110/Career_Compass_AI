@@ -8,7 +8,7 @@ import {
     BarElement,
 } from "chart.js";
 
-import { DoughnutController, Bar } from "react-chartjs-2";
+import { Doughnut, Bar } from "react-chartjs-2";
 
 ChartJS.register(
     ArcElement,

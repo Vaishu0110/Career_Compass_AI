@@ -1,10 +1,9 @@
 import{ useState }from "react";
 import axiosInstance from "../api/axiosInstance";
 
-const [answers, setAnswers] = useState([]);
-const [evaluation, setEvaluation] = useState(null);
-
 export default function InterviewSimulator(){
+    const [answers, setAnswers] = useState([]);
+    const [evaluation, setEvaluation] = useState(null);
     const[role,setRole]=useState("");
     const[questions,setQuestions]=useState([]);
     const[loading,setLoading]=useState(false);
@@ -61,11 +60,11 @@ export default function InterviewSimulator(){
         <div className="grid md:grid-cols-2 gap-8">
             {/* INPUT SECTION */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-                <h2 className="text-2xl. font-bold mb-4">
+                <h2 className="text-2xl font-bold mb-4">
                     Interview Setup
                 </h2>
                 <input type="text" placeholder="Enter Role (e.g. MERN Developer)"
-                value={role} onChange={(e)=> setRole(e.target.value)} className="w-full bg-blue-600 text-white py-3 rounded mb-4"/>
+                value={role} onChange={(e)=> setRole(e.target.value)} className="w-full border p-3 rounded mb-4"/>
                 <button onClick={generateQuestions} disabled={loading} className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700">
                     {loading? "Generating..." : "Generate Questions"}
                 </button>
@@ -88,7 +87,7 @@ export default function InterviewSimulator(){
                                 </h3>
                                 <p>{question}</p>
                                 <textarea
-                                    classname="w-full border mt-3 p-3 rounded"
+                                    className="w-full border mt-3 p-3 rounded"
                                     rows="4"
                                     placeholder="Type your answer..."
                                     value={answers[index]}
@@ -104,10 +103,11 @@ export default function InterviewSimulator(){
                 )}
             </div>
             
-            <button onClick={submitInterview} className="w-full mt-6 bg-green-600 text-white py-3 rounded">
-                Submit Interview
-            </button>
-
+            {question.length > 0 && (
+                <button onClick={submitInterview} className="w-full mt-6 bg-green-600 text-white py-3 rounded">
+                    Submit Interview
+                </button>
+            )}
             {evaluation && (
                 <div className="mt-8 border-t pt-6">
                     <h2 className="text-2xl font-bold">
