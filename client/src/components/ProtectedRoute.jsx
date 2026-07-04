@@ -1,10 +1,20 @@
+import { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext"
 
 export default function ProtectedRoute({ children }) {
-    const token = localStorage.getItem("token");
+    const { user, loading } = useContext(AuthContext);
 
-    if(!token) {
-        return <Navigate to="/login" replace />
+    if(loading) {
+        return (
+            <div className="h-screen flex items-center justify-center text-xl font-bold">
+                Loading...
+            </div>
+        );
+    }
+
+    if(!user) {
+        return <Navigate to="/login" replace />;
     }
     return children;
 }
