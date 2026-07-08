@@ -142,3 +142,8 @@ PDF Generation Libraries
 
 
 
+career coach clear chat error
+interview simulator error
+dark mode and light mode do nothing
+need better UI
+login page navbar error

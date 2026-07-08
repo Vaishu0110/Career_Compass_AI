@@ -13,6 +13,7 @@ import SkillGapAnalyzer from "./pages/SkillGapAnalyzer";
 import LearningRoadmap from "./pages/LearningRoadmap";
 import JobTracker from "./pages/JobTracker";
 import InterviewSimulator from "./pages/InterviewSimulator";
+import ResumeHistory from "./pages/ResumeHistory";
 
 export default function App() {
   return ( 
@@ -31,6 +32,7 @@ export default function App() {
       <Route path="/resume-generator" element={<ProtectedRoute><ResumeGenerator /></ProtectedRoute>}/>
       <Route path="/ats-checker" element={<ProtectedRoute><ATSChecker /></ProtectedRoute>} />
       <Route path="/skill-gap" element={<ProtectedRoute><SkillGapAnalyzer /></ProtectedRoute>} />
+      <Route path="/resume-history" element={<ProtectedRoute><resumeHistory /></ProtectedRoute>} />
     </Routes>
     </>
   );

@@ -1,17 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 
 
 export default function ProfileSetup(){
     const navigate = useNavigate();
+    const { user, setUser } = useContext(AuthContext);
     const [formData, setFormData]= useState({
-        role:"",
-        education:"",
-        targetRole:"",
-        skills:"",
-        experience:"",
-    });
+        name: "",
+        role: "",
+        education: "",
+        targetRole: "",
+        education: "",
+        college: "",
+        phone: "",
+        experience: "",
+        skills: "",
+        portfoliio: "",
+        github: "",
+        linkedin: "",
+        });
+    useEffect(() => {
+        if(user) {
+            setFormData({
+                name: user.name || "",
+                role: user.role || "",
+                targetRole: user.targerRole || "",
+                education: user.education || "",
+                college: user.college || "",
+                phone: user.phone || "",
+                experience: user.experience || "",
+                skills: (user.skills || []).join(", "),
+                portfolio: user.portfolio || "",
+                github: user.github || "",
+                linkedin: user.linkedin || "",
+            });
+        }
+    }, [user]);
 
     const handleChange = (e) => {
         setFormData({
@@ -23,7 +49,12 @@ export default function ProfileSetup(){
         e.preventDefault();
 
         try{
-            await axiosInstance.put("/auth/profile",formData);
+            const res=await axiosInstance.put("/profile",{
+                ...formData,
+                skills: formData.skills.split(",").map(skill => skill.trim()).filter(skill => skill),
+            });
+
+            setUser(res.data.user);
             alert("Profile Updated");
             navigate("/dashboard");
         } catch(error){
@@ -43,15 +74,27 @@ export default function ProfileSetup(){
                     <option value="Fresher">Fresher</option>
                     <option value="Professional">Professional</option>
                 </select>
+                <input type="text" name="name" placeholder="Full Name" value={formData.name}
+                onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
+                <input type="text" name="phone" placeholder="Phone Number" value={formData.phone}
+                onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
+                <input type="text" name="college" placeholder="College / University" value={formData.college}
+                onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
                 <input type="text" name="education" placeholder="Education"
                 onChange={handleChange} className="w-full border p-3 mb-4"/>
                 <input type="text" name="targetRole" placeholder="Target Career Role"
                 onChange={handleChange} className="w-full border p-3 mb-4"/>
                 <input type="text" name="skills" placeholder="Skills (comma seperated)"
                 onChange={handleChange} className="w-full border p-3 mb-4"/>
+                <input type="text" name="portfolio" placeholder="Portfolio URL" value={formData.portfolio}
+                onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
+                <input type="text" name="github" placeholder="Github URL" value={formData.github}
+                onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
+                <input type="text" name="linkedin" placeholder="Linkedin URL" value={formData.linkedin}
+                onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
                 <textarea name="experience" placeholder="Experience" onChange={handleChange}
                 className="w-full border p-3 mb-4"/>
-                <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded">
+                <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">
                     Save Profile
                 </button>
             </form>

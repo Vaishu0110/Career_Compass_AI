@@ -1,5 +1,5 @@
 import express from "express";
-import { generateRoadmap } from "../services/roadmapAI.js";
+import { generateRoadmap } from "../services/ai/roadmapAI.js";
 
 const router = express.Router();
 

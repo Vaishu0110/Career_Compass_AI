@@ -1,11 +1,15 @@
 import express from "express";
+import { protect } from "../middleware/authMiddleware.js";
 import Job from "../models/Job.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", protect, async (req, res) => {
     try {
-        const jobs = await Job.find().sort({
+        const jobs = await Job.find({
+            user: req.user._id,
+
+        }).sort({
             createdAt: -1,
         });
 
@@ -18,9 +22,12 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", protect, async (req, res) => {
     try {
-        const job = await Job.create(req.body);
+        const job = await Job.create({
+            ...req.body,
+            user: req.user._id,
+        });
         res.status(201).json(job);
     }
     catch (err) {
@@ -30,9 +37,18 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", protect, async (req, res) => {
     try{
-        await Job.findByIdAndUpdate(req.params.id,{status: res.body.status,},{new: true,});
+        await Job.findOneAndUpdate({
+            _id: req.params.id,
+            user: req.user._id,
+        },
+        {
+            status: req.body.status,
+        },
+        {
+            new: true,
+        });
         res.json({
             success: true,
         });
@@ -43,9 +59,12 @@ router.put("/:id", async (req, res) => {
     }
 }) ;
 
-router.delete("/:id", async(req, res)=>{
+router.delete("/:id", protect, async(req, res)=>{
     try{
-        await Job.findByIdAndDelete(req.params.id);
+        await Job.findOneAndDelete({
+            _id: req.params.id,
+            user: req.user._id,
+        });
         res.json({success: true,});
     } catch (error) {
         res.status(500).json({message: error.message,});

@@ -29,10 +29,10 @@ export default function Navbar(){
                     <Link to="/skill-gap" className="hover:text-blue-400 transition">
                         Skill Gap
                     </Link>
-                    <Link to="/learning-roadmap" className="text-blue-400 transition">
+                    <Link to="/learning-roadmap" className="hover:text-blue-400 transition">
                         Roadmap
                     </Link>
-                    <Link to="/interview-simulator" className="text-blue-400 transition">
+                    <Link to="/interview-simulator" className="hover:text-blue-400 transition">
                         Interview
                     </Link>
                     <Link to="/job-tracker" className="hover:text-blue-400 transition">

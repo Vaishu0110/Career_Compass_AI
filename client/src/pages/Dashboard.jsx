@@ -19,9 +19,14 @@ export default function Dashboard(){
     };
     return (
         <div className="p-8">
-            <h1 className="text-4xl font-bold mb-8 text-center">
-                CAREER COMPASS AI
-            </h1>
+            <div className="mb-8 text-center">
+                <h1 className="text-4xl font-bold">
+                    Welcome back{stats?.name ? `, ${stats.name}` : "" } 👋
+                </h1>
+                <p className="text-gray-600 mt-2">
+                    {stats?.targetRole ? `Target Role: ${stats.targetRole}` : "Let's build your career together!"}
+                </p>
+            </div>
             {/* Dashboard Stats */}
             {stats &&(
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
@@ -48,7 +53,7 @@ export default function Dashboard(){
                             Applications
                         </h2>
                         <p className="text-4xl font-bold mt-2">
-                            {stats.applications}
+                            {stats.applied}
                         </p>
                     </div>
 
@@ -57,7 +62,29 @@ export default function Dashboard(){
                             Interviews    
                         </h2>
                         <p className="text-4xl font-bold mt-2">
-                            {stats.interviews}
+                            {stats.interview}
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {stats && (
+                <div className="bg-white rounded-xl shadow p-6 mb-10">
+                    <h2 className="text-2xl font-bold mb-4">
+                        Career Summary
+                    </h2>
+                    <div classname="grid md:grid-cols-2 gap-4">
+                        <p>
+                            🎯 <strong>Target Role:</strong> {stats.targetRole || "Not Set"}
+                        </p>
+                        <p>
+                            📄 <strong>Resume Count:</strong> {stats.resumeCount}
+                        </p>
+                        <p>
+                            🤖 <strong>ATS Analyses:</strong> {stats.analysesCount}
+                        </p>
+                        <p>
+                            💼 <strong>Applications:</strong> {stats.applied}
                         </p>
                     </div>
                 </div>
@@ -160,6 +187,17 @@ export default function Dashboard(){
                         </h2>
                         <p>
                             Chat with your personal AI mentor.
+                        </p>
+                    </div>
+                </Link>
+                <Link to="/resume-history">
+                    <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
+                        <h2 className="text-2xl font-bold">
+                            Resume History
+                        </h2>
+
+                        <p>
+                            View all uploaded resumes and ATS reports
                         </p>
                     </div>
                 </Link>

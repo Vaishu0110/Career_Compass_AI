@@ -1,5 +1,5 @@
 import express from "express";
-import { askCareerCoach } from "../services/careerCoachAI.js";
+import { askCareerCoach } from "../services/ai/careerCoachAI.js";
 
 const router = express.Router();
 router.post("/ask", async (req, res)=> {
