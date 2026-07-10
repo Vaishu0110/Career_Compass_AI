@@ -201,6 +201,17 @@ export default function Dashboard(){
                         </p>
                     </div>
                 </Link>
+                <Link to="/job-recommendations">
+                    <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
+                        <h2 className="text-2xl font-bold">
+                            AI Job Recommendations
+                        </h2>
+
+                        <p>
+                            Discover personalized job opportunities based on your profile and resume.
+                        </p>
+                    </div>
+                </Link>
             </div>
             {stats && <DashboardCharts stats={stats} />}
         </div>

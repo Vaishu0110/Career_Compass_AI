@@ -14,6 +14,7 @@ import LearningRoadmap from "./pages/LearningRoadmap";
 import JobTracker from "./pages/JobTracker";
 import InterviewSimulator from "./pages/InterviewSimulator";
 import ResumeHistory from "./pages/ResumeHistory";
+import JobRecommendations from "./pages/JobRecommendations";
 
 export default function App() {
   return ( 
@@ -33,6 +34,7 @@ export default function App() {
       <Route path="/ats-checker" element={<ProtectedRoute><ATSChecker /></ProtectedRoute>} />
       <Route path="/skill-gap" element={<ProtectedRoute><SkillGapAnalyzer /></ProtectedRoute>} />
       <Route path="/resume-history" element={<ProtectedRoute><resumeHistory /></ProtectedRoute>} />
+      <Route path="/job-recommendations" element={<ProtectedRoute><JobRecommendations /></ProtectedRoute>} />
     </Routes>
     </>
   );

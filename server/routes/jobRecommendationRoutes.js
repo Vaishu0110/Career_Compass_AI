@@ -23,10 +23,29 @@ router.get("/",protect, async (req, res)=>{
             return res.status(404).json({
                 message: "Please analyze a resume first.",
             });
-
-            res.json(result);
-
         }
+        
+        const result = await generateJobRecommendations(
+            user,
+            latestResume.analysis
+        );
+
+        await JobRecommendations.findOneAndUpdate(
+            {
+                user: req.user._id,
+            },
+            {
+                user: req.user._id,
+                recommendatins: result.jobs,
+            },
+            {
+                upsert: true,
+                new: true,
+            }
+        );
+
+        res.json(result);
+        
     } catch (error) {
         res.status(500).json({
             message: error.message,
