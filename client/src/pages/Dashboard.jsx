@@ -29,7 +29,7 @@ export default function Dashboard(){
             </div>
             {/* Dashboard Stats */}
             {stats &&(
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-10">
                     <div className="bg-blue-600 text-white rounded-lg p-5 shadow">
                         <h2 className="text-lg">
                             Resume Score
@@ -45,6 +45,15 @@ export default function Dashboard(){
                         </h2>
                         <p className="text-4xl font-bold mt-2">
                             {stats.atsScore}
+                        </p>
+                    </div>
+
+                    <div className="bg-indigo-600 text-white rounded-lg p-5 shadow">
+                        <h2 className="text-lg">
+                            Resumes Uploaded    
+                        </h2>
+                        <p className="text-4xl font-bold mt-2">
+                            {stats.resumeCount}
                         </p>
                     </div>
 

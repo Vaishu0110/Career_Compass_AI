@@ -67,13 +67,29 @@ export default function DashboardCharts ({ stats }) {
         ],
     };
 
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max:100,
+            },
+        },
+    };
+
     return (
         <div className="grid md:grid-cols-2 gap-8 mt-10">
             <div className="bg-white rounded-xl shadow p-6">
                 <h2 className="text-xl font-bold mb-4">
                     Job Applications
                 </h2>
-                <Doughnut data={jobData} />
+                <Doughnut data={jobData} 
+                options={{plugin:{legend:{position: bottom },},}}/>
             </div>
             
             <div className="bg-white rounded-xl shadow p-6">
@@ -81,7 +97,7 @@ export default function DashboardCharts ({ stats }) {
                     Resume vs ATS
                 </h2>
 
-                <Bar data = { scoreData } />
+                <Bar data = { scoreData } options={options}/>
             </div>
         </div>
     );

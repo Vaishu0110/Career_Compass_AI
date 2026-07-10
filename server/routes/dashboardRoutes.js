@@ -1,14 +1,23 @@
-import express from "express";
+import express, { application } from "express";
 import User from "../models/User.js";
 import Job from "../models/Job.js";
+import Resume from "../models/Resume.js"
 import { protect } from "../middleware/authmiddleware.js";
 
 const router = express.Router();
 
 router.get("/", protect, async (req, res) => {
     try{
-        const jobs = await Job.find({
+        const user = await User.findById(req.user._id);
+
+        const latestResume = await Resume.findOne({
             user: req.user._id,
+        }).sort({
+            createdAt: -1,
+        });
+
+        const jobs = await Job.find({
+            user:req.user._id,
         });
 
         const applied = jobs.filter(job => job.status === "Applied").length;
@@ -19,15 +28,21 @@ router.get("/", protect, async (req, res) => {
 
         const rejected = jobs.filter(job => job.status === "Rejected").length;
 
-        const user = await User.findById(req.user._id);
         res.json({
             name: user.name,
             targetRole: user.targetRole,
 
-            resumeScore: 88,
-            atsScore: 82,
+            resumeScore: latestResume?.resumeScore || 0,
+            atsScore: latestResume?.atsScore || 0,
             
-            resumeCount:user.resumeCount,
+            resumeCount: await Resume.countDocuments({
+                user: req.user._id,
+            }),
+
+            applications: jobs.length,
+
+            interview: interview,
+            
             analysesCount:user.analysisCount,
 
             learningProgress: 45,
