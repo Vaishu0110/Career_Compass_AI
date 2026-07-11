@@ -82,7 +82,7 @@ export default function Dashboard(){
                     <h2 className="text-2xl font-bold mb-4">
                         Career Summary
                     </h2>
-                    <div classname="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-2 gap-4">
                         <p>
                             🎯 <strong>Target Role:</strong> {stats.targetRole || "Not Set"}
                         </p>
@@ -218,6 +218,17 @@ export default function Dashboard(){
 
                         <p>
                             Discover personalized job opportunities based on your profile and resume.
+                        </p>
+                    </div>
+                </Link>
+
+                <Link to="/resume-history">
+                    <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
+                        <h2 className="text-2xl font-bold">
+                            Resume History
+                        </h2>
+                        <p>
+                            View every resume you've uploaded along with ATS scores and AI analysis.
                         </p>
                     </div>
                 </Link>

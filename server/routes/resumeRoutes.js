@@ -116,7 +116,8 @@ router.delete("/:id", protect, async (req, res) => {
     if (!resume) {
       return res.status(404).json({message: "Resume Not Found."});
     }
-    await Resume.findByIdAndDelete(req.params.id);
+    await resume.deleteOne();
+    
     await User.findByIdAndUpdate(req.user._id,{
       $inc: {
         resumeCount: -1,

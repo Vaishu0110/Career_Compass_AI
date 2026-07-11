@@ -15,6 +15,7 @@ import profileRoutes from "./routes/profileRoutes.js";
 import interviewRoutes from "./routes/interviewRoutes.js";
 import careerCoachRoutes from "./routes/careerCoachRoutes.js";
 import jobRecommendationRoutes from "./routes/jobRecommendationRoutes.js";
+import resumeHistoryRoutes from "./routes/resumeHistoryRoutes.js"
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.use("/api/resume", resumeRoutes);
 app.use("/api/skill-gap", skillGapRoutes);
 app.use( "/api/resume-generator", resumeGeneratorRoutes );
 app.use("/api/job-recommendations", jobRecommendationRoutes);
+app.use("/api/resume-history", resumeHistoryRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

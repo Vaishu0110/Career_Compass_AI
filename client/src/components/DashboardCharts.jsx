@@ -89,7 +89,14 @@ export default function DashboardCharts ({ stats }) {
                     Job Applications
                 </h2>
                 <Doughnut data={jobData} 
-                options={{plugin:{legend:{position: bottom },},}}/>
+                options={{
+                    plugin:{
+                        legend:{
+                                position: "bottom", 
+                            },
+                        },
+                    }}
+                />
             </div>
             
             <div className="bg-white rounded-xl shadow p-6">

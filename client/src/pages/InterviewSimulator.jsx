@@ -116,10 +116,10 @@ export default function InterviewSimulator(){
                     <div className="text-5xl text-green-600 font-bold my-4">
                         {evaluation.score}/100
                     </div>
-                    <h3 classname = "font-bold">
+                    <h3 className = "font-bold">
                         Strengths
                     </h3>
-                    <ul classname="list-disc pl-5">
+                    <ul className="list-disc pl-5">
                         {evaluation.strengths.map(
                             (item, index)=>
                                 <li key={index}>{item}</li>
@@ -128,7 +128,7 @@ export default function InterviewSimulator(){
                     <h3 className="font-bold mt-5">
                         Weaknesses
                     </h3>
-                    <ul classname="list-disc pl-5">
+                    <ul className="list-disc pl-5">
                         {evaluation.weaknesses.map(
                             (item, index)=>
                                 <li key={index}>

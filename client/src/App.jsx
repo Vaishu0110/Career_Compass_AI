@@ -33,7 +33,7 @@ export default function App() {
       <Route path="/resume-generator" element={<ProtectedRoute><ResumeGenerator /></ProtectedRoute>}/>
       <Route path="/ats-checker" element={<ProtectedRoute><ATSChecker /></ProtectedRoute>} />
       <Route path="/skill-gap" element={<ProtectedRoute><SkillGapAnalyzer /></ProtectedRoute>} />
-      <Route path="/resume-history" element={<ProtectedRoute><resumeHistory /></ProtectedRoute>} />
+      <Route path="/resume-history" element={<ProtectedRoute><ResumeHistory /></ProtectedRoute>} />
       <Route path="/job-recommendations" element={<ProtectedRoute><JobRecommendations /></ProtectedRoute>} />
     </Routes>
     </>
