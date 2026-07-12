@@ -28,6 +28,33 @@ export default function ResumeHistory() {
         }
     };
 
+    const downloadResume = async (id, fileName) => {
+        try {
+            const response = await axiosInstance.get(
+                `/resume-history/download/${id}`,
+                {
+                    responseType: "blob",
+                }
+            );
+
+            const url = window.URL.crateObjectURL(new Blob([response.data]));
+
+            const link = document.createElement("a");
+            
+            link.href = url;
+
+            link.setAttribute("download", fileName);
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error(error);
+            alert("Failed to download resume.");
+        }
+    };
+
     return ( 
         <div className="max-w-6xl mx-auto p-8">
             <h1 className="text-4xl font-bold mb-8">
@@ -67,6 +94,9 @@ export default function ResumeHistory() {
                                 </button>
                                 <button onClick={()=>(deleteResume(resume._id))} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
                                     Delete
+                                </button>
+                                <button onClick={()=> downloadResume(resume._id, resume.originalName)} className="bg-green-600 text-white px-4 py-2 rounded hoover:bg-green-700">
+                                    Download
                                 </button>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ import User from "../models/User.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { extractTextFromPDF } from "../services/parsers/resumeParser.js";
 import { analyzeResumeWithAI } from "../services/ai/resumeAI.js";
+import fs from "fs";
 
 const router = express.Router();
 
@@ -70,7 +71,7 @@ router.post(
 
         originalName: req.file.originalname,
 
-        fileUrl: req.file.filename,
+        fileUrl: req.file.path,
 
         fileSize: req.file.size,
 
@@ -116,8 +117,13 @@ router.delete("/:id", protect, async (req, res) => {
     if (!resume) {
       return res.status(404).json({message: "Resume Not Found."});
     }
+
+    if(fs.existsSync(resume.fileUrl)) {
+      fs.unlinkSync(resume.fileUrl);
+    }
+
     await resume.deleteOne();
-    
+
     await User.findByIdAndUpdate(req.user._id,{
       $inc: {
         resumeCount: -1,
