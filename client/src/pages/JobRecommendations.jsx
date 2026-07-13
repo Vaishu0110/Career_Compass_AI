@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInsatance from "../api/axiosInstance";
+import axiosInstance from "../api/axiosInstance";
 
 export default function JobRecommendations(){
     const [jobs, setJobs] = useState([]);

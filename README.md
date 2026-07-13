@@ -140,7 +140,7 @@ Axios
 Cloud Storage Integration 
 PDF Generation Libraries
 
-interview simulator error
+
 dark mode and light mode do nothing
 NEED BETTER UI
 resume generator need refinement right now it return plane text

@@ -9,7 +9,7 @@ const client = new OpenAI({
 });
 
 export async function generateJobRecommendations(profile, resumeAnalysis) {
-    const completion = await client.chat.completion.create({
+    const completion = await client.chat.completions.create({
         model: "google/gemini-2.5-flash",
         temperature:0.3,
         max_tokens:1200,
@@ -45,6 +45,10 @@ export async function generateJobRecommendations(profile, resumeAnalysis) {
         ]
     });
 
-    return JSON.parse(completion.choices[0].message.content.replace(/```json/g,"").replace(/```/g,"").trim());
+    const raw = completion.choices[0].message.content;
+
+    const cleaned = raw.replace(/```json/g, "").replace(/```/g, "").trim();
+
+    return JSON.parse(cleaned);
 
 }

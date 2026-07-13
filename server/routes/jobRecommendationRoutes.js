@@ -30,13 +30,13 @@ router.get("/",protect, async (req, res)=>{
             latestResume.analysis
         );
 
-        await JobRecommendations.findOneAndUpdate(
+        await JobRecommendation.findOneAndUpdate(
             {
                 user: req.user._id,
             },
             {
                 user: req.user._id,
-                recommendatins: result.jobs,
+                recommendations: result.jobs,
             },
             {
                 upsert: true,
@@ -47,7 +47,9 @@ router.get("/",protect, async (req, res)=>{
         res.json(result);
         
     } catch (error) {
+        console.error(error);
         res.status(500).json({
+            success: false,
             message: error.message,
         });
     }
