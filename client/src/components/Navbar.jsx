@@ -44,9 +44,8 @@ export default function Navbar(){
                     <ThemeToggle />
                     {user && (
                         <div className="flex items-center gap-2 text-white">
-                            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold">
-                                {user.name?.charAt(0).toUpperCase()}
-                            </div>
+                            <img src={user?.profilePicture ? `http://localhost:5000/uploads/profile/${user.profilePicture}` : "/default-avatar.png"} alt="Profile" 
+                            className="w-10 h-10 rounded-full object-cover border-2 border-white" />
                             <span>
                                 {user.name}
                             </span>

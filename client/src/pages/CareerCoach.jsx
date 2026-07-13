@@ -10,6 +10,12 @@ export default function CareerCoach() {
 
   const bottomRef =useRef(null);
 
+  useEffect(() => {
+        bottomRef.current?.scrollIntoView({
+            behavior: "smooth",
+        });
+    },[messages]);
+
   const askAI = async () => {
     if (!question.trim()) {
       alert("Please enter your question.");
@@ -54,7 +60,7 @@ export default function CareerCoach() {
       </h1>
 
       <div className="flex justify-end mb-4">
-        <button onClick={()=> setMessages({})}
+        <button onClick={()=> setMessages([])}
         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" >
             Clear Chat
         </button>
@@ -72,11 +78,6 @@ export default function CareerCoach() {
                 if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     askAI();
-                    useEffect(() => {
-                        bottomRef.Ref.current?.scrollIntoView({
-                            behavior: "smooth",
-                        });
-                    },[messages]);
                 }
             }}
         />

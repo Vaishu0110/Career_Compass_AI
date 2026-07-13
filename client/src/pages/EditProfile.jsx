@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../api/axiosInstance";
-import { useNavigate } from "react-rouiter-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
     const navigate = useNavigate();
+    const [image, setImage] = useState(null);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -12,6 +13,7 @@ export default function EditProfile() {
         targetRole: "",
         skills: "",
         experience: "",
+        profilePicture: "",
     });
 
     useEffect(()=> {
@@ -20,15 +22,16 @@ export default function EditProfile() {
 
     const fetchProfile = async () => {
         try {
-            const res = await axiosInstance.get("/auth/profile");
+            const res = await axiosInstance.get("/profile");
 
             setFormData({
                 name: res.data.name || "",
                 email: res.data.email || "",
                 education: res.data.education || "",
                 targetRole: res.data.targetRole || "",
-                skills: res.data.skills || "",
+                skills: (res.data.skills || []).join(","),
                 experience: res.data.experience || "",
+                profilePicture: res.data.profilePicture || "",
             });
         } catch (error) {
             console.error(error);
@@ -44,18 +47,35 @@ export default function EditProfile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try{
-            await axiosInstance.put("/auth/profile", {
-                ...formData,
-                skills: formData.skills.split(",").map(skill => skill.trim()).filter(Boolean),
+            const data = new FormData();
+
+            data.append("name", formData.name);
+            data.append("email", formData.email);
+            data.append("education", formData.education);
+            data.append("targetRole", formData.targetRole);
+            data.append("experience", formData.experience);
+
+            const skillsArray = typeof formData.skills === "string" ? formData.skills.split(",").map(skill => skill.trim()).filter(Boolean) : formData.skills;
+
+            data.append("skills", JSON.stringify(skillsArray));
+
+            if (image) {
+                data.append("profilePicture", image);
+            }
+
+            await axiosInstance.put("/profile",  data ,{
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             });
 
             alert("Profile updated successfully");
             navigate("/dashboard");
         } catch (error) {
             console.error(error);
-            alert("Failed to update Profile.");
+            console.log(error.response);
+            alert(error.response?.data?.message || error.message);
         }
     };
 
@@ -66,6 +86,10 @@ export default function EditProfile() {
             </h1>
 
             <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 space-y-4">
+                <div className="flex felx-col items-center mb-6">
+                    <img src={formData.profilePicture ? `http://localhost:5000/uploads/profile/${formData.profilePicture}` : "/default-avatar.png"} alt="Profile" className="w-32 h-32 rounded-full object-cover border-2 border-gray-300 mb-3" />
+                    <input type="file" accept="image/*" onChange={(e)=> setImage(e.target.files[0])} />
+                </div>
                 <input type="text" name="name" placeholder="Name" value={formData.name} 
                 onChange={handleChange} className="w-full border p-3 rounded" />
                 <input type="email" name="email" placeholder="Email" value={formData.email}

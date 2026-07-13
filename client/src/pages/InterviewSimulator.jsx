@@ -88,7 +88,7 @@ export default function InterviewSimulator(){
                                 <p>{question}</p>
                                 <textarea
                                     className="w-full border mt-3 p-3 rounded"
-                                    rows="4"
+                                    rows={4}
                                     placeholder="Type your answer..."
                                     value={answers[index]}
                                     onChange={(e)=>{
@@ -103,7 +103,7 @@ export default function InterviewSimulator(){
                 )}
             </div>
             
-            {question.length > 0 && (
+            {questions.length > 0 && (
                 <button onClick={submitInterview} className="w-full mt-6 bg-green-600 text-white py-3 rounded">
                     Submit Interview
                 </button>
@@ -114,13 +114,13 @@ export default function InterviewSimulator(){
                         Interview Feedback
                     </h2>
                     <div className="text-5xl text-green-600 font-bold my-4">
-                        {evaluation.score}/100
+                        {evaluation.overallScore}/100
                     </div>
                     <h3 className = "font-bold">
                         Strengths
                     </h3>
                     <ul className="list-disc pl-5">
-                        {evaluation.strengths.map(
+                        {evaluation.strengths?.map(
                             (item, index)=>
                                 <li key={index}>{item}</li>
                         )}
@@ -129,7 +129,7 @@ export default function InterviewSimulator(){
                         Weaknesses
                     </h3>
                     <ul className="list-disc pl-5">
-                        {evaluation.weaknesses.map(
+                        {evaluation.weaknesses?.map(
                             (item, index)=>
                                 <li key={index}>
                                     {item}
@@ -140,7 +140,7 @@ export default function InterviewSimulator(){
                         Suggestions
                     </h3>
                     <ul className="list-disc pl-5">
-                        {evaluation.suggestions.map(
+                        {evaluation.suggestions?.map(
                             (item, index)=>
                                 <li key={index}>{item}</li>
                         )}

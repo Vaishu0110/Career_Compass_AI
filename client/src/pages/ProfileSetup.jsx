@@ -7,17 +7,18 @@ import axiosInstance from "../api/axiosInstance";
 export default function ProfileSetup(){
     const navigate = useNavigate();
     const { user, setUser } = useContext(AuthContext);
+    const [image, setImage] = useState(null);
+
     const [formData, setFormData]= useState({
         name: "",
         role: "",
         education: "",
         targetRole: "",
-        education: "",
         college: "",
         phone: "",
         experience: "",
         skills: "",
-        portfoliio: "",
+        portfolio: "",
         github: "",
         linkedin: "",
         });
@@ -26,7 +27,7 @@ export default function ProfileSetup(){
             setFormData({
                 name: user.name || "",
                 role: user.role || "",
-                targetRole: user.targerRole || "",
+                targetRole: user.targetRole || "",
                 education: user.education || "",
                 college: user.college || "",
                 phone: user.phone || "",
@@ -49,11 +50,27 @@ export default function ProfileSetup(){
         e.preventDefault();
 
         try{
-            const res=await axiosInstance.put("/profile",{
-                ...formData,
-                skills: formData.skills.split(",").map(skill => skill.trim()).filter(skill => skill),
-            });
+            
+            const data = new FormData();
 
+            data.append("role", formData.role);
+            data.append("education", formData.education);
+            data.append("targetRole", formData.targetRole);
+
+            data.append("skills", JSON.stringify(formData.skills.split(",").map(skill => skill.trim()).filter(skill => skill)));
+
+            if (image) {
+                data.append("profilePicture", image);
+            }
+
+            const res = await axiosInstance.put("/profile",
+                data,
+                {
+                    headers: {
+                        "Content-type": "multipart/form-data",
+                    },
+                }
+            );
             setUser(res.data.user);
             alert("Profile Updated");
             navigate("/dashboard");
@@ -80,7 +97,7 @@ export default function ProfileSetup(){
                 onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
                 <input type="text" name="college" placeholder="College / University" value={formData.college}
                 onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
-                <input type="text" name="education" placeholder="Education"
+                <input type="text" name="education" placeholder="Education" value={formData.education}
                 onChange={handleChange} className="w-full border p-3 mb-4"/>
                 <input type="text" name="targetRole" placeholder="Target Career Role"
                 onChange={handleChange} className="w-full border p-3 mb-4"/>
@@ -94,6 +111,12 @@ export default function ProfileSetup(){
                 onChange={handleChange} className="w-full border p-3 mb-4 rounded" />
                 <textarea name="experience" placeholder="Experience" onChange={handleChange}
                 className="w-full border p-3 mb-4"/>
+                <div className="mb-4">
+                    <label className="block font-medium mb-2">
+                        Profile Picture
+                    </label>
+                    <input type="file" accept="image/*" onChange={(e)=> setImage(e.target.files[0])} />    
+                </div>
                 <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">
                     Save Profile
                 </button>

@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
             default:"Student",
         },
 
-        profileImage:{
+        profilePicture:{
             type:String,
             default:"",
         },

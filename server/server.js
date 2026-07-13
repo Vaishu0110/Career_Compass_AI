@@ -15,7 +15,8 @@ import profileRoutes from "./routes/profileRoutes.js";
 import interviewRoutes from "./routes/interviewRoutes.js";
 import careerCoachRoutes from "./routes/careerCoachRoutes.js";
 import jobRecommendationRoutes from "./routes/jobRecommendationRoutes.js";
-import resumeHistoryRoutes from "./routes/resumeHistoryRoutes.js"
+import resumeHistoryRoutes from "./routes/resumeHistoryRoutes.js";
+import path from "path";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {
   res.send("API Running...");
@@ -39,9 +41,9 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/ai", aiResumeRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/api/skill-gap", skillGapRoutes);
-app.use( "/api/resume-generator", resumeGeneratorRoutes );
+app.use("/api/resume-generator", resumeGeneratorRoutes );
 app.use("/api/job-recommendations", jobRecommendationRoutes);
-app.use("/api/resume-history", resumeHistoryRoutes);
+app.use("/api/resume-history", resumeHistoryRoutes)
 
 mongoose
   .connect(process.env.MONGO_URI)

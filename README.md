@@ -140,16 +140,11 @@ Axios
 Cloud Storage Integration 
 PDF Generation Libraries
 
-
-
-career coach clear chat error
 interview simulator error
 dark mode and light mode do nothing
-need better UI
-login page navbar error
-learning road map error
-2 Resume history button
-remove career ai and rename ai career coach as career ai
+NEED BETTER UI
 resume generator need refinement right now it return plane text
 UI/UX of whole website
 add photo in profilr segment
+gmail otp option banana hai
+sign in with google ka option bhi

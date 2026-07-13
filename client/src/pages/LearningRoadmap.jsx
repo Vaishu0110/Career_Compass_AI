@@ -31,7 +31,7 @@ export default function LearningRoadmap(){
             <h1 className="text-4xl font-bold text-center mb-8">
                 Learning Roadmap Generator
             </h1>
-            <div className="grid md:grid-cols-2n gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
                 {/*INPUT SECTION*/}
             <div className="bg-white shadow-lg rounded-lg p-6">
                 <h2 className="text-2xl font-bold mb-4">
@@ -48,7 +48,7 @@ export default function LearningRoadmap(){
                 <h2 className="text-2xl font-bold mb-4">
                     Learning Plan
                 </h2>
-                {!roadmap?(<p className="etx-gray-500">
+                {!roadmap?(<p className="text-gray-500">
                     Your Roadmap will appear here.
                 </p>
                 ):(
@@ -59,7 +59,7 @@ export default function LearningRoadmap(){
                                     {month.month}
                                 </h3>
                                 <ul className="list-disc pl-5">
-                                    {months.topics?.map((topic, i)=>(<li key={i}>{topic}</li>))}
+                                    {month.topics?.map((topic, i)=>(<li key={i}>{topic}</li>))}
                                 </ul>
                             </div>
                         ))}

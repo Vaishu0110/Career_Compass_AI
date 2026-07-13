@@ -12,7 +12,7 @@ router.post("/generate", async(req, res)=>{
             result,
         });
     } catch (error) {
-        consolr.error(error);
+        console.error(error);
         res.status(500).json({
             success: false,
             message:"Roadmap generation Failed",

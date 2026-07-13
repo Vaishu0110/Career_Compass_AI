@@ -1,8 +1,20 @@
 import express from "express";
 import User from "../models/User.js";
+import multer from "multer";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: (req, file ,cb) => {
+        cb(null, "uploads/profile/");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" +file.originalname);
+    }
+});
+
+const upload = multer ({ storage });
 
 router.get("/", protect, async (req, res) => {
     try{
@@ -14,7 +26,7 @@ router.get("/", protect, async (req, res) => {
     }
 });
 
-router.put("/", protect, async (req, res) => {
+router.put("/", protect, upload.single("profilePicture"), async (req, res) => {
     try {
         const {
            name,
@@ -42,7 +54,7 @@ router.put("/", protect, async (req, res) => {
         user.targetRole = targetRole;
         user.education = education;
         user.experience = experience;
-        user.skills = skills;
+        user.skills = typeof skills === "string" ? JSON.parse(skills) : skills;
         user.phone = phone;
         user.college = college;
         user.portfolio = portfolio;
@@ -50,6 +62,9 @@ router.put("/", protect, async (req, res) => {
         user.linkedin =linkedin;
         user.profileCompleted = true;
 
+        if(req.file) {
+            user.profilePicture = req.file.filename;
+        }
         await user.save();
         
         res.json({

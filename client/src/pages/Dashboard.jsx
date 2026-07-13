@@ -27,6 +27,12 @@ export default function Dashboard(){
                     {stats?.targetRole ? `Target Role: ${stats.targetRole}` : "Let's build your career together!"}
                 </p>
             </div>
+            <div className="flex justify-end mb-6">
+                <Link to="/edit-profile" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Edit Profile
+                </Link>
+            </div>
+
             {/* Dashboard Stats */}
             {stats &&(
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-10">
@@ -100,7 +106,7 @@ export default function Dashboard(){
             )}
 
             {/* Feature Cards */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-5 gap-6">
                 <Link to="/resume-analyzer">
                     <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
                         <h2 className="text-2xl font-bold">
@@ -119,17 +125,6 @@ export default function Dashboard(){
                         </h2>
                         <p>
                             Generate ATS friendly resumes.
-                        </p>
-                    </div>
-                </Link>
-
-                <Link to="/career-ai">
-                    <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
-                        <h2 className="text-2xl font-bold">
-                            Career AI
-                        </h2>
-                        <p>
-                            Get personalised career guidance.
                         </p>
                     </div>
                 </Link>
@@ -210,6 +205,7 @@ export default function Dashboard(){
                         </p>
                     </div>
                 </Link>
+
                 <Link to="/job-recommendations">
                     <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
                         <h2 className="text-2xl font-bold">
@@ -217,18 +213,7 @@ export default function Dashboard(){
                         </h2>
 
                         <p>
-                            Discover personalized job opportunities based on your profile and resume.
-                        </p>
-                    </div>
-                </Link>
-
-                <Link to="/resume-history">
-                    <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
-                        <h2 className="text-2xl font-bold">
-                            Resume History
-                        </h2>
-                        <p>
-                            View every resume you've uploaded along with ATS scores and AI analysis.
+                            Discover personalized job opportunities.
                         </p>
                     </div>
                 </Link>
