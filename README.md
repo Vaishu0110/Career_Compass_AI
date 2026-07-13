@@ -145,6 +145,5 @@ dark mode and light mode do nothing
 NEED BETTER UI
 resume generator need refinement right now it return plane text
 UI/UX of whole website
-add photo in profilr segment
 gmail otp option banana hai
 sign in with google ka option bhi

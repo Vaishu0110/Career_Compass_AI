@@ -8,7 +8,7 @@ const client = new OpenAI({
 export async function generateQuestions(role){
     const completion = await client.chat.completions.create({
         model: "google/gemini-2.5-flash",
-        max_tokens: 300,
+        max_tokens: 800,
         temperature: 0.4,
         messages:[
             {
@@ -27,5 +27,7 @@ export async function generateQuestions(role){
     });
     const result = completion.choices[0].message.content;
 
-    return JSON.parse(result.replace(/```json/g,"").replace(/```/g,"").trim());
+    const cleaned = result.replace(/```json/g, "").replace(/```/g, "").trim();
+
+    return JSON.parse(cleaned);
 }
