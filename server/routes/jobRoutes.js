@@ -24,6 +24,13 @@ router.get("/", protect, async (req, res) => {
 
 router.post("/", protect, async (req, res) => {
     try {
+        const { company, position } =req.body;
+
+        if(!company || !position) {
+            return res.status(400).json({
+                message: "Company and Position are required",
+            })
+        }
         const job = await Job.create({
             ...req.body,
             user: req.user._id,
@@ -37,21 +44,44 @@ router.post("/", protect, async (req, res) => {
     }
 });
 
-router.put("/:id", protect, async (req, res) => {
+router.put("/edit/:id", protect, async (req, res) => {
     try{
-        await Job.findOneAndUpdate({
+        const { company, position, status, notes } = req.body;
+
+        const allowed = ["Applied", "Interview", "Offer", "Rejected"];
+
+        if(!allowed.includes(req.body.status)){
+            return res.status(400).json({
+                message: "Invalid status",
+            });
+        }
+
+        if(!company  || !position ) {
+            return res.status(400).json({
+                message: "Company and Position are required",
+            })
+        }
+
+        const job = await Job.findOneAndUpdate({
             _id: req.params.id,
             user: req.user._id,
-        },
-        {
-            status: req.body.status,
-        },
-        {
-            new: true,
         });
-        res.json({
-            success: true,
-        });
+        
+        if (!job) {
+            return res.status(404).json({
+                message: "Job not found",
+            });
+        }
+
+        job.company = company;
+        job.position = position;
+        job.status = status;
+        job.notes = notes;
+
+        await job.save();
+        
+        res.json(job);
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -65,7 +95,7 @@ router.delete("/:id", protect, async(req, res)=>{
             _id: req.params.id,
             user: req.user._id,
         });
-        res.json({success: true,});
+        res.json({ message: "Job deleted successfully"});
     } catch (error) {
         res.status(500).json({message: error.message,});
     }
