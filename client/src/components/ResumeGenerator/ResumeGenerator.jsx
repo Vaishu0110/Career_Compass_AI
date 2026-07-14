@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import jsPDF from "jspdf";
 import ResumeForm from "./ResumeForm";
 import ResumePreview from "./ResumePreview";
 import axiosInstance from "../../api/axiosInstance";
+import html2canvas from "html2canvas";
 
 export default function ResumeGenerator() {
   const [formData, setFormData] = useState({
@@ -21,8 +22,10 @@ export default function ResumeGenerator() {
   });
 
   const [generatedResume, setGeneratedResume] = useState(null);
+  const [editableResume, setEditableResume] = useState(null);
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const resumeRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -43,6 +46,7 @@ export default function ResumeGenerator() {
       );
 
       setGeneratedResume(res.data.resume);
+      setEditableResume(res.data.resume);
     } catch (error) {
       console.error(error);
       alert("Failed to generate Resume");
@@ -51,32 +55,35 @@ export default function ResumeGenerator() {
     }
   };
 
-  const downloadPDF = () => {
-    if (!generatedResume) return;
+  const downloadPDF = async () => {
 
-    const doc = new jsPDF();
+    const resume = resumeRef.current;
+    
+    if(!resume) return;
 
-    const resumeText = `
-PROFESSIONAL SUMMARY
-${generatedResume.summary || ""}
+    const canvas = await html2canvas(resume, {
+      scale: 2,
+      useCORS: true,
+    });
 
-SKILLS
-${generatedResume.skills?.join(", ") || ""}
+    const imgData = canvas.toDataURL("image/png");
 
-PROJECTS
-${generatedResume.projects?.join("\n") || ""}
+    const pdf = new jsPDF("p", "m", "a4");
 
-EXPERIENCE
-${generatedResume.experience?.join("\n") || ""}
+    const pdfWidth =pdf.internal.pageSize.getWidth();
 
-ACHIEVEMENTS
-${generatedResume.achievements?.join("\n") || ""}
-`;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    const lines = doc.splitTextToSize(resumeText, 180);
+    pdf.addImage(
+      imgData,
+      "PNG",
+      0,
+      0,
+      pdfWidth,
+      pdfHeight
+    );
 
-    doc.text(lines, 10, 10);
-    doc.save("resume.pdf");
+    pdf.save(`${formData.fullName}_Resume.pdf`);
   };
 
   return (
@@ -91,7 +98,9 @@ ${generatedResume.achievements?.join("\n") || ""}
         loading={loading} setPhoto={setPhoto} />
         
         <div className="min-h-[1000px]">
-          <ResumePreview formData={formData} generatedResume={generatedResume} photo={null} />
+          <div ref={resumeRef}>
+            <ResumePreview formData={formData} generatedResume={editableResume} setGeneratedResume={setEditableResume} photo={null} downloadPDF={downloadPDF} />
+          </div>
         </div>
       </div>
     </div>
