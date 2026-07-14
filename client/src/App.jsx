@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import CareerCoach from "./pages/CareerCoach";
 import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 import ProfileSetup from "./pages/ProfileSetup";
-import ResumeGenerator from "./pages/ResumeGenerator";
+import ResumeGenerator from "./components/ResumeGenerator";
 import ATSChecker from "./pages/ATSChecker";
 import SkillGapAnalyzer from "./pages/SkillGapAnalyzer";
 import LearningRoadmap from "./pages/LearningRoadmap";
