@@ -7,6 +7,7 @@ import ExecutiveTemplate from "./ResumeTemplates/ExecutiveTemplate";
 
 export default function ResumeViewer({
     resume,
+    downloadPDF,
 }) {
     const props = {
         formData: {

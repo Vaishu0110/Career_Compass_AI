@@ -188,7 +188,7 @@ export default function ResumeHistory() {
                                     </button>
 
                                     <button onClick={() => {
-                                        setSelectedResume(resume); setTimeout(() => { handleDownloadGenerated();}, 300);
+                                        setSelectedResume(resume); setTimeout(handleDownloadGenerated, 500);
                                     }} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                                         Download
                                     </button>
@@ -217,53 +217,7 @@ export default function ResumeHistory() {
                                     Generated Resume
                                 </h2>
 
-                                <h3 className="text-xl font-bold">
-                                    {selectedResume.fullName}
-                                </h3>
-
-                                <p className="text-gray-600 mb-4">
-                                    {selectedResume.targetRole}
-                                </p>
-
-                                <div className="mb-6">
-                                    <h4 className="font-bold mb-2">
-                                        Professional Summary
-                                    </h4>
-
-                                    <p>
-                                        {selectedResume.resume.summary}
-                                    </p>
-                                </div>
-
-                                <div className="mb-6">
-                                    <h4 className="font-bold mb-2">
-                                        Skills
-                                    </h4>
-
-                                    <ul className="list-disc ml-6">
-                                        {selectedResume.resume.skills?.map((skill, index) => (
-                                            <li key={index}>{skill}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <div className="mb-6">
-                                    <h4 className="font-bold mb-2">
-                                        Projects
-                                    </h4>
-
-                                    {selectedResume.resume.projects?.map((project, index) => (
-                                        <div key={index} className="border rounded p-3 mb-3">
-                                            <h5 className="font-semibold">
-                                                {project.title}
-                                            </h5>
-
-                                            <p>
-                                                {project.description}
-                                            </p>
-                                        </div>
-                                    ))}
-                                </div>
+                                <ResumeViewer resume={selectedResume} />
                             </>
                         ):(
                             <>
@@ -332,6 +286,11 @@ export default function ResumeHistory() {
                         <ResumeViewer resume={selectedResume} />
                     )}
                 </div>
+            </div>
+            <div className="mt-6 flex justify-end">
+                <button onClick={() => setSelectedResume(null)} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                    Close
+                </button>
             </div>
         </div>
 
