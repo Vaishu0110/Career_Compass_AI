@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { useReactToPrint} from "react-to-print";
+import ResumeViewer from "../components/ResumeGenerator/ResumeViewer";
 
 export default function ResumeHistory() {
     const [resumes, setResumes] = useState([]);
     const [selectedResume, setSelectedResume] = useState(null);
     const [activeTab, setActiveTab] = useState("uploaded");
     const [generatedResumes, setGeneratedResumes] = useState([]);
+
+    const printRef = useRef();
 
     useEffect(() => {
         fetchResumes();
@@ -81,6 +85,11 @@ export default function ResumeHistory() {
             alert("Failed to download resume.");
         }
     };
+
+    const handleDownloadGenerated = useReactToPrint({
+        content: () => printRef.current,
+        documentTitle: "Resume",
+    });
 
     return ( 
         <div className="max-w-6xl mx-auto p-8">
@@ -178,7 +187,9 @@ export default function ResumeHistory() {
                                         Edit
                                     </button>
 
-                                    <button className="bg-green-600 text-white px-4 py-2 rounded">
+                                    <button onClick={() => {
+                                        setSelectedResume(resume); setTimeout(() => { handleDownloadGenerated();}, 300);
+                                    }} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                                         Download
                                     </button>
 
@@ -311,6 +322,18 @@ export default function ResumeHistory() {
                     </div>    
                 </div>
             )}
+
+            <div style={{
+                position: "absolute",left: "-9999px", top:0,
+            }}
+            >
+                <div ref={printRef}>
+                    {selectedResume?.resume && (
+                        <ResumeViewer resume={selectedResume} />
+                    )}
+                </div>
+            </div>
         </div>
+
     );
 }
