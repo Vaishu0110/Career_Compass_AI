@@ -16,6 +16,7 @@ import ResumeHistory from "./pages/ResumeHistory";
 import JobRecommendations from "./pages/JobRecommendations";
 import EditProfile from "./pages/EditProfile";
 import AppLayout from "./components/AppLayout";
+import MyResumes from "./pages/MyResumes";
 
 export default function App() {
   return (  
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/resume-history" element={<ProtectedRoute><ResumeHistory /></ProtectedRoute>} />
         <Route path="/job-recommendations" element={<ProtectedRoute><JobRecommendations /></ProtectedRoute>} />
         <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
+        <Route path="/my-resumes" element={<ProtectedRoute><MyResumes /></ProtectedRoute>} />
       </Route>
     </Routes>
   );

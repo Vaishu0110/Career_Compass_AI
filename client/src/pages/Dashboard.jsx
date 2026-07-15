@@ -206,6 +206,18 @@ export default function Dashboard(){
                     </div>
                 </Link>
 
+                <Link to="/my-resumes">
+                    <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
+                        <h2 className="text-2xl font-bold">
+                            My Resumes
+                        </h2>
+
+                        <p>
+                            View, edit and download your AI generated resumes.
+                        </p>
+                    </div>
+                </Link>
+
                 <Link to="/job-recommendations">
                     <div className="p-6 bg-white rounded-lg shadow hover:shadow-xl transition">
                         <h2 className="text-2xl font-bold">

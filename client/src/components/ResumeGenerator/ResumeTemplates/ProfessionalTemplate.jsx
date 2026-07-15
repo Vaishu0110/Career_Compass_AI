@@ -4,6 +4,7 @@ export default function ProfessionalTemplate({
     setGeneratedResume,
     photo,
     downloadPDF,
+    saveResume,
 })
 {
     const addSkill = () => {
@@ -393,6 +394,10 @@ export default function ProfessionalTemplate({
                     <div className="mt-10">
                         <button type="button" onClick={downloadPDF} className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
                             Download PDF
+                        </button>
+
+                        <button type="button" onClick={saveResume} className="ml-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                            Save Resume
                         </button>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ export default function ResumePreview({
     setGeneratedResume,
     photo,
     downloadPDF,
+    saveResume,
 }) {
     if(!generatedResume) {
         return (
@@ -26,6 +27,7 @@ export default function ResumePreview({
         setGeneratedResume,
         photo,
         downloadPDF,
+        saveResume,
     };
 
     switch(formData.template) {

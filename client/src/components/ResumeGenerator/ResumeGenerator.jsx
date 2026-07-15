@@ -47,6 +47,13 @@ export default function ResumeGenerator() {
 
       setGeneratedResume(res.data.resume);
       setEditableResume(res.data.resume);
+
+      await axiosInstance.post("/generated-resume/save", {
+        fullName: formData.fullName,
+        targetRole: formData.targetRole,
+        template: formData.template,
+        resume: res.data.resume,
+      });
     } catch (error) {
       console.error(error);
       alert("Failed to generate Resume");
@@ -68,7 +75,7 @@ export default function ResumeGenerator() {
 
     const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF("p", "m", "a4");
+    const pdf = new jsPDF("p", "mm", "a4");
 
     const pdfWidth =pdf.internal.pageSize.getWidth();
 
@@ -86,6 +93,21 @@ export default function ResumeGenerator() {
     pdf.save(`${formData.fullName}_Resume.pdf`);
   };
 
+  const saveResume = async () => {
+    try{
+      await axiosInstance.post("/generated-resume/save",{
+        fullName: formData.fullName,
+        targetRole: formData.targetRole,
+        template: formData.template,
+        resume: editableResume,
+      });
+      alert("Resume saved successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to save resume.");
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h1 className="text-4xl font-bold mb-8 text-center">
@@ -98,8 +120,8 @@ export default function ResumeGenerator() {
         loading={loading} setPhoto={setPhoto} />
         
         <div className="min-h-[1000px]">
-          <div ref={resumeRef}>
-            <ResumePreview formData={formData} generatedResume={editableResume} setGeneratedResume={setEditableResume} photo={null} downloadPDF={downloadPDF} />
+          <div ref={resumeRef} id="resume-preview" className="bg-white">
+            <ResumePreview formData={formData} generatedResume={editableResume} setGeneratedResume={setEditableResume} photo={photo} downloadPDF={downloadPDF} saveResume={saveResume} />
           </div>
         </div>
       </div>

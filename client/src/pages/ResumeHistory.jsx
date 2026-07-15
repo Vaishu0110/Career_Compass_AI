@@ -4,15 +4,28 @@ import axiosInstance from "../api/axiosInstance";
 export default function ResumeHistory() {
     const [resumes, setResumes] = useState([]);
     const [selectedResume, setSelectedResume] = useState(null);
+    const [activeTab, setActiveTab] = useState("uploaded");
+    const [generatedResumes, setGeneratedResumes] = useState([]);
 
     useEffect(() => {
         fetchResumes();
+        fetchGeneratedResumes();
     }, []);
 
     const fetchResumes = async () => {
         try {
             const res = await axiosInstance.get("/resume-history");
             setResumes(res.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const fetchGeneratedResumes = async () => {
+        try{
+            const res = await axiosInstance.get("/generated-resume");
+
+            setGeneratedResumes(res.data);
         } catch (error) {
             console.error(error);
         }
@@ -28,6 +41,20 @@ export default function ResumeHistory() {
         }
     };
 
+    const deleteGeneratedResume = async (id) => {
+        try {
+            await axiosInstance.delete(`/generated-resume/${id}`);
+
+            setGeneratedResumes(
+                generatedResumes.filter(
+                    resume => resume._id !== id
+                )
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const downloadResume = async (id, fileName) => {
         try {
             const response = await axiosInstance.get(
@@ -37,7 +64,7 @@ export default function ResumeHistory() {
                 }
             );
 
-            const url = window.URL.crateObjectURL(new Blob([response.data]));
+            const url = window.URL.createObjectURL(new Blob([response.data]));
 
             const link = document.createElement("a");
             
@@ -60,8 +87,18 @@ export default function ResumeHistory() {
             <h1 className="text-4xl font-bold mb-8">
                 Resume History
             </h1>
+            <div className="flex gap-4 mb-8">
+                <button onClick={() => setActiveTab("uploaded")} 
+                className={`px-6 py-2 rounded-lg ${activeTab === "uploaded" ? "bg-blue-600 text-white" : "bg-gray-200"}`}>
+                    Uploaded Resumes
+                </button>
 
-            {resumes.length === 0 ? (
+                <button onClick={() => setActiveTab("generated")} className={`px-6 py-2 rounded-lg ${activeTab === "generated" ? "bg-green-600 text-white" : "bg-gray-200" }`}>
+                    AI Generated Resume
+                </button>
+            </div>
+
+            {activeTab === "uploaded" && (resumes.length === 0 ? (
                 <div className="bg-white rounded-lg shadow p-8 text-center">
                     No resumes uploaded yet.    
                 </div>
@@ -95,73 +132,181 @@ export default function ResumeHistory() {
                                 <button onClick={()=>(deleteResume(resume._id))} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
                                     Delete
                                 </button>
-                                <button onClick={()=> downloadResume(resume._id, resume.originalName)} className="bg-green-600 text-white px-4 py-2 rounded hoover:bg-green-700">
+                                <button onClick={()=> downloadResume(resume._id, resume.originalName)} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                                     Download
                                 </button>
                             </div>
                         </div>
                     ))}
                 </div>
+            ))}
+
+            {activeTab === "generated" && (
+                generatedResumes.length === 0 ? (
+                    <div className="bg-white rounded-lg shadow p-8 text-center">
+                        No AI Generated Resumes Yet.    
+                    </div>
+                ):(
+                    <div className="space-y-5">
+                        {generatedResumes.map((resume) => (
+                            <div key={resume._id} className="bg-white rounded-xl shadow p-6 flex justify-between items-center">
+                                <div>
+                                    <h2 className="text-2xl font-bold">
+                                        {resume.fullName}
+                                    </h2>
+
+                                    <p className="text-gray-500">
+                                        {resume.targetRole}
+                                    </p>
+
+                                    <p className="text-gray-500"> 
+                                        Template :  {resume.template}
+                                    </p>
+
+                                    <p className="text-sm text-gray-400">
+                                        {new Date(resume.createdAt).toLocaleDateString()}
+                                    </p>
+
+                                </div>
+
+                                <div className="flex gap-3">
+                                    <button onClick={() => setSelectedResume(resume)} className="bg-blue-600 text-white px-4 py-2 rounded">
+                                        View
+                                    </button>
+
+                                    <button className="bg-yellow-500 text-white px-4 py-2 rounded">
+                                        Edit
+                                    </button>
+
+                                    <button className="bg-green-600 text-white px-4 py-2 rounded">
+                                        Download
+                                    </button>
+
+                                    <button  onClick={() => deleteGeneratedResume(resume._id)} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        ))}
+
+                    </div>
+
+                )
+
             )}
             {selectedResume && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-centerz-50">
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                        <h2 className="text-3xl fontt-bold mb-6">
-                            Resume Analysis    
-                        </h2>
-                        <p>
-                            <strong>ATS Score:</strong> {selectedResume.atsScore}
-                        </p>
+                        {selectedResume.resume ? (
+                            <>
+                                <h2 className="text-3xl font-bold mb-6">
+                                    Generated Resume
+                                </h2>
 
-                        <p className="mb-6">
-                            <strong>Resume Score:</strong> {selectedResume.resumeScore}
-                        </p>
+                                <h3 className="text-xl font-bold">
+                                    {selectedResume.fullName}
+                                </h3>
 
-                        <h3 className="font-bold mt-4">
-                            Skills
-                        </h3>
+                                <p className="text-gray-600 mb-4">
+                                    {selectedResume.targetRole}
+                                </p>
 
-                        <ul className="list-disc ml-6">
-                            {selectedResume.analysis?.skills?.map(skill => (
-                                <li key={skill}>{skill}</li>
-                            ))}
-                        </ul>
+                                <div className="mb-6">
+                                    <h4 className="font-bold mb-2">
+                                        Professional Summary
+                                    </h4>
 
-                        <h3 className="font-bold mt-4">
-                            Missing Skills
-                        </h3>
+                                    <p>
+                                        {selectedResume.resume.summary}
+                                    </p>
+                                </div>
 
-                        <ul className="list-disc ml-6">
-                            {selectedResume.analysis?.missingSkills?.map(skill => (
-                                <li key={skill}>{skill}</li>
-                            ))}
-                        </ul>
+                                <div className="mb-6">
+                                    <h4 className="font-bold mb-2">
+                                        Skills
+                                    </h4>
 
-                        <h3 className="font-bold mt-4">
-                            Recommended Roles
-                        </h3>
+                                    <ul className="list-disc ml-6">
+                                        {selectedResume.resume.skills?.map((skill, index) => (
+                                            <li key={index}>{skill}</li>
+                                        ))}
+                                    </ul>
+                                </div>
 
-                        <ul className="list-disc ml-6">
-                            {selectedResume.analysis?.recommendedRoles?.map(role => (
-                                <li key={role}>
-                                    {role}
-                                </li>
-                            ))}
-                        </ul>
+                                <div className="mb-6">
+                                    <h4 className="font-bold mb-2">
+                                        Projects
+                                    </h4>
 
-                        <h3 className="font-bold mt-4">
-                            Learning Roadmap
-                        </h3>
+                                    {selectedResume.resume.projects?.map((project, index) => (
+                                        <div key={index} className="border rounded p-3 mb-3">
+                                            <h5 className="font-semibold">
+                                                {project.title}
+                                            </h5>
 
-                        <ul className="list-disc ml-6 mb-6">
-                            {selectedResume.analysis?.roadmap?.map(step => (
-                                <li key={step}>{step}</li>
-                            ))}
-                        </ul>
+                                            <p>
+                                                {project.description}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        ):(
+                            <>
+                                <h2 className="text-3xl font-bold mb-6">
+                                    Resume Analysis
+                                </h2>
 
-                        <button onClick={()=> setSelectedResume(null)} className="bg-blue-600 text-white px-6 py-2 rounded">
-                            Close
-                        </button>
+                                <p>
+                                    <strong>ATS Score:</strong> {selectedResume.atsScore}
+                                </p>
+
+                                <h3 className="font-bold mt-4">
+                                    Skills
+                                </h3>
+
+                                <ul className="list-disc ml-6">
+                                    {selectedResume.analysis?.skills?.map(skill => (
+                                        <li key={skill}>{skill}</li>
+                                    ))}
+                                </ul>
+
+                                <h3 className="font-bold mt-4">
+                                    Missing Skills
+                                </h3>
+
+                                <ul className="list-disc ml-6">
+                                    {selectedResume.analysis?.missingSkills?.map(skill => (
+                                        <li key={skill}>{skill}</li>
+                                    ))}
+                                </ul>
+
+                                <h3 className="font-bold mt-4">
+                                    Recommended Roles
+                                </h3>
+
+                                <ul className="list-disc ml-6">
+                                    {selectedResume.analysis?.recommendedRoles?.map(role => (
+                                        <li key={role}>{role}</li>
+                                    ))}
+                                </ul>
+
+                                <h3 className="font-bold mt-4">
+                                    Learning Roadmap
+                                </h3>
+
+                                <ul className="list-disc ml-6 mb-6">
+                                    {selectedResume.analysis?.roadmap?.map(step => (
+                                        <li key={step}>
+                                            {step}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
 
                     </div>    
                 </div>
