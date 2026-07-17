@@ -5,7 +5,7 @@ const client = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
 });
 
-export async function generateQuestions(role){
+export async function generateQuestions(role, difficulty){
     const completion = await client.chat.completions.create({
         model: "google/gemini-2.5-flash",
         max_tokens: 800,
@@ -16,12 +16,27 @@ export async function generateQuestions(role){
                 content : `
                 Return ONLY valid JSON
                 {
-                    "questions":[]
+                    "questions":[
+                        {
+                            "question": ""
+                        }
+                    ]
                 }`
             },
             {
                 role:"user",
-                content:`Generate 15 interview questions for ${role}`
+                content:`Generate 15 interview questions for ${role}
+
+                Difficulty: ${difficulty}
+                
+                Question should include:
+                
+                - 10 ${role} questions
+                - 5 HR/Behavioral question
+                
+                Return ONLY valid JSON.
+                Do not include answers.
+                Do not include maekdown.`
             }
         ]
     });

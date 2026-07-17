@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import axiosInstance from "../api/axiosInstance";
 import { useReactToPrint} from "react-to-print";
 import ResumeViewer from "../components/ResumeGenerator/ResumeViewer";
+import {useNavigate } from "react-router-dom"; 
 
 export default function ResumeHistory() {
     const [resumes, setResumes] = useState([]);
@@ -10,6 +11,8 @@ export default function ResumeHistory() {
     const [generatedResumes, setGeneratedResumes] = useState([]);
 
     const printRef = useRef();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchResumes();
@@ -183,7 +186,11 @@ export default function ResumeHistory() {
                                         View
                                     </button>
 
-                                    <button className="bg-yellow-500 text-white px-4 py-2 rounded">
+                                    <button onClick={() => navigate("/resume-generator", {
+                                        state: {
+                                            resume,
+                                        },
+                                    })} className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
                                         Edit
                                     </button>
 
@@ -206,7 +213,6 @@ export default function ResumeHistory() {
                     </div>
 
                 )
-
             )}
             {selectedResume && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">

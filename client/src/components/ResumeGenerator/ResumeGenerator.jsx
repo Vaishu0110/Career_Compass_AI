@@ -1,9 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 import ResumeForm from "./ResumeForm";
 import ResumePreview from "./ResumePreview";
 import axiosInstance from "../../api/axiosInstance";
 import html2canvas from "html2canvas";
+import { useLocation } from "react-router-dom";
 
 export default function ResumeGenerator() {
   const [formData, setFormData] = useState({
@@ -26,6 +27,7 @@ export default function ResumeGenerator() {
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
   const resumeRef = useRef(null);
+  const location = useLocation();
 
   const handleChange = (e) => {
     setFormData({
@@ -33,6 +35,32 @@ export default function ResumeGenerator() {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    if(!location.state?.resume) return;
+
+    const saved = location.state.resume;
+
+    setFormData({
+      fullName: saved.fullName,
+      email: "",
+      phone: "",
+      linkedin: saved.resume.linkedin || "",
+      github: saved.resume.github || "",
+      portfolio: saved.resume.portfolio || "",
+      education: "",
+      skills: "",
+      projects: "",
+      experience: "",
+      targetRole: saved.targetRole,
+      template: saved.template,
+
+    });
+
+    setGeneratedResume(saved.resume);
+    setEditableResume(saved.resume);
+
+  }, [location]);
 
   const handleGenerate = async (e) => {
     e.preventDefault();

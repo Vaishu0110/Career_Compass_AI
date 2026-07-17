@@ -7,6 +7,7 @@ export default function InterviewSimulator(){
     const[role,setRole]=useState("");
     const[questions,setQuestions]=useState([]);
     const[loading,setLoading]=useState(false);
+    const [difficulty, setDifficulty] = useState("Intermediate");
 
     const generateQuestions = async () => {
         if(!role.trim()){
@@ -19,7 +20,9 @@ export default function InterviewSimulator(){
 
             const res = await axiosInstance.post(
                 "/interview/questions",
-                {role}
+                {role,
+                    difficulty,
+                }
             );
 
             const qs = res.data.result.questions;
@@ -40,7 +43,7 @@ export default function InterviewSimulator(){
             ).join("\n");
 
             const res=await axiosInstance.post("/interview/evaluate",
-                {role, qa,}
+                {role, difficulty, qa,}
             );
         
         setEvaluation(
@@ -65,8 +68,14 @@ export default function InterviewSimulator(){
                 </h2>
                 <input type="text" placeholder="Enter Role (e.g. MERN Developer)"
                 value={role} onChange={(e)=> setRole(e.target.value)} className="w-full border p-3 rounded mb-4"/>
-                <button onClick={generateQuestions} disabled={loading} className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700">
-                    {loading? "Generating..." : "Generate Questions"}
+
+                <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} className="w-full border p-3 rounded mb-4">
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                </select>
+                <button onClick={generateQuestions} disabled={loading} className={`w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 ${ loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-7000"}`}>
+                    {loading? `Generating ${difficulty} Questions...` : "Generate Questions"}
                 </button>
             </div>
             {/*QUESTIONS SECTION */}
@@ -82,9 +91,15 @@ export default function InterviewSimulator(){
                     <div className="space-y-6">
                         {questions.map((question, index)=> (
                             <div key={index} className="border rounded p-4">
-                                <h3 className="font-semibold mb-2">
-                                    Question {index + 1}
-                                </h3>
+                                <div className="flex justify-between mb-2">
+                                    <h3 className="font-semibold mb-2">
+                                        Question {index + 1}
+                                    </h3>
+
+                                    <span className="text-sm bg-blue-100 text-blue-700 px-2 py-1 riunded">
+                                        {difficulty}
+                                    </span>
+                                </div>
                                 <p>{question}</p>
                                 <textarea
                                     className="w-full border mt-3 p-3 rounded"
