@@ -1,4 +1,4 @@
-import{ useState }from "react";
+import{ useState, useEffect, useRef }from "react";
 import axiosInstance from "../api/axiosInstance";
 
 export default function InterviewSimulator(){
@@ -8,6 +8,10 @@ export default function InterviewSimulator(){
     const[questions,setQuestions]=useState([]);
     const[loading,setLoading]=useState(false);
     const [difficulty, setDifficulty] = useState("Intermediate");
+    const [timeLeft, setTimeLeft] = useState(1800);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [listening, setListening] = useState(false);
+    const recognitionRef = useRef(null);
 
     const generateQuestions = async () => {
         if(!role.trim()){
@@ -28,6 +32,7 @@ export default function InterviewSimulator(){
             const qs = res.data.result.questions;
             setQuestions(qs);
             setAnswers(new Array(qs.length).fill(""));
+            setCurrentQuestion(0);
            }catch (error) {
             console.error(error);
             alert("Failed to generate questions");
@@ -54,6 +59,66 @@ export default function InterviewSimulator(){
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        if(question.length === 0 ) return;
+
+        if(timeLeft <= 0) {
+            submitInterview();
+            return;
+        }
+
+        const timer = setInterval(() => {
+            setTimeLeft(prev => prev - 1);
+        }, 1000);
+
+        return () => clearInterview(timer);
+    }, [question, timeLeft]);
+
+    useEffect(() => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        
+        if(!SpeechRecognition) return;
+
+        const recognition = new SpeechRecognition();
+
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = "en-US";
+
+        recognition.onresult = (event) => {
+            let transcript = "";
+
+            for(let i=event.resultIndex; i< event.results.length; i++) {
+                transcript += event.result[i][0].transcript;
+            }
+
+            const copy= [...answers];
+            copy[currentQuestion] = transcript;
+            setAnswer(copy);
+        };
+
+        recognition.onend = () => {
+            setListening(false);
+        };
+
+        recognitionRef.current = recognition;
+    }, [currentQuestion, answer]);
+
+    const startListening = () => {
+        if(!recognitionRef.current) {
+            alert("Speech Recognition is not supported.");
+            return;
+        }
+
+        recognitionRef.current.start();
+        setListening(true);
+    };
+
+    const stopListening = () => {
+        recognitionRef.current?.stop();
+        setListening(false);
+    }
 
     return(
     <div className="max-w-6xl mx-auto p-6">
@@ -89,79 +154,131 @@ export default function InterviewSimulator(){
                     </p>
                 ):( 
                     <div className="space-y-6">
-                        {questions.map((question, index)=> (
-                            <div key={index} className="border rounded p-4">
+                        <div>
+                            <div className="flex justfy-between mb-2">
+                                <span className="font-semibold">
+                                    Question {currentQuestion + 1} of {question.length}
+                                </span>
+
+                                <span>
+                                    {Math.round(((currentQuestion + 1)/question.length) * 100)}%
+                                </span>
+                            </div>
+
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                                <div>
+                                    <div className="bg-blue-600 h-2 rounded-full" style={{width: `${((currentQuestion + 1)/question.length) * 100}%`,}} />
+                                </div>
+                            </div>
+
+                            <div className="border rounded p-4">
+
                                 <div className="flex justify-between mb-2">
-                                    <h3 className="font-semibold mb-2">
-                                        Question {index + 1}
+                                    <h3 className="font-semibold">
+                                        Question {currentQuestion + 1}
                                     </h3>
 
-                                    <span className="text-sm bg-blue-100 text-blue-700 px-2 py-1 riunded">
+                                    <span className="text-sm bg-blue-100 text-blue-700 px-2 py-1 rounded">
                                         {difficulty}
                                     </span>
                                 </div>
-                                <p>{question}</p>
-                                <textarea
-                                    className="w-full border mt-3 p-3 rounded"
-                                    rows={4}
-                                    placeholder="Type your answer..."
-                                    value={answers[index]}
-                                    onChange={(e)=>{
-                                        const copy=[...answers]
-                                        copy[index]=e.target.value;
-                                        setAnswers(copy);
-                                    }}
-                                />
+
+                                <div className="mb-4 text-center">
+                                    <span className="text-xl font-bold text-red-600">
+                                        Time Left:
+                                    </span>
+
+                                    <p className="text-3xl font-bold">
+                                        {Math.floor(timeLeft/60)} : {(timeLeft / 60) .toString().padStart(2, "0")}
+                                    </p>
+                                </div>
+
+                                <p className="mb-4">
+                                    {question[currentQuestion]}
+                                </p>
+
+                                <textarea className="w-full border mt-3 p-3 rounded" rows={4} placeholder="Type your answer..." value={answer[cuurrentQuestion]} onChange={(e) => {
+                                    const copy = [...answers];
+                                    copy[currentQuestion] = e.target.value;
+                                    setAnswers(copy);
+                                }} />
+
+                                <div className="flex-gap-3 mt-3">
+
+                                    {!listening ? (
+                                        <button onClick={startListening} className="bg-purple-600 text-white px-4 py-2 rounded">
+                                            Start Recording
+                                        </button>
+                                    ) : (
+                                        <button onClick={stopListening} className="bg-red-600 text-white px-4 py-2 rounded">
+                                            Stop Recording
+                                        </button>
+                                    )}
+                                    
+                                </div>
+
+                                <div className="flex justify-between mt-6">
+
+                                    <button disabled={currentQuestion === 0} onClick={() => setCurrentQuestion(currentQuestion - 1)} 
+                                        className="bg-gray-500 text-white px-6 py-2 rounded disabled:opacity-50">
+                                        Previous
+                                    </button>
+
+                                    {currentQuestion < questions.length - 1 ?(
+                                        <button onClick={() => setCurrentQuestion(currentQuestion + 1)} className="bg-blue-600 text-white px-6 py-2 rounded">
+                                            Next
+                                        </button>
+                                    ):(
+                                        <button onClick={submitInterview} className="bg-green-600 text-white px-6 py-2 rounded">
+                                            Finish Interview
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                        ))}
+                        </div>
+                    
+                        {evaluation && (
+                            <div className="mt-8 border-t pt-6">
+                                <h2 className="text-2xl font-bold">
+                                    Interview Feedback
+                                </h2>
+                                <div className="text-5xl text-green-600 font-bold my-4">
+                                    {evaluation.overallScore}/100
+                                </div>
+                                <h3 className = "font-bold">
+                                    Strengths
+                                </h3>
+                                <ul className="list-disc pl-5">
+                                    {evaluation.strengths?.map(
+                                        (item, index)=>
+                                            <li key={index}>{item}</li>
+                                    )}
+                                </ul>
+                                <h3 className="font-bold mt-5">
+                                    Weaknesses
+                                </h3>
+                                <ul className="list-disc pl-5">
+                                    {evaluation.weaknesses?.map(
+                                        (item, index)=>
+                                            <li key={index}>
+                                                {item}
+                                            </li>
+                                    )}
+                                </ul>
+                                <h3 className="font-bold mt-5">
+                                    Suggestions
+                                </h3>
+                                <ul className="list-disc pl-5">
+                                    {evaluation.suggestions?.map(
+                                        (item, index)=>
+                                            <li key={index}>{item}</li>
+                                    )}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
-            
-            {questions.length > 0 && (
-                <button onClick={submitInterview} className="w-full mt-6 bg-green-600 text-white py-3 rounded">
-                    Submit Interview
-                </button>
-            )}
-            {evaluation && (
-                <div className="mt-8 border-t pt-6">
-                    <h2 className="text-2xl font-bold">
-                        Interview Feedback
-                    </h2>
-                    <div className="text-5xl text-green-600 font-bold my-4">
-                        {evaluation.overallScore}/100
-                    </div>
-                    <h3 className = "font-bold">
-                        Strengths
-                    </h3>
-                    <ul className="list-disc pl-5">
-                        {evaluation.strengths?.map(
-                            (item, index)=>
-                                <li key={index}>{item}</li>
-                        )}
-                    </ul>
-                    <h3 className="font-bold mt-5">
-                        Weaknesses
-                    </h3>
-                    <ul className="list-disc pl-5">
-                        {evaluation.weaknesses?.map(
-                            (item, index)=>
-                                <li key={index}>
-                                    {item}
-                                </li>
-                        )}
-                    </ul>
-                    <h3 className="font-bold mt-5">
-                        Suggestions
-                    </h3>
-                    <ul className="list-disc pl-5">
-                        {evaluation.suggestions?.map(
-                            (item, index)=>
-                                <li key={index}>{item}</li>
-                        )}
-                    </ul>
-                </div>
-            )}
         </div>
     </div>
     );

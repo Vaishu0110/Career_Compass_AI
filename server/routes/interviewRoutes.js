@@ -2,6 +2,7 @@ import express from "express";
 import { generateQuestions } from "../services/ai/interviewAI.js";
 import {evaluateInterview} from "../services/interviewEvaluationAI.js";
 import { protect } from "../middleware/authMiddleware.js";
+import Interview from "../models/Interview.js";
 
 const router = express.Router();
 
@@ -49,6 +50,25 @@ router.post("/evaluate",protect, async(req,res) => {
             success: true,
             result
         });
+
+        await Interview.create({
+
+            user:req.user._id,
+
+            role,
+
+            difficulity:req.body.difficulty,
+
+            overallScore:result.overallScore,
+
+            strengths:result.strengths,
+
+            weaknesses:result.weaknesses,
+
+            suggestions:result.suggestions,
+
+        });
+
     }
     catch (error) {
         console.error(error);
