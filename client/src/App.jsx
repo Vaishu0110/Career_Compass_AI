@@ -17,6 +17,7 @@ import JobRecommendations from "./pages/JobRecommendations";
 import EditProfile from "./pages/EditProfile";
 import AppLayout from "./components/AppLayout";
 import MyResumes from "./pages/MyResumes";
+import InterviewHistory from "./pages/InterviewHistory";
 
 export default function App() {
   return (  
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/job-recommendations" element={<ProtectedRoute><JobRecommendations /></ProtectedRoute>} />
         <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
         <Route path="/my-resumes" element={<ProtectedRoute><MyResumes /></ProtectedRoute>} />
+        <Route path="/interview-history" element={<ProtectedRoute><InterviewHistory /></ProtectedRoute>} />
       </Route>
     </Routes>
   );
