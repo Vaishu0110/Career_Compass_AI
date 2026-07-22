@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const interview = new mongoose.Schema(
+const interviewSchema = new mongoose.Schema(
     {
         user:{
             type:mongoose.Schema.Types.ObjectId,

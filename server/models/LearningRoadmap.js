@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const learningRoadSchema = new mongoose.Schema({
+const learningRoadmapSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -27,5 +27,5 @@ const learningRoadSchema = new mongoose.Schema({
 
 export default mongoose.model(
     "LearningRoadmap",
-    learningRoadmapSchemma
+    learningRoadmapSchema
 );

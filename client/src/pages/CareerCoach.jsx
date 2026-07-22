@@ -25,20 +25,24 @@ export default function CareerCoach() {
     const userMessage = {
         sender: "user",
         text: question,
+        time: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedHistory = [...messages, userMessage];
+    setMessages(updatedHistory);
+
     try {
         setLoading(true);
 
         const res = await axiosInstance.post("/career-coach/ask",{
             question,
-            history: messages,
+            history: updatedHistory,
         });
 
         const aiMessage={
             sender: "ai",
             text: res.data.response,
+            time: new Date(),
         };
 
         setMessages ((prev)=> [...prev, aiMessage]);
@@ -60,13 +64,35 @@ export default function CareerCoach() {
       </h1>
 
       <div className="flex justify-end mb-4">
-        <button onClick={()=> setMessages([])}
+        <button onClick={() => {
+            if (windows.confirm("Clear Chat?")) {
+                setMessages([]);
+            }
+        }}
         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" >
             Clear Chat
         </button>
       </div>
 
       <div className="bg-white shadow-lg rounded-xl p-6">
+
+        <div className="flex flex-wrap gap-2 mb-5">
+
+            <button onClick={() => 
+                setQuestion("Resume my resume")
+            } className="px-4 py-2 roundeed nb-gray-200">
+                Resume Review
+            </button>
+
+            <button onClick={() => setQuestion("Give me interview tips")} className="px-4 py-2 rounded bg-gray-200">
+                Interview Tips
+            </button>
+
+            <button onClick={() => setQuestion("Suggest Projects")} className="px-4 py-2 rounded bg-gray-200">
+                Projects
+            </button>
+
+        </div>
 
         <textarea
           rows="5"
@@ -94,20 +120,54 @@ export default function CareerCoach() {
       <div className="bg-white shadow-lg rounded-xl p-6 mt-8 h-[500px] overflow-y-auto">
         {messages.length === 0 ? (
             <p className="text-gray-500 text-center mt-20">
-                Start chatting with your AI Career Coach
+                Hi,
+
+                Ask me anything about:
+
+                • Resume Improvement
+
+                • Interview Preparation
+
+                • Learning Roadmaps
+
+                • Career Planning
+
+                • Projects
+
+                • Salary Advice
             </p>
         ) : (
             messages.map((msg, index) => (
-                <div key={index} className= {`mb-5 flex ${msg.sender === "user" ?
+                <div key={index} className= {`mb-5 flex items-end gap-2 ${msg.sender === "user" ?
                     "justify-end" : "justify-start"
                 }`}>
+
+                    {msg.sender === "ai" && (
+                        <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
+                            AI
+                        </div>
+                    )}
                     <div className={`max-w-[75%] rounded-xl px-5 py-3 whitespace-pre-wrap ${
                         msg.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"
                     }`}>
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                             {msg.text}
                         </ReactMarkdown>
+                        {msg.time && (
+                            <p className="text-xs opacity-60 mt-2">
+                                {new Date(msg.time).toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                })}
+                            </p>
+                        )}
                     </div>
+
+                    {msg.sender === "user" && (
+                        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
+                            You
+                        </div>
+                    )}
                 </div>
             ))
         )}

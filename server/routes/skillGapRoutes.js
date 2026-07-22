@@ -8,10 +8,20 @@ router.post("/analyze", protect, async(req,res)=> {
     try{
         const {skills, targetRole} = req.body;
 
+        if(!skills || !targetRole) {
+            return res.status(400).json({
+                success: false,
+                message: "Skills and Target Role are required.",
+            });
+        }
         const result = await analyzeSkillGap(skills, targetRole);
+
         res.json({success:true, result,});
+
     } catch (error) {
+
         console.error(error);
+        
         res.status(500).json({
             success: false,
             message: "Skill Gap Analsis Failed",
@@ -19,13 +29,5 @@ router.post("/analyze", protect, async(req,res)=> {
     }
 });
 
-const { skills, targetRole } =req.body;
-
-if(!skills || !targetRole) {
-    return res.status(400).json({
-        success: false,
-        message: "Skills and Target Role are required.",
-    });
-}
 
 export default router;

@@ -39,8 +39,8 @@ export async function askCareerCoach(question, history = []) {
         },
 
         ...history.slice(-10).map(msg => ({
-            role: msg.sender === "user" ? "user" : "assistant",
-            content: msg.text
+            role: msg.role || (msg.sender === "user" ? "user" : "assistant"),
+            content: msg.content || msg.text
         })),
         {
             role:"user",

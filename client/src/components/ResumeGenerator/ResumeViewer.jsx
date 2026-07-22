@@ -1,4 +1,4 @@
-import ProfessionalTemplate from "./ResumeTemplate/ProfessionalTemplate";
+import ProfessionalTemplate from "./ResumeTemplates/ProfessionalTemplate";
 import ModernTemplate from "./ResumeTemplates/ModernTemplate";
 import CorporateTemplate from "./ResumeTemplates/CorporateTemplate";
 import DeveloperTemplate from "./ResumeTemplates/DeveloperTemplate";
