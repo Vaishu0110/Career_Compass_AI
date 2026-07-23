@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", protect, async (req, res) => {
 
-    const history = await Interview.fing({
+    const history = await Interview.find({
         user:req.user._id
     }).sort({
         createdAt:-1
