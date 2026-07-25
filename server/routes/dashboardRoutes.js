@@ -2,7 +2,10 @@ import express, { application } from "express";
 import User from "../models/User.js";
 import Job from "../models/Job.js";
 import Resume from "../models/Resume.js"
-import { protect } from "../middleware/authmiddleware.js";
+import { protect } from "../middleware/authMiddleware.js";
+import Interview from "../models/Interview.js";
+import SkillGap from "../models/SkillGap.js";
+import LearningRoadmap from "../models/LearningRoadmap.js";
 
 const router = express.Router();
 
@@ -22,11 +25,36 @@ router.get("/", protect, async (req, res) => {
 
         const applied = jobs.filter(job => job.status === "Applied").length;
         
-        const interview= jobs.filter(job => job.status ==="Interview").length;
+        const interviewCount= jobs.filter(job => job.status ==="Interview").length;
 
         const offer = jobs.filter(job => job.status ==="Offer").length;
 
         const rejected = jobs.filter(job => job.status === "Rejected").length;
+
+        const latestInterview = await Interview.findOne({
+            user:req.user._id,
+        }).sort({ createdAt: -1 });
+
+        const latestRoadmap = await LearningRoadmap.findOne({
+            user: req.user._id,
+        }).sort({ createdAt: -1});
+
+        const latestSkillGap = await SkillGap.findOne({
+            user: req.user._id,
+        }).sort({ createdAt: -1});
+
+        let learningProgress = 0;
+
+        if(!latestRoadmap?.roadmap?.length) {
+
+            const total = latestRoadmap.roadmap.length;
+
+            const completed = latestRoadmap.roadmap.filter(step => step.completed).length;
+
+            learningProgress = Math.round((completed / total) * 100);
+
+            const missingSkills = latestSkillGap?.missingSkills?.length || 0;
+        }
 
         res.json({
             name: user.name,
@@ -41,12 +69,15 @@ router.get("/", protect, async (req, res) => {
 
             applications: jobs.length,
 
-            interview: interview,
+            interviewScore:latestInterview?.overallScore || 0,
+
+            learningProgress,
+
+            skillGap: missingSkills,
+
+            interview: interviewCount,
             
             analysesCount:user.analysisCount,
-
-            learningProgress: 45,
-            skillGap: 6,
 
             applied,
             interview,

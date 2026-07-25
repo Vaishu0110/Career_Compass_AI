@@ -11,18 +11,21 @@ const generatedResumeSchema = new mongoose.Schema(
         fullName:String,
         targetRole:String,
 
-        template:String,
+        template:{
+            fullName: String,
+            targetRole:String,
+            default:"modern",
+        },
 
         resume:{
             type: Object,
             required:true,
         },
-
-        createdAt:{
-            type:Date,
-            default:Date.now,
-        },
-    });
+    },
+    {
+        timestamp: true,
+    }     
+);
 
 export default mongoose.model(
     "GeneratedResume", generatedResumeSchema

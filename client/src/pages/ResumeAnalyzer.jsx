@@ -6,32 +6,97 @@ export default function ResumeAnalyzer(){
     const [file , setFile] = useState(null);
     const [analysis, setAnalysis] = useState(null);
 
-        const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    if (!file) {
-        alert("Please select a file");
-        return;
-    }
+        if (!file) {
+            alert("Please select a file");
+            return;
+        }
 
-    const formData = new FormData();
+        const formData = new FormData();
 
-    formData.append("resume", file);
+        formData.append("resume", file);
 
-    try {
-            const res = await axiosInstance.post(
-            "/resume/upload",
-            formData
-        );
+        try {
+                const res = await axiosInstance.post(
+                "/resume/upload",
+                formData
+            );
 
-        setAnalysis(res.data.analysis);
-        alert("Resume uploaded successfully!");
-        console.log(res.data);
-        
-      } catch (error) {
-        console.error(error);
-     }
+            setAnalysis(res.data.analysis);
+            alert("Resume uploaded successfully!");
+            console.log(res.data);
+            
+        } catch (error) {
+            console.error(error);
+        }
     };
+
+    const downloadReport = async () => {
+        try{
+
+            const response = await axiosInstance.get(
+                "/resume/download-report",
+                {
+                    responseType: "blob",
+                }
+            );
+
+            const url = window.URL.createObjectURL(
+                new Blob([response.data])
+            );
+
+            const link = document.createElement("a");
+
+            link.href = url;
+
+            link.setAttribute(
+                "download",
+                "Resume-Analysis.pdf"
+            );
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Failed to download report.");
+        }
+    };
+
+    const downloadPDF = async () => {
+        try{
+            const res = await axiosInstance.get(
+                "/resume/download-report/pdf",
+                {
+                    responseType: "blob",
+                }
+            );
+
+            const url = window.URL.createObjectURL(
+                new Blob([res.data])
+            );
+
+            const link = document.createElement("a");
+
+            link.href = url;
+            link.download = "Resume-Analysis.pdf";
+
+            link.click();
+
+            window.URL.revokeObjectURL(url);
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return(
         <div className="p-6">
             <h1 className="text-3xl font-bold mb-6">
@@ -53,7 +118,7 @@ export default function ResumeAnalyzer(){
                             </h2>
 
                             <p className="text-5xl font-bold mt-3">
-                                {analysis.resumeSxore}
+                                {analysis.resumeScore}
                             </p>
                         </div>
 
@@ -93,7 +158,7 @@ export default function ResumeAnalyzer(){
                             Missing Skills
                         </h2>
                         <div className="flex flex-wrap gap-2">
-                            {analysis.missingSkills?.map((skills) => (
+                            {analysis.missingSkills?.map((skill) => (
                                 <span key={skill} className="bg-red-100 text-red-700 px-3 py-1 rounded-full">
                                     {skill}
                                 </span>
@@ -141,6 +206,14 @@ export default function ResumeAnalyzer(){
                             {analysis.summary}
                         </p>
                     </div>
+
+                    <button onClick={downloadReport} className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700">
+                        Download DOCX Report
+                    </button>
+
+                    <button onClick={downloadPDF} className="mt-4 w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700">
+                        Download PDF Report
+                    </button>
                 </div>
             )}
         </div>

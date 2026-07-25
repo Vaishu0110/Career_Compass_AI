@@ -147,3 +147,5 @@ resume generator need refinement right now it return plane text
 UI/UX of whole website
 gmail otp option banana hai
 sign in with google ka option bhi
+
+server assets logo.png have to make

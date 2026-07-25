@@ -17,6 +17,15 @@ export default function Dashboard(){
             console.error(error);
         }
     };
+
+    if(!stats) {
+
+        return(
+            <div className="flex justify-center items-center h-screen">
+                Loading Dashboard...
+            </div>
+        )
+    }
     return (
         <div className="p-8">
             <div className="mb-8 text-center">
@@ -34,8 +43,8 @@ export default function Dashboard(){
             </div>
 
             {/* Dashboard Stats */}
-            {stats &&(
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-10">
+            {(
+                <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-6 mb-10">
                     <div className="bg-blue-600 text-white rounded-lg p-5 shadow">
                         <h2 className="text-lg">
                             Resume Score
@@ -80,10 +89,40 @@ export default function Dashboard(){
                             {stats.interview}
                         </p>
                     </div>
+
+                    <div className="bg-pink-600 text-white rounded-lg p-5 shadow">
+                        <h2 className="text-lg">
+                            Interview Score
+                        </h2>
+
+                        <p className="text-4xl font-bold mt-2">
+                            {stats.interviewScore || 0 }
+                        </p>
+                    </div>
+
+                    <div className="bg-cyan-600 text-white rounded-lg p-5 shadow">
+                        <h2 className="text-lg">
+                            Learning Progress
+                        </h2>
+
+                        <p className="text-4xl font-bold mt-2">
+                            {stats.learningProgress}%
+                        </p>
+                    </div>
+
+                    <div className="bg-red-600 text-white rounded-lg p-5 shadow">
+                        <h2 className="text-lg">
+                            Missing Skills
+                        </h2>
+
+                        <p className="text-4xl font-bold mt-2">
+                            {stats.skillGap}
+                        </p>
+                    </div>
                 </div>
             )}
 
-            {stats && (
+            {(
                 <div className="bg-white rounded-xl shadow p-6 mb-10">
                     <h2 className="text-2xl font-bold mb-4">
                         Career Summary
@@ -104,6 +143,31 @@ export default function Dashboard(){
                     </div>
                 </div>
             )}
+
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl text-white p-8 mb-10">
+
+                <h2 className="text-3xl font-bold mb-2">
+                    Quick Actions
+                </h2>
+
+                <p className="mb-6">
+                    Continoe improving your career profile.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                    <Link to="/resume-analyzer" className="bg-white text-blue-700 px-5 py-3 rounded-lg font-semibold">
+                        Analyze Resume
+                    </Link>
+
+                    <Link to="/job-recommendations" className="bg-white text-blue-700 px-5 py-3 rounded-lg font-semibold">
+                        Find Jobs
+                    </Link>
+
+                    <Link to="/career-coach" className="bg-white text-blue-700 px-5 py-3 rounded-lg font-semibold">
+                        Ask AI Coach
+                    </Link>
+                </div>
+            </div>
 
             {/* Feature Cards */}
             <div className="grid md:grid-cols-5 gap-6">
@@ -242,7 +306,7 @@ export default function Dashboard(){
                     </div>
                 </Link>
             </div>
-            {stats && <DashboardCharts stats={stats} />}
+            {<DashboardCharts stats={stats} />}
         </div>
     );
 }

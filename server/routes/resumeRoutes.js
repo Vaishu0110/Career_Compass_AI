@@ -6,6 +6,8 @@ import { protect } from "../middleware/authMiddleware.js";
 import { extractTextFromPDF } from "../services/parsers/resumeParser.js";
 import { analyzeResumeWithAI } from "../services/ai/resumeAI.js";
 import fs from "fs";
+import { generateResumePDF } from "../services/pdf/resumeReport.js";
+import { generateResumePDFKit } from "../utils/generateResumePDFKit.js";
 
 const router = express.Router();
 
@@ -134,6 +136,73 @@ router.delete("/:id", protect, async (req, res) => {
   res.json({success:true,});
   } catch (error) {
     res.status(500).json({ message: error.message,});
+  }
+});
+
+router.get("/download-report", protect, async (req, res) => {
+  try{
+
+    const user = await User.findById(req.user._id);
+
+    const latestResume = await Resume.findOne({
+      user: req.user._id,
+    }).sort({
+      createdAt: -1,
+    });
+
+    if(!latestResume) {
+      return res.status(404).json({
+        message: "No resume analysis found.",
+      });
+    }
+
+    generateResumePDF(
+      res,
+      latestResume.analysis,
+      user
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    })
+  }
+});
+
+router.get("/download-report/pdf", protect, async (req, res) => {
+  try{
+
+    const user = await User.findById(req.user._id);
+
+    const latestResume = await Resume.findOne({
+      user: req.user._id,
+    }).sort({
+      createdAt: -1,
+    });
+
+    if(!latestResume) {
+      return res.status(404).json({
+        message: "No resume analysi found.",
+      });
+    }
+
+    await generateResumePDFKit(
+      res,
+      latestResume.analysis,
+      user
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+
   }
 });
 

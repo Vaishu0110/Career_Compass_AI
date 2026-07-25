@@ -21,7 +21,7 @@ const learningRoadmapSchema = new mongoose.Schema({
 
     progress: {
         type: Number,
-        default:  Date.now,
+        default: 0,
     },
 });
 
