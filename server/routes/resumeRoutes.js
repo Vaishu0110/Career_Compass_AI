@@ -7,7 +7,7 @@ import { extractTextFromPDF } from "../services/parsers/resumeParser.js";
 import { analyzeResumeWithAI } from "../services/ai/resumeAI.js";
 import fs from "fs";
 import { generateResumePDF } from "../services/pdf/resumeReport.js";
-import { generateResumePDFKit } from "../utils/generateResumePDFKit.js";
+import { generateResumePDFKit } from "../services/utils/generateResumePDFKit.js";
 
 const router = express.Router();
 

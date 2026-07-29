@@ -13,7 +13,8 @@ const generatedResumeSchema = new mongoose.Schema(
 
         template:{
             fullName: String,
-            targetRole:String,
+            targetRole: String,
+            type: String,
             default:"modern",
         },
 

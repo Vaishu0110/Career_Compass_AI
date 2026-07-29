@@ -10,7 +10,7 @@ router.post("/save", protect, async (req, res) => {
             user:req.user._id,
             fullName: req.body.fullName,
             targetRole: req.body.targetRole,
-            template: req.body.template,
+            template: req.body.template || "modern",
             resume:req.body.resume,
 
         });
@@ -60,6 +60,66 @@ router.delete("/:id", protect, async (req, res) => {
         res.json({
             success:true,
         });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+});
+
+router.get("/:id", protect, async (req, res) => {
+    try{
+
+        const resume = await GeneratedResume.findOne({
+            _id: req.params.id,
+            user: req.user._id,
+        });
+
+        if(!resume) {
+            return res.status(404).json({
+                message: "Resume not found",
+            });
+        }
+
+        res.json(resume);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+});
+
+router.put("/:id", protect, async (req, res) => {
+    try{
+
+        const resume = await GeneratedResume.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                user: req.user._id,
+            },
+            {
+                fullName: req.body.fullName,
+                targetRole: req.body.targetRole,
+                template: req.body.template,
+                resume: req.body.resume,
+            },
+            {
+                new: true,
+            }
+        );
+
+        if(!resume) {
+            return res.status(404).json({
+                message: "Resume not found",
+            });
+        }
+
+        res.json({
+            success: true,
+            resume,
+        });
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
