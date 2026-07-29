@@ -6,6 +6,12 @@ import DeveloperTemplate from "../components/ResumeGenerator/ResumeTemplates/Dev
 import CorporateTemplate from "../components/ResumeGenerator/ResumeTemplates/CorporateTemplate";
 import ExecutiveTemplate from "../components/ResumeGenerator/ResumeTemplates/ExecutiveTemplate";
 import ProfessionalTemplate from "../component/ResumeGenerator/ResumeTemplate/ProfessionalTemplate";
+import TemplateCard from "../components/ResumeGenerator/TemplateCard";
+import modernImg from "../assets/templates/modern.png";
+import studentImg from "../assets/templates/student.png";
+import developerImg from "../assets/templates/developer.png";
+import executiveImg from "../assets/templates/executive.png";
+import professionalImg from "../assets/templates/professional.png";
 
 export default function ResumeBuilder() { 
 
@@ -63,33 +69,27 @@ export default function ResumeBuilder() {
             <div className="space-y-4">
 
 
-                <div className="flex gap-3 mb-5">
+                <div className="grid grid-cols-3 gap-4 mb-8">
 
-                    <button onClick={() => setTemplate("modern")} className="bg-blue-600 text-white px-4 py-2 rounded">
-                        Modern
-                    </button>
+                    <TemplateCard title="Modern" image={modernImg} 
+                    selected={template === "moern" } onClick={() => setTemplate("modern")} />
 
-                    <button onClick={() => setTemplate("professional")} className="bg-gray-700 text-white px-4 py-2 rounded">
-                        Professional
-                    </button>
+                    <TemplateCard title="Professional" image={professionalImg} 
+                    selected={template === "professional" } onClick={() => setTemplate("professional")} />
 
-                    <button onClick={() => setTemplate("student")} className="bg-green-600 text-white px-4 py-2 rounded">
-                        Student
-                    </button>
+                    <TemplateCard title="Student" image={studentImg} 
+                    selected={template === "student" } onClick={() => setTemplate("student")}/>
 
-                    <button onClick={() => setTemplate("developer")} className="bg-purple-600 text-white px-4 py-2 rounded">
-                        Developer
-                    </button>
+                    <TemplateCard title="Developer" image={developerImg}
+                    selected={template === "developer"} onClick={() => setTemplate("developer")} />
 
-                    <button onClick={() => setTemplate("corporate")} className="bg-orange-600 text-white px-4 py-2 rounded">
-                        Corporate
-                    </button>
+                    <TemplateCard title="Corporate" image={corporateImg}
+                    selected={template === "corporate"} onClick={() => setTemplate("corporate")} />
 
-                    <button onClick={() => setTemplate("executive")} className="bg-pink-600 text-white px-4 py-2 rounded">
-                        Executive
-                    </button>
-
-                </div>
+                    <TemplateCard title="Executive" image={executiveImg}
+                    selected={template === "executive"} onClick={() => setTemplate("executive")} />
+                    
+                </div> 
 
                 <h1 className="text-3xl font-bold">
                     Resume Builder
