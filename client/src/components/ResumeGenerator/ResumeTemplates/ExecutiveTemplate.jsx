@@ -1,7 +1,7 @@
 export default function ExecutiveTemplate({ resume }) {
     const skills = (resume.skills || "").spit(",").filter(skill => skill.trim());
     return (
-        <div className="bg-white shadow-2xl max-w-5xl mx-auto border">
+        <div className="bg-white p-12 min-h-[1123px]">
            
            <div className="bg-gray-900 text-white p-10">
 

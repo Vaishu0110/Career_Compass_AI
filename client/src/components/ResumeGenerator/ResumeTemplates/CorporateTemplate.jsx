@@ -1,7 +1,7 @@
 export default function CorporateTemplate({ resume }) {
     const skill = (resume.skills || "").split(",").filter(skill => skill.trim());
     return (
-        <div className="bg-white shadow-xl max-w-5xl mx-auto border">
+        <div className="bg-white p-12 min-h-[1123px]">
             
             <div clasName="border-b-4 border-blue-800 p-8">
 
@@ -86,7 +86,7 @@ export default function CorporateTemplate({ resume }) {
                         <p className="mt-4 whitespace-pre-wrap leading-8">
                             {resume.projects}
                         </p>
-                        
+
                     </section>
                 </div>
             </div>

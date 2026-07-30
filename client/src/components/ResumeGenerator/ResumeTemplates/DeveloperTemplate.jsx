@@ -1,7 +1,7 @@
 export default function DeveloperTemplate({ resume }) {
     const skill = (resume.skills || "").split(",").filter(skill => skill.trim());
     return (
-        <div className="bg-white shadow-xl rounded-xl overflow-hidden max-w-5xl mx-auto border">
+        <div className="bg-white p-12 min-h-[1123px]">
 
             <div className="bg-gray-900 text-white p-8">
 
@@ -91,7 +91,7 @@ export default function DeveloperTemplate({ resume }) {
                         <p className="text-2xl font-bold border-b-2 border-green-500 pb-2">
                             {resume.education}
                         </p>
-                        
+
                     </section>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 export default function ModernTemplate({ resume }) {
     return (
         <>
-            <div className="bg-white shadow-xl rounded-xl p-10 max-w-4xl mx-auto border">
+            <div className="bg-white p-12 min-h-[1123px]">
 
                 <h1 className="text-5xl font-extrabold text-blue-700">
                     {resume.fullName || "Your Name"}

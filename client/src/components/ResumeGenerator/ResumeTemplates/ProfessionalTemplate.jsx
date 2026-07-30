@@ -74,7 +74,7 @@ export default function ProfessionalTemplate({
 
 
     return (
-        <div className="bg-white shadow-2xl rounded-lg overflow-hidden min-h-[1050px] border">
+        <div className="bg-white p-12 min-h-[1123px]">
 
             <div className="bg-blue-700 text-white px-10 py-8 flex justify-between items-center">
 

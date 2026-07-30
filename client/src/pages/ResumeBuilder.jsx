@@ -5,13 +5,14 @@ import StudentTemplate from "../components/ResumeGenerator/ResumeTemplates/Stude
 import DeveloperTemplate from "../components/ResumeGenerator/ResumeTemplates/DeveloperTemplate";
 import CorporateTemplate from "../components/ResumeGenerator/ResumeTemplates/CorporateTemplate";
 import ExecutiveTemplate from "../components/ResumeGenerator/ResumeTemplates/ExecutiveTemplate";
-import ProfessionalTemplate from "../component/ResumeGenerator/ResumeTemplate/ProfessionalTemplate";
+import ProfessionalTemplate from "../components/ResumeGenerator/ResumeTemplates/ProfessionalTemplate";
 import TemplateCard from "../components/ResumeGenerator/TemplateCard";
 import modernImg from "../assets/templates/modern.png";
 import studentImg from "../assets/templates/student.png";
 import developerImg from "../assets/templates/developer.png";
 import executiveImg from "../assets/templates/executive.png";
 import professionalImg from "../assets/templates/professional.png";
+import corporateImg from "../assets/templates/corporate.png";
 
 export default function ResumeBuilder() { 
 
@@ -72,7 +73,7 @@ export default function ResumeBuilder() {
                 <div className="grid grid-cols-3 gap-4 mb-8">
 
                     <TemplateCard title="Modern" image={modernImg} 
-                    selected={template === "moern" } onClick={() => setTemplate("modern")} />
+                    selected={template === "modern" } onClick={() => setTemplate("modern")} />
 
                     <TemplateCard title="Professional" image={professionalImg} 
                     selected={template === "professional" } onClick={() => setTemplate("professional")} />
@@ -88,7 +89,7 @@ export default function ResumeBuilder() {
 
                     <TemplateCard title="Executive" image={executiveImg}
                     selected={template === "executive"} onClick={() => setTemplate("executive")} />
-                    
+
                 </div> 
 
                 <h1 className="text-3xl font-bold">
@@ -128,27 +129,39 @@ export default function ResumeBuilder() {
 
             </div>
 
-            <div>
+            <div className="flex justify-center bg-gray-200 p-8 rounded-xl overflow-auto">
 
-                {template === "modern" && (
-                    <ModernTemplate resume={resume} />
-                )}
+                <div className="bg-white shadow-2xl" style={{
+                    width: "794px",
+                    minHeight: "1123px",
+                    padding: "40px",
+                }} >
 
-                {template === "student" && (
-                    <StudentTemplate resume={resume} />
-                )}
+                    {template === "modern" && (
+                        <ModernTemplate resume={resume} />
+                    )}
 
-                {template === "developer" && (
-                    <DeveloperTemplate resume={resume} />
-                )}
+                    {template === "student" && (
+                        <StudentTemplate resume={resume} />
+                    )}
 
-                {template === "corporate" && (
-                    <CorporateTemplate resume={resume} />
-                )}
+                    {template === "developer" && (
+                        <DeveloperTemplate resume={resume} />
+                    )}
 
-                {template === "executive" && (
-                    <ExecutiveTemplate resume={resume} />
-                )}
+                    {template === "corporate" && (
+                        <CorporateTemplate resume={resume} />
+                    )}
+
+                    {template === "executive" && (
+                        <ExecutiveTemplate resume={resume} />
+                    )}
+
+                    {template === "professional" && (
+                        <ProfessionalTemplate resume={resume} />
+                    )}
+                    
+                </div>
                 
             </div>
 
