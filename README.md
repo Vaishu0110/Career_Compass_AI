@@ -132,4 +132,36 @@ AI & Machine Learning:
 OpenAI/ Gemini APIs
 
 
-HOW TO RUN LOCALLY:
+INSTRUCTIONS TO RUN:
+
+// Prefer using Google Chrome
+
+Use Signup to create new user
+Complete the profile setup
+Login using Signup details
+
+Dashboard will open
+Start by analysing a resume.
+followed by Ats Analyzer.
+
+Use the skill gap feature.
+Use the learning roadmap feature.
+
+Take the interview simulator to check your progress.
+// Use Google Chrome, Brave does not support voice recoginition.
+
+Get your answers from career coach feature.
+
+Then see out the job recommendations feature.
+
+Followed by job tracker to keep record of applied jobs.
+
+You can also use resume builder to generate and save new AI-powered resumes.
+
+
+AI Usage:
+AI was used in this project for:
+-Purpose of dubbing.
+-Refinement of Prompts.
+-Solving project related queries.
+
