@@ -10,7 +10,7 @@ export default function ResumeHistory() {
     const [activeTab, setActiveTab] = useState("uploaded");
     const [generatedResumes, setGeneratedResumes] = useState([]);
 
-    const printRef = useRef();
+    const printRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ export default function ResumeHistory() {
 
     const fetchResumes = async () => {
         try {
-            const res = await axiosInstance.get("/resume-history");
+            const res = await axiosInstance.get("/resume");
             setResumes(res.data);
         } catch (error) {
             console.error(error);
@@ -39,6 +39,9 @@ export default function ResumeHistory() {
     };
 
     const deleteResume = async (id) => {
+        const confirmed = window.confirm("Delete this uploaded resume?");
+        if (!confirmed) return;
+
         try {
             await axiosInstance.delete(`/resume/${id}`);
 
@@ -49,6 +52,9 @@ export default function ResumeHistory() {
     };
 
     const deleteGeneratedResume = async (id) => {
+        const confirmed = window.confirm("Delete this generated resume?");
+        if (!confirmed) return;
+
         try {
             await axiosInstance.delete(`/generated-resume/${id}`);
 
@@ -77,7 +83,7 @@ export default function ResumeHistory() {
             
             link.href = url;
 
-            link.setAttribute("download", fileName);
+            link.setAttribute("download", fileName || "Resume.pdf");
 
             document.body.appendChild(link);
             link.click();
@@ -90,9 +96,11 @@ export default function ResumeHistory() {
     };
 
     const handleDownloadGenerated = useReactToPrint({
-        content: () => printRef.current,
-        documentTitle: "Resume",
+        contentRef: () => printRef.current,
+        documentTitle: "Career-Compass-Resume",
     });
+
+    const downloadGeneratedResume = (resume) => {setSelectedResume(resume); setTimeout(() => { handleDownloadGenerated();}, 300);}
 
     return ( 
         <div className="max-w-6xl mx-auto p-8">
@@ -186,17 +194,12 @@ export default function ResumeHistory() {
                                         View
                                     </button>
 
-                                    <button onClick={() => navigate("/resume-generator", {
-                                        state: {
-                                            resume,
-                                        },
-                                    })} className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+                                    <button onClick={() => navigate("/resume-generator", { state: {resume} })}  className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
                                         Edit
                                     </button>
-
-                                    <button onClick={() => {
-                                        setSelectedResume(resume); setTimeout(handleDownloadGenerated, 500);
-                                    }} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+ 
+                                   <button onClick={() => downloadGeneratedResume(resume)}
+                                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                                         Download
                                     </button>
 
@@ -279,26 +282,24 @@ export default function ResumeHistory() {
                             </>
                         )}
 
-                    </div>    
+                        <div className="mt-6 flex justify-end">
+                            <button onClick={() => setSelectedResume(null)} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                                Close
+                            </button>
+                        </div>
+
+                    </div>  
+
                 </div>
             )}
 
-            <div style={{
-                position: "absolute",left: "-9999px", top:0,
-            }}
-            >
+            <div style={{ position: "absolute", left: "-9999px", top: 0, }} >
                 <div ref={printRef}>
                     {selectedResume?.resume && (
                         <ResumeViewer resume={selectedResume} />
                     )}
                 </div>
             </div>
-            <div className="mt-6 flex justify-end">
-                <button onClick={() => setSelectedResume(null)} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-                    Close
-                </button>
-            </div>
         </div>
-
     );
 }

@@ -6,14 +6,13 @@ export default function TemplateCard({
 }) {
     return (
         <div onClick={onClick} className={`cursor-pointer rounded-xl overflow-hidden border-4 transition-all duration-300
-            ${ selected ? "border-blue-600 shadow-xl scale-105" : "border-gray-200 hover:border-blue-300 hover:shadow-lg" }
+            ${ selected ? "border-4 border-blue-600 shadow-xl scale-105" : "border hover:shadow-lg hover:scale-105" }
             `}>
                 <img src={image} alt={title} className="h-48 w-full object-cover" />
-                <div className="p-4 bg-white">
-
-                    <h3 className="font-bold text-lg">
-                        {title}
-                    </h3>
+                <div className={`text-center py-3 font-semibold${
+                    selected ? "bg-blue-600 text-white" : "bg-white"
+                }`}>
+                    {title}
                 </div>
         </div>
     );
