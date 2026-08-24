@@ -54,46 +54,73 @@ export default function Login() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-900">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-gray-800 p-8 rounded-lg w-96"
-      >
-        <h1 className="text-3xl text-white mb-6 text-center">
-          LOGIN
-        </h1>
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full p-3 mb-4 rounded"
-          required
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full p-3 mb-4 rounded"
-          required
-        />
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded"
-        >
-          LOGIN
-        </button>
-        <p className="text-center text-white mt-4">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-400 hover:underline">Sign Up</Link>
-        </p>
-      </form>
-    </div>
-  );
+        <div className="min-h-screen flex items-center justify-center bg-slate-950 p-6 relative overflow-hidden">
+            
+            {/* AMBIENT BACKGROUND GLOW */}
+            <div className="absolute w-96 h-96 bg-teal-500/10 rounded-full blur-3xl -top-20 -left-20 pointer-events-none" />
+            <div className="absolute w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -bottom-20 -right-20 pointer-events-none" />
+            {/* AUTH CARD */}
+            <div className="bg-slate-900/90 border border-teal-500/30 rounded-3xl p-8 md:p-10 shadow-2xl backdrop-blur-xl w-full max-w-md space-y-8 relative z-10">
+                
+                {/* BRAND HEADER */}
+                <div className="text-center space-y-3">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-white font-black text-2xl shadow-lg mx-auto">
+                        🧭
+                    </div>
+                    <h1 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-teal-100 via-emerald-200 to-teal-50 bg-clip-text text-transparent">
+                        Career Compass AI
+                    </h1>
+                    <p className="text-xs text-gray-400 font-medium">
+                        Welcome back! Sign in to access your dashboard.
+                    </p>
+                </div>
+                {/* FORM */}
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
+                            Email Address *
+                        </label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="name@example.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
+                            Password *
+                        </label>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="••••••••"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base mt-2"
+                    >
+                        Sign In to Career Compass
+                    </button>
+                </form>
+                {/* FOOTER */}
+                <div className="text-center pt-2 border-t border-slate-800">
+                    <p className="text-xs text-gray-400">
+                        Don't have an account?{" "}
+                        <Link to="/signup" className="text-emerald-400 font-bold hover:underline">
+                            Create Account
+                        </Link>
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
 }

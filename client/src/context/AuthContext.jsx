@@ -12,6 +12,7 @@ export const AuthProvider = ({children})=> {
 
         if(!token) {
             setLoading(false);
+            return;
         }
         try{
             const res=await axiosInstance.get("/auth/me",{
