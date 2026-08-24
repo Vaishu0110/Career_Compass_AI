@@ -25,10 +25,15 @@ dotenv.config();
 
 const app = express();
 
-const uploadsDir = path.join(process.cwd(), "uploads");
+const uploadsDir = path.join("/tmp", "uploads");
 const profileUploadsDir = path.join(uploadsDir, "profile");
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-if (!fs.existsSync(profileUploadsDir)) fs.mkdirSync(profileUploadsDir, { recursive: true });
+
+try {
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  if (!fs.existsSync(profileUploadsDir)) fs.mkdirSync(profileUploadsDir, { recursive: true });
+} catch (err) {
+  console.warn("Vercel read-only filesystem notice:", err.message);
+}
 
 const allowedOrigins = [
   "http://localhost:5173",
