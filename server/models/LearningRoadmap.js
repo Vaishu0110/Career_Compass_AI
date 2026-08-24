@@ -1,6 +1,8 @@
+// server/models/LearningRoadmap.js
 import mongoose from "mongoose";
 
-const learningRoadmapSchema = new mongoose.Schema({
+const learningRoadmapSchema = new mongoose.Schema(
+    {
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
@@ -13,13 +15,13 @@ const learningRoadmapSchema = new mongoose.Schema({
         },
 
         currentSkills: {
-            type: String,
-            required: true,
+            type: mongoose.Schema.Types.Mixed,
+            default: "None",
         },
 
         missingSkills: {
             type: [String],
-            required: true,
+            default: [],
         },
 
         roadmap: [
@@ -55,7 +57,7 @@ const learningRoadmapSchema = new mongoose.Schema({
             type: Number,
             default: 0,
             min: 0,
-            max:100,
+            max: 100,
         },
     },
     {
@@ -63,7 +65,4 @@ const learningRoadmapSchema = new mongoose.Schema({
     }
 );
 
-export default mongoose.model(
-    "LearningRoadmap",
-    learningRoadmapSchema
-);
+export default mongoose.model("LearningRoadmap", learningRoadmapSchema);
