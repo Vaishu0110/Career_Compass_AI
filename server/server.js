@@ -104,5 +104,8 @@ if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => console.log(`Server running on Port ${PORT}`));
 }
 
-// ✅ Export app for Vercel Serverless environment
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", message: "Server is running on Vercel!" });
+});
+
 export default app;
