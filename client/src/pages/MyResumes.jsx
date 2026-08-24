@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 export default function MyResumes() {
     const [resumes, setResumes] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchResumes();
@@ -15,6 +18,26 @@ export default function MyResumes() {
             setResumes(res.data);
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const deleteResume = async (id) => {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this resume?"
+        );
+
+        if(!confirmed) return;
+
+        try{
+            await axiosInstance.delete(`/generated-resume/${id}`);
+
+            setResumes((prev) =>
+                prev.filter((resume) => resume._id !== id)
+            );
+
+        } catch (error) {
+            console.error(error);
+            alert("Failed to delete resume");
         }
     };
 
@@ -40,6 +63,19 @@ export default function MyResumes() {
                             <p className="mt-2">
                                 {resume.template}
                             </p>
+
+                            <div className="flex gap-3 mt-4">
+
+                                <button onClick={() => deleteResume(resume._id)} className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+                                    Delete
+                                </button>
+
+                                <button onClick={() => navigate("/resume-generator", {state : {resume} })} className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                                    Edit
+                                </button>
+
+                            </div>
+
                         </div>
                     ))}
                 </div>
