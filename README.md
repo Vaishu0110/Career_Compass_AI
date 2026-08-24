@@ -165,3 +165,27 @@ AI was used in this project for:
 -Refinement of Prompts.
 -Solving project related queries.
 
+HOW TO RUN LOCALLY:
+
+Create .env file inside srever/ directory with this structure,
+PORT=5000
+MONGO_URI=XXXX
+JWT_SECRET=XXXX
+OPENROUTER_API_KEY=XXXX
+CLIENT_URL=http://localhost:5173
+
+Start backend server:
+cd server
+npm install
+npm start
+
+Your expected output should be:
+Server running on Port 5000
+MongoDB Connected
+
+Start frontend server:
+cd client
+npm install
+npm run dev
+
+Open you browser with the link provided in client terminal
