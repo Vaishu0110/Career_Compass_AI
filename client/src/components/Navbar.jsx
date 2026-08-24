@@ -1,61 +1,90 @@
-import { Link } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
-import { useContext } from "react"
-import  { AuthContext } from "../context/AuthContext";
+// client/src/components/Navbar.jsx
+import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-export default function Navbar(){
+export default function Navbar() {
     const { user } = useContext(AuthContext);
+
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         window.location.href = "/login";
     };
-    return(
-        <nav className="bg-gray-900 dark:bg-gray-950 text-white p-4 flex justify-between items-center shadow-lg">
-            <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
-                <h1 className="text-2xl font-bold">
-                    Career Compass AI
-                </h1>
-                <div className="flex items-center gap-5 text-sm font-medium">
-                    <Link to="/" className="hover:text-blue-400 transition">
-                        Dashboard
-                    </Link>
-                    <Link to="/resume-analyzer" className="hover:text-blue-400 transition">
-                        Resume 
-                    </Link>
-                    <Link to="/ats-checker" className="hover:text-blue-400 transition">
-                        ATS
-                    </Link>
-                    <Link to="/skill-gap" className="hover:text-blue-400 transition">
-                        Skill Gap
-                    </Link>
-                    <Link to="/learning-roadmap" className="hover:text-blue-400 transition">
-                        Roadmap
-                    </Link>
-                    <Link to="/interview-simulator" className="hover:text-blue-400 transition">
-                        Interview
-                    </Link>
-                    <Link to="/job-tracker" className="hover:text-blue-400 transition">
-                        Jobs
-                    </Link>
-                    <Link to="/career-coach" className="hover:text-blue-400 transition">
-                        AI Coach
-                    </Link>
-                    <ThemeToggle />
+
+    const navLinks = [
+        { name: "Dashboard", path: "/dashboard" },
+        { name: "Resume Analyzer", path: "/resume-analyzer" },
+        { name: "ATS Checker", path: "/ats-checker" },
+        { name: "Skill Gap", path: "/skill-gap" },
+        { name: "Roadmap", path: "/learning-roadmap" },
+        { name: "Interview", path: "/interview-simulator" },
+        { name: "Jobs", path: "/job-tracker" },
+        { name: "AI Coach", path: "/career-coach" },
+    ];
+
+    return (
+        <header className="sticky top-0 z-50 bg-teal-900/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-teal-700/40 shadow-xl transition-all">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+                
+                {/* BRAND LOGO */}
+                <Link to="/dashboard" className="flex items-center gap-2.5 group">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-white font-extrabold text-xl shadow-md group-hover:scale-105 transition transform">
+                        🧭
+                    </div>
+                    <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-teal-100 via-emerald-200 to-teal-50 bg-clip-text text-transparent tracking-tight">
+                        Career Compass <span className="text-emerald-400 font-bold text-sm ml-1 uppercase px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/40">AI</span>
+                    </span>
+                </Link>
+
+                {/* DYNAMIC NAV LINK WITH INSTANT ACTIVE HIGHLIGHTING */}
+                <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-medium text-teal-100">
+                    {navLinks.map((link) => (
+                        <NavLink
+                            key={link.path}
+                            to={link.path}
+                            className={({ isActive }) =>
+                                `px-3 py-2 rounded-xl transition duration-150 ${
+                                    isActive
+                                        ? "bg-teal-700/80 text-emerald-300 font-bold border border-teal-500/50 shadow-inner"
+                                        : "hover:bg-teal-800/60 hover:text-emerald-200"
+                                }`
+                            }
+                        >
+                            {link.name}
+                        </NavLink>
+                    ))}
+                </nav>
+
+                {/* RIGHT ACTIONS */}
+                <div className="flex items-center gap-3">
+
                     {user && (
-                        <div className="flex items-center gap-2 text-white">
-                            <img src={user?.profilePicture ? `http://localhost:5000/uploads/profile/${user.profilePicture}` : "/default-avatar.png"} alt="Profile" 
-                            className="w-10 h-10 rounded-full object-cover border-2 border-white" />
-                            <span>
+                        <div className="hidden sm:flex items-center gap-2.5 pl-2 border-l border-teal-700/50">
+                            <img
+                                src={
+                                    user?.profilePicture
+                                        ? `${import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || 'http://localhost:5000'}/uploads/profile/${user.profilePicture}`
+                                        : "/default-avatar.png"
+                                }
+                                alt="Profile"
+                                className="w-9 h-9 rounded-full object-cover border-2 border-emerald-400 shadow"
+                            />
+                            <span className="text-xs font-semibold text-teal-100 max-w-[100px] truncate">
                                 {user.name}
                             </span>
                         </div>
                     )}
-                    <button onClick={logout} className="bg-red-500 hover:bg-red-600 px-4py-2 rounded-lg transition">
-                        LOGOUT
+
+                    <button
+                        onClick={logout}
+                        className="bg-red-500/90 hover:bg-red-600 text-white px-3.5 py-1.5 rounded-xl font-bold text-xs uppercase tracking-wider transition shadow hover:shadow-lg active:scale-95"
+                    >
+                        Logout
                     </button>
                 </div>
+
             </div>
-        </nav>
+        </header>
     );
 }
