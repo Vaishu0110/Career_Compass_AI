@@ -1,1 +1,56 @@
 @import "tailwindcss";
+
+:root {
+  --primary: #0d9488;          
+  --primary-hover: #0f766e;
+  --accent: #10b981;           
+  --accent-hover: #059669;
+
+  --bg-main: #022c22;          
+  --bg-card: #064e3b;          
+  --text-main: #f0fdf4;
+  --border-color: #047857;
+}
+
+html, body {
+  background-color: #022c22 !important;
+  color: #f0fdf4 !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* UI Cards in Dark Mode (Excluding Resume Paper Preview) */
+.bg-white:not(#resume-preview):not(#resume-preview *) {
+  background-color: #064e3b !important;
+  color: #f0fdf4 !important;
+  border-color: #047857 !important;
+}
+
+/* Force Dark Mode Inputs & Textareas Outside Resume Preview */
+input:not(#resume-preview *), select:not(#resume-preview *) {
+  background-color: #022c22 !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #a7f3d0 !important;
+}
+
+/* ==========================================================================
+   RESUME PRINTABLE PAPER PREVIEW (PRISTINE WHITE DOCUMENT STYLING)
+   ========================================================================== */
+#resume-preview {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+#resume-preview * {
+  box-sizing: border-box;
+}
+
+#resume-preview textarea {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+}
