@@ -16,7 +16,9 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
+    const cleanEmail = email.toLowerCase().trim();
+
+    const existingUser = await User.findOne({ email: cleanEmail });
 
     if (existingUser) {
       return res.status(400).json({
@@ -28,18 +30,28 @@ router.post("/register", async (req, res) => {
 
     const user = await User.create({
       name,
-      email: email.toLowerCase().trim(),
+      email: cleanEmail,
       password: hashedPassword,
     });
 
+    const jwtSecret = process.env.JWT_SECRET || "career_compass_fallback_jwt_secret_2026";
+    const token = jwt.sign({ id: user._id }, jwtSecret, {
+      expiresIn: "1d",
+    });
+
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
+    console.error("REGISTER ERROR TRACE:", error);
     res.status(500).json({
-      message: error.message,
+      message: error.message || "Registration failed",
+      errorName: error.name,
     });
   }
 });
@@ -59,8 +71,7 @@ router.post("/login", async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid Credentials" });
 
-    const jwtSecret = process.env.JWT_SECRET || "career_compass_fallback_secret_key_2026";
-
+    const jwtSecret = process.env.JWT_SECRET || "career_compass_fallback_jwt_secret_2026";
     const token = jwt.sign({ id: user._id }, jwtSecret, {
       expiresIn: "1d",
     });
@@ -69,8 +80,8 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.error("LOGIN ERROR TRACE:", error);
     res.status(500).json({
-      message: error.message || "Internal Server Error during login",
-      errorType: error.name,
+      message: error.message || "Login failed",
+      errorName: error.name,
     });
   }
 });
