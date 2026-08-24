@@ -49,8 +49,12 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+
+app.use(cors({
+  origin: true,
+  credentials: true,
+}));
+
 
 app.use(cors({
   origin: process.env.CLIENT_URL || "http://localhost:5173",
