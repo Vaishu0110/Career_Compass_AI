@@ -35,9 +35,9 @@ export async function analyzeATS(resumeText, jobDescription){const completion = 
             role:"user",
             content:`
             Resume:
-            $(resumeText)
+            ${resumeText}
             Job Description:
-            $(jobDescription)
+            ${jobDescription}
             Compare ONLY against the job description.
             Identify the most important missing keywords.
             Do NOT generate generic keywords.
@@ -63,7 +63,7 @@ try {
         missingKeywords:[],
         strengths:[],
         weaknesses:[],
-        suggesstions:["AI returned invalid JSON."]
+        suggestions:["AI returned invalid JSON."]
     };
 
 }

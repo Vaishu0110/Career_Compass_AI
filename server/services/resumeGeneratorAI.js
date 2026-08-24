@@ -17,29 +17,41 @@ export async function generateResumeWithAI(data)
                 You are an expert ATS Resume Writer.
                 IMPORTANT RULES:
                 1. NEVER use placeholders.
-                2. NEVER write:
-                [mention technologies]
-                Project Title 1
-                Company Name
-                Month Year
-                yourusername
-                3. Use ONLY information provided by the user.
-                4. If information is missing, intelligently improve existing content.
-                5. Generate professional ATS-friendly content.
-                6. Fix grammar mistakes.
-                7. Generate strong achievement bullets.
+                2. NEVER invent information.
+                3. Preserve the user's personal information exactly:
+                - fullName
+                - email
+                - phone
+                - linkedin
+                - github
+                - portfolio
+                - education 
+                - targetRole
+                4. Improve only the wording of:
+                - summary
+                - skills
+                - projects
+                - experience
+                - achievements
+                5. Use ONLY information provided by the user.
+                6. Generate professional ATS-friendly content.
+                7. Fix grammar mistakes.
                 8. Rewrite projects professionally.
                 9. Return ONLY valid JSON.
                 Return exactly:
                 {
-                "summary":"",
-                "skills":[],
-                "projects":[],
-                "experience":[],
-                "achievements":[],
-                "linkedin":"",
-                "github":"",
-                "portfolio":""
+                "fullName": "",
+                "email": "",
+                "phone": "",
+                "linkedin": "",
+                "github": "",
+                "portfolio": "",
+                "education": "",
+                "summary": "",
+                "skills": "",
+                "projects": [],
+                "experience": [],
+                "achievements": []
                 }
                 `
         },
@@ -58,6 +70,13 @@ export async function generateResumeWithAI(data)
             GitHub:${data.github}
             Portfolio:${data.portfolio}
             Template:${data.template}
+
+            IMPORTANT:
+            Return the user's personal/contact information exactly as provided.
+
+            Improve the professional wording of the summary, skills, projects, experience, and achievements.
+
+            Do not invent missing information.
             `,
         },
     ],
@@ -69,6 +88,12 @@ export async function generateResumeWithAI(data)
     const cleaned = result.replace(/```json/g,"").replace(/```/g,"").trim();
     console.log("CLEANED RESPONSE:");
     console.log(cleaned);
-    
-    return JSON.parse(cleaned);
+    try{
+        return JSON.parse(cleaned);
+    } catch (error) {
+        console.error("Resume AI JSON Parse Error:", error);
+        console.error("AI Response:", cleaned);
+        
+        throw new Error("AI returned invalid resume data.");
+    }
 }

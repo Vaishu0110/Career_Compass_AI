@@ -24,17 +24,12 @@ export async function generateResumePDF(res, analysis, user) {
 
                     new Paragraph({
                         alignment: AlignmentType.CENTER,
-                        children: [
-                            new ImageRun({
-                                data: fs.readFileSync(
-                                    path.join(process.cwd(), "assets/logo.png")
-                                ),
-                                transformation: {
-                                    width: 90,
-                                    height: 90,
-                                },
+                        children: fs.existsSync(path.join(process.cwd(), "assets/logo.png")) ? [
+                            new ImageRum({
+                                data: fs.readFileSync(path.join(process.cwd(), "assets/logo.png")),
+                                transformation: {width: 90, height: 90},
                             }),
-                        ],
+                        ] : [],
                     }),
 
                     new Paragraph({

@@ -12,7 +12,7 @@ export async function analyzeResumeWithAI(resumeText)
 {
     const completion = await client.chat.completions.create({
         model: "google/gemini-2.5-flash",
-        max_tokens: 1000,
+        max_tokens: 2500,
         temperature: 0.3,
         messages:
         [
@@ -27,14 +27,14 @@ export async function analyzeResumeWithAI(resumeText)
                 {
                     "resumeScore": 0,
                     "atsScore": 0,
-                    skills": [],
+                    "skills": [],
                     "missingSkills": [],
                     "strengths": [],
                     "weaknesses": [],
                     "recommendedRoles": [],
                     "roadmap": [],
                     "improvements": [],
-                    "sumary": [],
+                    "summary": ""
                 }
 
                 Rules:
@@ -57,7 +57,7 @@ export async function analyzeResumeWithAI(resumeText)
             },
             {
                 role: "user",
-                content: resumeText,
+                content: resumeText.substring(0, 4000),
             },
         ],
     });

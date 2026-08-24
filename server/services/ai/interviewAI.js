@@ -5,41 +5,50 @@ const client = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
 });
 
-export async function generateQuestions(role, difficulty){
+export async function generateQuestions(role, difficulty="Medium"){
     const completion = await client.chat.completions.create({
         model: "google/gemini-2.5-flash",
-        max_tokens: 800,
+        max_tokens: 1200,
         temperature: 0.4,
         messages:[
             {
                 role : "system",
                 content : `
-                Return ONLY valid JSON
+                Return ONLY valid JSON.
+
+                The JSON must follow exactly this structure:
                 {
                     "questions":[
                         {
                             "question": ""
                         }
                     ]
-                }`
+                }
+                Rules:
+                - Generate exactly 15 questions.
+                - Generate 10 role-specfic technical questions.
+                - Generate 5 HR/behavioral questions.
+                - Do not provide answers.
+                - Do not provide explanations.
+                - Do not use markdown.
+                - Do not include any text outside the JSON.
+                `,
             },
             {
                 role:"user",
-                content:`Generate 15 interview questions for ${role}
-
+                content:`Generate an interview for:
+                
+                Role: ${role}
                 Difficulty: ${difficulty}
                 
                 Question should include:
                 
-                - 10 ${role} questions
-                - 5 HR/Behavioral question
-                
-                Return ONLY valid JSON.
-                Do not include answers.
-                Do not include maekdown.`
-            }
-        ]
+                Return exactly 15 questions.
+                `,
+            },
+        ],
     });
+
     const result = completion.choices[0].message.content;
 
     const cleaned = result.replace(/```json/g, "").replace(/```/g, "").trim();
