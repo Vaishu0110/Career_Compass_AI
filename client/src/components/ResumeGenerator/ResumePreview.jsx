@@ -34,44 +34,32 @@ export default function ResumePreview({
         
         case "Modern":
             return(
-                <div id="resume-preview">
-                    <ModernTemplate {...templateProps} />
-                </div>
+                <ModernTemplate {...templateProps} />
             );
 
         case "Corporate":
             return(
-                <div id="resume-preview">
-                    <CorporateTemplate {...templateProps} />
-                </div>
+                <CorporateTemplate {...templateProps} />
             );
 
         case "Developer":
             return(
-                <div id="resume-preview">
-                    <DeveloperTemplate {...templateProps} />
-                </div>
+                <DeveloperTemplate {...templateProps} />
             );
 
         case "Student":
             return(
-                <div id="resume-preview">
-                    <StudentTemplate {...templateProps} />
-                </div>
+                <StudentTemplate {...templateProps} />
             );
 
         case "Executive":
             return(
-                <div id="resume-preview">
-                    <ExecutiveTemplate {...templateProps} />
-                </div>
+                <ExecutiveTemplate {...templateProps} />
             );
 
         default:
             return(
-                <div id="resume-preview">
-                    <ProfessionalTemplate {...templateProps} />
-                </div>
+                <ProfessionalTemplate {...templateProps} />
             );
 
     }
