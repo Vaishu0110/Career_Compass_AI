@@ -37,74 +37,127 @@ export default function DashboardCharts ({ stats }) {
                     stats.rejected,
                 ],
                 backgroundColor: [
-                    "#3B82F6",
-                    "#EAB308",
-                    "#22C55E",
-                    "#EF4444",
+                    "#0d9488",
+                    "#14b8a6",
+                    "#10b981",
+                    "#64748b",
                 ],
+                borderWidth: 3,
+                borderColor: "#ffffff",
+                hoverOffset: 6,
             },
         ],
     };
 
     const scoreData = {
         labels: [
-            "Resume",
-            "ATS",
-        ],
-
+            "Resume Score", "ATS Match", "Interview", "Roadmap%"],
         datasets: [
             {
-                label: "Scores",
+                label: "Performance Rating",
                 data: [
-                    stats.resumeScore,
-                    stats.atsScore,
+                    stats?.resumeScore || 0,
+                    stats?.atsScore || 0,
+                    stats?.interviewScore || 0,
+                    stats?.learningProgress || 0,
                 ],
                 backgroundColor: [
-                    "#2563EB",
-                    "#16A34A",
+                    "#0d9488", 
+                    "#10b981", 
+                    "#14b8a6", 
+                    "#34d399", 
                 ],
+                borderRadius: 8,
+                borderSkipped: false,
+                barThickness: 32,
             },
         ],
     };
 
-    const options = {
+    const barOptions = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
-            legend: {
-                display: false,
+            legend: { display: false, },
+            tooltip: {
+                backgroundColor: "#0f172a",
+                titleColor: "#f8fafc",
+                bodyColor: "#f8fafc",
+                cornerRadius: 10,
+                padding: 12,
             },
         },
         scales: {
+            x: {
+                grid: { display: false },
+                ticks: { color: "#091d17", font: { weight: "600", size: 12 } },
+            },
             y: {
                 beginAtZero: true,
                 max:100,
+                grid: { color: "#e2e8f0", strokeDash: [4, 4] },
+                ticks: { color: "#64748b", font: { size: 12 } },
+            },
+        },
+    };
+
+    const doughnutOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "75%",
+        plugins: {
+            legend: {
+                position: "bottom",
+                labels: {
+                    usePointStyle: true,
+                    pointStyle: "circle",
+                    padding: 20,
+                    color: "#04150f",
+                    font: { weight: "600", size: 12 },
+                },
+            },
+            tooltip: {
+                backgroundColor: "#0f172a",
+                titleColor: "#f8fafc",
+                bodyColor: "#f8fafc",
+                cornerRadius: 10,
+                padding: 12,
             },
         },
     };
 
     return (
-        <div className="grid md:grid-cols-2 gap-8 mt-10">
-            <div className="bg-white rounded-xl shadow p-6">
-                <h2 className="text-xl font-bold mb-4">
-                    Job Applications
-                </h2>
-                <Doughnut data={jobData} 
-                options={{
-                    plugin:{
-                        legend:{
-                                position: "bottom", 
-                            },
-                        },
-                    }}
-                />
+        <div className="grid md:grid-cols-2 gap-8 ">
+            <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-teal-100 dark:border-teal-900 flex flex-col justify-between">
+                <div className="flex justify-between items-center mb-4">    
+                    <h3 className="text-lg font-bold flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+                        Application Pipeline Distribution
+                    </h3>
+                    <span className="text-xs bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300 font-bold px-2.5 py-1 rounded-full">
+                        Funnel
+                    </span>
+                </div>
+                <div className="h-[260px] relative flex items-center justify-center">
+                    <Doughnut data={jobData} options={doughnutOptions} />
+                </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow p-6">
-                <h2 className="text-xl font-bold mb-4">
-                    Resume vs ATS
-                </h2>
+            <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-teal-100 dark:border-teal-900 flex flex-col justify-between">
+                <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-bold flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                        Overall Career Readiness Metrics
+                    </h3>
 
-                <Bar data = { scoreData } options={options}/>
+                    <span className="text-xs bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-2.5 py-1 rounded-full">
+                        Ratings
+                    </span>
+                </div>
+
+                <div className="h-[260px]">
+                    <Bar data = { scoreData } options={barOptions}/>
+                </div>
             </div>
         </div>
     );
