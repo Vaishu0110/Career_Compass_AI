@@ -12,10 +12,15 @@ export default function InterviewHistory() {
 
     const fetchHistory = async () => {
         try{
-            const res = await axiosInstance.get("/interview-history");
-            setHistory(res.data);
+            const res = await axiosInstance.get("/interview/history");
+
+            console.log("Interview history:", res.data);
+
+            if(res.data.success){
+                setHistory(res.data.interviews || []);
+            }
         } catch (error) {
-            console.error(error) 
+            console.error("Failed to fetch interview history:", error.response?.data || error) 
         } finally {
             setLoading(false);
         }
@@ -89,9 +94,13 @@ export default function InterviewHistory() {
 
                     <div className="bg-white rounded-xl w-full max-w-3xl p-8 max-h-[90vh] overflow-y-auto">
 
-                        <h2 className="text-3xl font-bold mb-6">
-                            Interview Feedback
+                        <h2 className="text-3xl font-bold">
+                            Interview Report
                         </h2>
+
+                        <p className="text-gray-600 mb-6">
+                            {selectedInterview.role} • {selectedInterview.difficulty}
+                        </p>
 
                         <div className="mb-6">
 
@@ -133,7 +142,22 @@ export default function InterviewHistory() {
 
                         <div className="mb-6">
 
-                            <h3 className="font-bold text-lg">
+                            <h3 className="font-bold text-lg text-red-600">
+                                Weaknesses
+                            </h3>
+
+                            <ul className="list-disc ml-6 mt-2">
+                                {selectedInterview.weaknesses?.map((item, index) => (
+                                    <li key={index}>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className="mb-6">
+
+                            <h3 className="font-bold text-lg text-blue-700">
                                 Suggestions
                             </h3>
 
@@ -141,16 +165,93 @@ export default function InterviewHistory() {
 
                                 {selectedInterview.suggestions?.map((item, index) => (
                                     <li key={index}>
-                                        {items}
+                                        {item}
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
-                        <button onClick = {() => setSelectedInterview(null)}
-                        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-                            Close
-                        </button>
+                        <div className="border-t pt-6">
+
+                            <h3 className="text-2xl font-bold mb-5">
+                                Question-by-Question Evaluation
+                            </h3>
+
+                            {selectedInterview.questions?.length > 0 ? (
+                                <div className="space-y-6">
+                                    {selectedInterview.questions.map((question, index) => (
+                                        <div key={index} className="border rounded-xl p-5">
+                                            <div className="flex justify-between items-start gap-4">
+                                                
+                                                <h4 className="font-bold text-lg">
+                                                    Question {index+1}
+                                                </h4>
+
+                                                <span className={`font-bold px-3 py-1 rounded ${
+                                                    question.score >=70 ? "bg-green-100 text-green-700" 
+                                                    : question.score >=40
+                                                    ? "bg-yellow-100 text-yellow-700"
+                                                    : "bg-red-100 text-red-700"
+                                                }`}>
+                                                    {question.score}/100
+                                                </span>
+                                            </div>
+
+                                            
+
+                                            <p className="mt-3 font-semibold">
+                                                {question.question}
+                                            </p>
+
+                                            <div className="mt-4">
+
+                                                <p className="font-semibold text-gray-700">
+                                                    Your Answer
+                                                </p>
+
+                                                <div className="bg-gray-50 border rounded-lg p-4 mt-2">
+
+                                                    {question.answer ? (
+                                                        <p className="whitespace-pre-wrap">
+                                                            {question.answer}
+                                                        </p>
+                                                    ) : (
+                                                        <p className="text-gray-500 italic">
+                                                            No answer provided.
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-4">
+
+                                                <p className="font-semibold text-blue-700">
+                                                    AI Feedback
+                                                </p>
+
+                                                <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mt-2">
+
+                                                    <p>
+                                                        {question.feedback || "No feedback available."}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ):(
+                                <div className="bg-gray-50 rounded-lg p-5 text-gray-500">
+                                    Question-level evaluation is not available for this interview.
+                                </div>
+                            )} 
+                        </div>
+
+                        <div className="flex justify-end mt-8">
+                            <button onClick = {() => setSelectedInterview(null)}
+                            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                                Close
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
