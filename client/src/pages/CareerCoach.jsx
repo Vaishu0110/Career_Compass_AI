@@ -34,7 +34,7 @@ export default function CareerCoach() {
         }
     }
 
-  const askAI = async () => {
+const askAI = async () => {
     if (!question.trim()) {
       alert("Please enter your question.");
       return;
@@ -46,15 +46,21 @@ export default function CareerCoach() {
         time: new Date(),
     };
 
-    const updatedHistory = [...messages, userMessage];
-    setMessages(updatedHistory);
+    const updatedMessages = [...messages, userMessage];
+    
+    const historyForAI = updatedMessages.map((msg) => ({
+        sender: msg.sender,
+        text:msg.text,
+    }));
+
+    setMessages(updatedMessages);
 
     try {
         setLoading(true);
 
         const res = await axiosInstance.post("/career-coach/ask",{
             question,
-            history: updatedHistory,
+            history: historyForAI,
             chatId,
         });
 
@@ -86,7 +92,14 @@ export default function CareerCoach() {
 
     setChatId(chat._id);
 
-    setMessages(chat.messages);
+    const formattedMessages = chat.messages.map((msg) => ({
+        sender: msg.sender,
+        text: msg.text,
+        time: msg.time || msg.createdAt,
+    }))
+    setMessages(formattedMessages);
+
+    setQuestion("");
   };
 
   const deleteChat = async (id) => {
@@ -99,6 +112,9 @@ export default function CareerCoach() {
             setMessages([]);
 
             setChatId(null);
+
+            setSelectedChat(null);
+
         }
     } catch (error) {
         console.error(error);
@@ -106,175 +122,196 @@ export default function CareerCoach() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-8">
-
-        <h1 className="text-4xl font-bold text-center mb-8">
-            AI Career Coach
-        </h1>
-
-        <div className="grid grid-cols-12 gap-6">
-
-            <div className="col-span-3 bg-white rounded-xl shadow p-4 h-[700px] overflow-y-auto">
-
-                <button onClick={() => {
-                    setMessages([]);
-                    setChatId(null);
-                    setSelectedChat(null);
-                    setQuestion("");
-                }} className="w-full bg-blue-600 text-white py-2 rounded mb-5">
-                    + New Chat
-                </button>
-
-                {chatHistory.map((chat) => (
-                    <div key={chat._id} className={`border rounded p-3 mb-3 cursor-pointer hover:bg-gray-100 ${
-                        selectedChat?._id === chat._id ? "bg-blue-50 border-blue-500" : ""
-                    }`}>
-                        <div onClick={() => openChat(chat)}>
-                            <h3 className="font-semibold">
-                                {chat.title}
-                            </h3>
-
-                            <p className="text-sm text-gray-500">
-                                {new Date(chat.updatedAt).toLocaleDateString()}
-                            </p>
-                        </div>
-
-                        <button onClick={() => deleteChat(chat._id)} className="text-red-500 text-sm mt-2">
-                            Delete
-                        </button>
-
-                    </div>
-                ))}
-
+        <div className="max-w-7xl mx-auto p-6 md:p-8 space-y-6">
+            
+            {/* HERO HEADER */}
+            <div className="text-center max-w-3xl mx-auto">
+                <span className="bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    24/7 AI Career Mentor
+                </span>
+                <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight">
+                    AI Career Coach 
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mt-2">
+                    Ask anything about resume strategies, technical interview prep, career transitions, or project recommendations.
+                </p>
             </div>
-
-            <div className="col-span-9">
-
-                <div className="flex justify-end mb-4">
-                    <button onClick={() => {
-                        if (window.confirm("Start a new conversation?")) {
+            {/* CHAT CONTAINER LAYOUT */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                {/* SIDEBAR: CHAT HISTORY */}
+                <div className="col-span-1 md:col-span-4 lg:col-span-3 bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-lg border border-teal-100 dark:border-teal-900 flex flex-col h-[680px]">
+                    <button
+                        onClick={() => {
                             setMessages([]);
                             setChatId(null);
                             setSelectedChat(null);
                             setQuestion("");
-                        }
-                    }}
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" >
-                        Clear Chat
-                    </button>
-                </div>
-
-                <div className="bg-white shadow-lg rounded-xl p-6 w-full">
-
-                    <div className="flex flex-wrap gap-2 mb-5">
-
-                        <button onClick={() => 
-                            setQuestion("Review my resume")
-                        } className="px-4 py-2 rounded bg-gray-200">
-                            Resume Review
-                        </button>
-
-                        <button onClick={() => setQuestion("Give me interview tips")} className="px-4 py-2 rounded bg-gray-200">
-                            Interview Tips
-                        </button>
-
-                        <button onClick={() => setQuestion("Suggest Projects")} className="px-4 py-2 rounded bg-gray-200">
-                            Projects
-                        </button>
-
-                    </div>
-
-                    <textarea
-                    rows="5"
-                    className="w-full border rounded-lg p-4"
-                    placeholder="Ask anything about your career..."
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                        onKeyDown={(e)=> {
-                            if (e.key === "Enter" && !e.shiftKey) {
-                                e.preventDefault();
-                                askAI();
-                            }
                         }}
-                    />
-
-                    <button
-                    onClick={askAI}
-                    disabled={loading}
-                    className="w-full mt-5 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold py-3 px-4 rounded-2xl shadow-md transition transform active:scale-95 flex items-center justify-center gap-2 mb-4 text-sm"
                     >
-                    {loading ? "Thinking..." : "Ask Career Coach"}
+                        + New Chat
                     </button>
-
-                </div>
-                <div className="bg-white shadow-lg rounded-xl p-6 mt-8 h-[500px] overflow-y-auto w-full">
-                    {messages.length === 0 ? (
-                        <p className="text-gray-500 text-center mt-20">
-                            Hi,
-
-                            Ask me anything about:
-
-                            • Resume Improvement
-
-                            • Interview Preparation
-
-                            • Learning Roadmaps
-
-                            • Career Planning
-
-                            • Projects
-
-                            • Salary Advice
-                        </p>
-                    ) : (
-                        messages.map((msg, index) => (
-                            <div key={index} className= {`mb-5 flex items-end gap-2 ${msg.sender === "user" ?
-                                "justify-end" : "justify-start"
-                            }`}>
-
-                                {msg.sender === "ai" && (
-                                    <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
-                                        AI
-                                    </div>
-                                )}
-                                <div className={`max-w-[75%] rounded-xl px-5 py-3 whitespace-pre-wrap ${
-                                    msg.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"
-                                }`}>
-                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                        {msg.text}
-                                    </ReactMarkdown>
-                                    {msg.time && (
-                                        <p className="text-xs opacity-60 mt-2">
-                                            {new Date(msg.time).toLocaleTimeString([], {
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                            })}
+                    <div className="flex-1 overflow-y-auto space-y-2.5 pr-1">
+                        <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider px-2">
+                            Recent Conversations
+                        </h2>
+                        {chatHistory.length === 0 ? (
+                            <p className="text-xs text-gray-400 text-center py-8">No previous chats yet.</p>
+                        ) : (
+                            chatHistory.map((chat) => (
+                                <div
+                                    key={chat._id}
+                                    className={`p-3.5 rounded-2xl border transition duration-150 flex justify-between items-start gap-2 ${
+                                        selectedChat?._id === chat._id
+                                            ? "bg-teal-50 dark:bg-teal-950/60 border-teal-500 dark:border-teal-400 shadow-sm"
+                                            : "bg-gray-50/60 dark:bg-slate-900/40 border-gray-200 dark:border-slate-700 hover:border-teal-300"
+                                    }`}
+                                >
+                                    <div onClick={() => openChat(chat)} className="flex-1 cursor-pointer min-w-0">
+                                        <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100 truncate">
+                                            {chat.title || "Untitled Chat"}
+                                        </h3>
+                                        <p className="text-xs text-gray-400 mt-1">
+                                            {new Date(chat.updatedAt).toLocaleDateString()}
                                         </p>
-                                    )}
-                                </div>
-
-                                {msg.sender === "user" && (
-                                    <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
-                                        You
                                     </div>
-                                )}
+                                    <button
+                                        onClick={() => deleteChat(chat._id)}
+                                        className="text-red-500 hover:text-red-700 text-xs font-bold p-1 rounded hover:bg-red-50 dark:hover:bg-red-950/40 transition"
+                                        title="Delete Conversation"
+                                    >
+                                        🗑️
+                                    </button>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+                {/* MAIN CHAT AREA */}
+                <div className="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col h-[680px]">
+                    
+                    {/* CHAT MESSAGES DISPLAY */}
+                    <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-lg border border-teal-100 dark:border-teal-900 flex-1 overflow-y-auto mb-4 space-y-4">
+                        {messages.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center h-full text-center p-6 space-y-4">
+                                <div className="w-16 h-16 rounded-3xl bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300 flex items-center justify-center text-3xl font-bold shadow-md">
+                                    💡
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                                        Welcome to AI Career Coach
+                                    </h3>
+                                    <p className="text-xs text-gray-500 max-w-md mt-1">
+                                        Ask me anything about Resume Review, Interview Tips, Project Ideas, or Salary Negotiations.
+                                    </p>
+                                </div>
                             </div>
-                        ))
-                    )}
-
-                    {loading && (
-                        <div className="flex justify-start mb-5">
-                            <div className="bg-gray-200 rounded-xl px-5 py-3">
-                                <span className="animate-pulse">
-                                    AI is thinking...
-                                </span>
+                        ) : (
+                            messages.map((msg, index) => (
+                                <div
+                                    key={index}
+                                    className={`flex items-start gap-3 ${
+                                        msg.sender === "user" ? "flex-row-reverse" : "flex-row"
+                                    }`}
+                                >
+                                    {/* AVATAR ICON */}
+                                    <div
+                                        className={`w-9 h-9 rounded-2xl flex items-center justify-center text-xs font-bold shrink-0 shadow ${
+                                            msg.sender === "user"
+                                                ? "bg-teal-600 text-white"
+                                                : "bg-emerald-600 text-white"
+                                        }`}
+                                    >
+                                        {msg.sender === "user" ? "You" : "AI"}
+                                    </div>
+                                    {/* MESSAGE BUBBLE */}
+                                    <div
+                                        className={`max-w-[80%] rounded-2xl px-5 py-3 text-sm leading-relaxed ${
+                                            msg.sender === "user"
+                                                ? "bg-teal-600 text-white rounded-tr-none shadow-md"
+                                                : "bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-gray-900 dark:text-gray-100 rounded-tl-none shadow-sm"
+                                        }`}
+                                    >
+                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                            {msg.text}
+                                        </ReactMarkdown>
+                                        {msg.time && (
+                                            <p className="text-[10px] opacity-60 mt-1.5 text-right font-medium">
+                                                {new Date(msg.time).toLocaleTimeString([], {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                })}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                        {loading && (
+                            <div className="flex justify-start items-center gap-3">
+                                <div className="w-9 h-9 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xs font-bold shadow">
+                                    AI
+                                </div>
+                                <div className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 rounded-2xl px-5 py-3">
+                                    <span className="animate-pulse text-xs font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
+                                        AI is thinking...
+                                    </span>
+                                </div>
                             </div>
+                        )}
+                        <div ref={bottomRef} />
+                    </div>
+                    {/* INPUT & QUICK PROMPT PILLS */}
+                    <div className="bg-white dark:bg-slate-800 rounded-3xl p-4 shadow-lg border border-teal-100 dark:border-teal-900 space-y-3">
+                        
+                        {/* QUICK PROMPT PILL BADGES */}
+                        <div className="flex flex-wrap gap-2">
+                            <button
+                                onClick={() => setQuestion("Review my resume and suggest improvements.")}
+                                className="text-xs bg-teal-50 dark:bg-teal-950 text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800 hover:bg-teal-100 font-bold px-3 py-1.5 rounded-full transition"
+                            >
+                                Resume Review
+                            </button>
+                            <button
+                                onClick={() => setQuestion("Give me top technical interview preparation tips.")}
+                                className="text-xs bg-emerald-50 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 font-bold px-3 py-1.5 rounded-full transition"
+                            >
+                                Interview Tips
+                            </button>
+                            <button
+                                onClick={() => setQuestion("Suggest impressive portfolio projects for a Full Stack Developer.")}
+                                className="text-xs bg-teal-50 dark:bg-teal-950 text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800 hover:bg-teal-100 font-bold px-3 py-1.5 rounded-full transition"
+                            >
+                                Project Ideas
+                            </button>
                         </div>
-                    )}
-                    <div ref={bottomRef}></div>
+                        {/* TEXTAREA INPUT */}
+                        <div className="flex gap-2 items-center">
+                            <textarea
+                                rows="2"
+                                className="flex-1 border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                                placeholder="Ask anything about your career... (Press Enter to send)"
+                                value={question}
+                                onChange={(e) => setQuestion(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && !e.shiftKey && !loading) {
+                                        e.preventDefault();
+                                        askAI();
+                                    }
+                                }}
+                            />
+                            <button
+                                onClick={askAI}
+                                disabled={loading || !question.trim()}
+                                className="bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 text-white font-extrabold px-6 py-4 rounded-2xl shadow-md transition transform active:scale-95 text-sm shrink-0"
+                            >
+                                Send 
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-      </div>
-    </div>
-  );
+        </div>
+    );
 }
