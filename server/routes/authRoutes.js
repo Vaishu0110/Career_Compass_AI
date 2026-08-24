@@ -59,13 +59,18 @@ router.post("/login", async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid Credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const jwtSecret = process.env.JWT_SECRET || "career_compass_fallback_secret_key_2026";
+
+    const token = jwt.sign({ id: user._id }, jwtSecret, {
       expiresIn: "1d",
     });
+
     res.json({ token, user });
   } catch (error) {
+    console.error("LOGIN ERROR TRACE:", error);
     res.status(500).json({
-      message: error.message,
+      message: error.message || "Internal Server Error during login",
+      errorType: error.name,
     });
   }
 });
