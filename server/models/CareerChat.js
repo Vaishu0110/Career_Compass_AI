@@ -1,25 +1,38 @@
 import mongoose from "mongoose";
 
+const messageSchema = new mongoose.Schema(
+    {
+        sender: {
+            type: String,
+            enum: ["user", "ai"],
+            required: true,
+        },
+
+        text: {
+            type: String,
+            required: true,
+        },
+    },
+    {
+        _id: false,
+    }
+);
+
 const careerChatSchema = new mongoose.Schema(
     {
         user:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:"User",
+            enum:["User", "ai"],
             required:true,
         },
 
-        messages:[
-            {
-                sender:String,
-                text:String,
-                time:{
-                    type:Date,
-                    default:Date.now,
-                },
-            },
-        ],
-    },
+        title: {
+            type: String,
+            default: "New Chat",
+        },
 
+        messages:[messageSchema],
+    },
     {
         timestamps:true,
     }

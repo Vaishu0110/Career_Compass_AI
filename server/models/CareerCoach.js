@@ -1,9 +1,21 @@
 import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
-    role: String,
-    content: String,
-});
+    sender: {
+        type: String,
+        enum: ["user", "ai"],
+        required: true,
+    },
+
+    text: {
+        type: String,
+        required: true,
+    },
+},
+{
+    _id: false,
+}
+);
 
 const careerCoachSchema = new mongoose.Schema(
     {
@@ -18,10 +30,10 @@ const careerCoachSchema = new mongoose.Schema(
             default:"New Chat",
         },
 
-        message:[messageSchema],
-
-    },{
-        timestamp:true,
+        messages : [messageSchema],
+    },
+    {
+        timestamps: true,
     }
 );
 

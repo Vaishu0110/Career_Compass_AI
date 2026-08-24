@@ -71,12 +71,12 @@ const userSchema = new mongoose.Schema(
 
         linkedin:{
             type:String,
-            deafult:"",
+            default:"",
         },
 
         portfolio:{
             type:String,
-            deafult:"",
+            default:"",
         },
 
         resumeScore:{
@@ -119,6 +119,6 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-const User = mongoose.model("User",userSchema);
- 
+const User = mongoose.models.User || mongoose.model("User",userSchema);
+
 export default User;

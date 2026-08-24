@@ -7,23 +7,18 @@ const jobRecommendationSchema = new mongoose.Schema(
             required: true,
         },
 
-        title: String,
-
-        company : String,
-
-        location: String,
-
-        salary: String,
-
-        matchScore: Number,
-
-        skillsMatched: [String],
-
-        missingSkills: [String],
-
-        reason: String,
-
-        applyLink: String,
+        recommendations: [
+            {
+                title: String,
+                company: String,
+                location: String,
+                salary: String,
+                matchScore: Number,
+                skillsMatched: [String],
+                missingSkills: [String],
+                reason: String,
+            }
+        ]
     },
     {
         timestamps: true,

@@ -8,14 +8,29 @@ const generatedResumeSchema = new mongoose.Schema(
             required:true,
         },
 
-        fullName:String,
-        targetRole:String,
+        fullName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+
+        targetRole: {
+            type:String,
+            required:true,
+            trim:true,
+        },
 
         template:{
-            fullName: String,
-            targetRole: String,
             type: String,
-            default:"modern",
+            enum: [
+                "Modern",
+                "Corporate",
+                "Developer",
+                "Student",
+                "Executive",
+                "Professional",
+            ],
+            default:"Modern",
         },
 
         resume:{
@@ -24,7 +39,7 @@ const generatedResumeSchema = new mongoose.Schema(
         },
     },
     {
-        timestamp: true,
+        timestamps: true,
     }     
 );
 
