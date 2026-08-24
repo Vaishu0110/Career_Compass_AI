@@ -130,20 +130,6 @@ MongoDB
 
 AI & Machine Learning:
 OpenAI/ Gemini APIs
-Natural Language Processing (NLP)
-Machine Learning - based Recommendation system
-
-Additional Tools
-
-JWT Authentication 
-Axios
-Cloud Storage Integration 
-PDF Generation Libraries
 
 
-dark mode and light mode do nothing
-NEED BETTER UI
-resume generator need refinement right now it return plane text
-UI/UX of whole website
-gmail otp option banana hai
-sign in with google ka option bhi
+HOW TO RUN LOCALLY:
