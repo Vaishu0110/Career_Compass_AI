@@ -32,7 +32,7 @@ app.use(cors({
 
 app.use(express.json());
 
-// Serverless DB Connection Handler
+// Serverless DB Connection Handler with Fast Timeout & Disabled Buffering
 let isConnected = false;
 const connectDB = async () => {
   if (isConnected || mongoose.connections[0]?.readyState === 1) {
@@ -42,6 +42,9 @@ const connectDB = async () => {
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URI is missing on Vercel Settings!");
   }
+  
+  mongoose.set("bufferCommands", false);
+
   await mongoose.connect(process.env.MONGO_URI, {
     serverSelectionTimeoutMS: 5000,
   });
