@@ -1,12 +1,12 @@
 import express from "express";
-import Interview from "../models/Interview.js";
+import Interview from "../models/InterviewSession.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.get("/", protect, async (req, res) => {
 
-    const history = await Interview.find({
+    const history = await InterviewSession.find({
         user:req.user._id
     }).sort({
         createdAt:-1

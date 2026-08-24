@@ -12,6 +12,14 @@ const router = express.Router();
 router.get("/",protect, async (req, res)=>{
     try{
         const user = await User.findById(req.user._id);
+
+        if(!user) {
+            return res.status(404).json({
+                message: "User not found.",
+            });
+        }
+
+        
         
         const latestResume = await Resume.findOne({
             user: req.user._id,
@@ -24,7 +32,7 @@ router.get("/",protect, async (req, res)=>{
                 message: "Please analyze a resume first.",
             });
         }
-        
+
         const result = await generateJobRecommendations(
             user,
             latestResume.analysis
@@ -40,11 +48,16 @@ router.get("/",protect, async (req, res)=>{
             },
             {
                 upsert: true,
-                new: true,
+                returnDocument: true,
             }
         );
+        
+        
 
-        res.json(result);
+        res.json({
+            success: true,
+            recommendations: result.jobs,
+        });
         
     } catch (error) {
         console.error(error);

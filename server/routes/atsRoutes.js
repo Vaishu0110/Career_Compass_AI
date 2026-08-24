@@ -1,9 +1,10 @@
 import express from "express";
 import { analyzeATS } from "../services/atsService.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/check",async(req,res)=>{
+router.post("/check", protect, async(req,res)=>{
     try{
         const { resumeText ,jobDescription }=req.body;
         const result = await analyzeATS (resumeText, jobDescription);

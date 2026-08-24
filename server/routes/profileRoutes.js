@@ -2,8 +2,13 @@ import express from "express";
 import User from "../models/User.js";
 import multer from "multer";
 import { protect } from "../middleware/authMiddleware.js";
+import fs from "fs";
 
 const router = express.Router();
+
+if (!fs.existsSync("uploads/profile")) {
+    fs.mkdirSync("uploads/profile", { recursive: true });
+}
 
 const storage = multer.diskStorage({
     destination: (req, file ,cb) => {
@@ -21,7 +26,7 @@ router.get("/", protect, async (req, res) => {
         res.json(req.user);
     } catch (error) {
         res.status(500).json({
-            message: error.messsage,
+            message: error.message,
         });
     }
 });
@@ -49,17 +54,29 @@ router.put("/", protect, upload.single("profilePicture"), async (req, res) => {
                 message: "User Not Found",
             });
         }
-        user.name = name;
-        user.role = role;
-        user.targetRole = targetRole;
-        user.education = education;
-        user.experience = experience;
-        user.skills = typeof skills === "string" ? JSON.parse(skills) : skills;
-        user.phone = phone;
-        user.college = college;
-        user.portfolio = portfolio;
-        user.github = github;
-        user.linkedin =linkedin;
+        
+        if (name) user.name = name;
+        if (role) user.role = role;
+        if (targetRole) user.targetRole = targetRole;
+        if (education) user.education = education;
+        if (experience) user.experience = experience;
+        if (phone) user.phone = phone;
+        if (college) user.college = college;
+        if (portfolio) user.portfolio = portfolio;
+        if (github) user.github = github;
+        if (linkedin) user.linkedin = linkedin;
+        if (skills) {
+            if (typeof skills === "string") {
+                try {
+                    user.skills = JSON.parse(skills);
+                } catch {
+                    user.skills = skills.split(",").map(s => s.trim()).filter(Boolean);
+                }
+            } else if (Array.isArray(skills)) {
+                user.skills = skills;
+            }
+        }
+        
         user.profileCompleted = true;
 
         if(req.file) {

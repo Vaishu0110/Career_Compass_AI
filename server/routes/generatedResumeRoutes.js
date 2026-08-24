@@ -6,20 +6,37 @@ const router = express.Router();
 
 router.post("/save", protect, async (req, res) => {
     try{
-        const resume = await GeneratedResume.create({
+        const {
+            fullName,
+            targetRole,
+            template,
+            resume,
+        } = req.body;
+
+        if (!fullName || !targetRole || !resume){
+            return res.status(400).json({
+                success: false,
+                message: "Full name, target role and resume data are required.",
+            });
+        }
+
+        const savedResume = await GeneratedResume.create({
             user:req.user._id,
-            fullName: req.body.fullName,
-            targetRole: req.body.targetRole,
-            template: req.body.template || "modern",
-            resume:req.body.resume,
-
-        });
-
-        res.json({
-            success:true,
+            fullName,
+            targetRole,
+            template: template || "Developer",
             resume,
         });
+
+        res.status(201).json({
+            success:true,
+            resume: savedResume,
+        });
+
     } catch (error) {
+
+        console.error("Save generated resume error:", error);
+
         res.status(500).json({
             success:false,
             message:error.message,
@@ -92,6 +109,12 @@ router.get("/:id", protect, async (req, res) => {
 
 router.put("/:id", protect, async (req, res) => {
     try{
+        if (!req.body.fullName || !req.body.targetRole || !req.body.resume) {
+            return res.status(400).json({
+                success: false,
+                message: "Full name, target role and resume data are required.",
+            });
+        }
 
         const resume = await GeneratedResume.findOneAndUpdate(
             {
@@ -105,7 +128,8 @@ router.put("/:id", protect, async (req, res) => {
                 resume: req.body.resume,
             },
             {
-                new: true,
+                returnDocument: true,
+                runValidators: true,
             }
         );
 

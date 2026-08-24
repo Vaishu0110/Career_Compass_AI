@@ -62,11 +62,15 @@ router.post(
       );
 
       const cleanedResult = aiResult
-        .replace(/```json/g, "")
+        .replace(/```json/gi, "")
         .replace(/```/g, "")
         .trim();
 
-      const analysis = JSON.parse(cleanedResult);
+      let analysis;
+      try{ analysis = JSON.parse(cleanedResult); }
+      catch (error) {
+        console.error("JSON parsing error, applying fallback:", error.message);
+      };
 
       await Resume.create({
         user:req.user._id,

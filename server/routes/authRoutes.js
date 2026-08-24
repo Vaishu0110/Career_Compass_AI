@@ -6,47 +6,37 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/register",async(req,res)=>{const {name,email,password} = req.body;
-
-const existingUser = await User.findOne({ email });
-
-if (existingUser) {
-  return res.status(400).json({
-    message: "User already exists",
-  });
-}
-
-const hashedPassword= await bcrypt.hash(password, 10);
-
-const user =await User.create({
-    name,
-    email,
-    password: hashedPassword,
-});
-
-res.status(201).json({
-  _id: user._id,
-  name: user.name,
-  email: user.email,
-});
-
-});
-
-router.get("/me", async (req, res) => {
-  res.json(req.user);
-});
-
-router.post("/login", async (req, res) => 
-{
+router.post("/register", async (req, res) => {
   try {
-    const {email, password} = req.body;
-    const user =await User.findOne({email});
-    if (!user) return res.status(400).json({ message: "User Not Found"});
-    const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch)
-        return res.status(400).json({message: "Invalid Crendentials"});
-    const token = jwt.sign({id: user._id }, process.env.JWT_SECRET,{expiresIn: "1d",});
-    res.json({token,user});
+    const { name, email, password } = req.body;
+
+    if (!name || typeof email !== "string" || typeof password !== "string") {
+      return res.status(400).json({
+        message: "Invalid input fields",
+      });
+    }
+
+    const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      name,
+      email: email.toLowerCase().trim(),
+      password: hashedPassword,
+    });
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -54,27 +44,60 @@ router.post("/login", async (req, res) =>
   }
 });
 
-router.put("/profile", protect, async(req, res)=>{
-  try{
-    const user = await User.findById(req.user.id);
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-    user.role=req.body.role;
-    user.education=req.body.education;
-    user.targetRole=req.body.targetRole;
-    user.skills= req.body.skills.split(",").map(skill => skill.trim());
-    user.experience= req.body.experience;
-    user.profileCompleted=true;
+    if (typeof email !== "string" || typeof password !== "string") {
+      return res.status(400).json({ message: "Invalid credentials format" });
+    }
 
-    await user.save();
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) return res.status(400).json({ message: "User Not Found" });
 
-    res.json({ message: "Profile Updated",});
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid Credentials" });
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    res.json({ token, user });
   } catch (error) {
-    res.status(500).json({ message:error.message,});
+    res.status(500).json({
+      message: error.message,
+    });
   }
 });
 
-router.get("/me", protect,async(req, res) => {
-  try{
+router.put("/profile", protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.role = req.body.role || user.role;
+    user.education = req.body.education || user.education;
+    user.targetRole = req.body.targetRole || user.targetRole;
+
+    if (req.body.skills) {
+      user.skills = typeof req.body.skills === "string"
+        ? req.body.skills.split(",").map(skill => skill.trim()).filter(Boolean)
+        : Array.isArray(req.body.skills) ? req.body.skills : user.skills;
+    }
+
+    user.experience = req.body.experience || user.experience;
+    user.profileCompleted = true;
+
+    await user.save();
+
+    res.json({ message: "Profile Updated", user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/me", protect, async (req, res) => {
+  try {
     res.json(req.user);
   } catch (error) {
     res.status(500).json({

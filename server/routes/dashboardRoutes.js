@@ -1,9 +1,9 @@
-import express, { application } from "express";
+import express from "express";
 import User from "../models/User.js";
 import Job from "../models/Job.js";
 import Resume from "../models/Resume.js"
 import { protect } from "../middleware/authMiddleware.js";
-import Interview from "../models/Interview.js";
+import InterviewSession from "../models/InterviewSession.js";
 import SkillGap from "../models/SkillGap.js";
 import LearningRoadmap from "../models/LearningRoadmap.js";
 
@@ -13,10 +13,20 @@ router.get("/", protect, async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
 
+        if(!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
         const latestResume = await Resume.findOne({
             user: req.user._id,
         }).sort({
             createdAt: -1,
+        });
+
+        const resumeCount = await Resume.countDocuments({
+            user: req.user._id,
         });
 
         const jobs = await Job.find({
@@ -31,7 +41,7 @@ router.get("/", protect, async (req, res) => {
 
         const rejected = jobs.filter(job => job.status === "Rejected").length;
 
-        const latestInterview = await Interview.findOne({
+        const latestInterview = await InterviewSession.findOne({
             user:req.user._id,
         }).sort({ createdAt: -1 });
 
@@ -45,7 +55,7 @@ router.get("/", protect, async (req, res) => {
 
         let learningProgress = 0;
 
-        if(!latestRoadmap?.roadmap?.length) {
+        if(latestRoadmap?.roadmap?.length) {
 
             const total = latestRoadmap.roadmap.length;
 
@@ -53,8 +63,9 @@ router.get("/", protect, async (req, res) => {
 
             learningProgress = Math.round((completed / total) * 100);
 
-            const missingSkills = latestSkillGap?.missingSkills?.length || 0;
         }
+
+         const missingSkills = latestSkillGap?.missingSkills?.length || 0;
 
         res.json({
             name: user.name,
@@ -63,11 +74,9 @@ router.get("/", protect, async (req, res) => {
             resumeScore: latestResume?.resumeScore || 0,
             atsScore: latestResume?.atsScore || 0,
             
-            resumeCount: await Resume.countDocuments({
-                user: req.user._id,
-            }),
+            resumeCount,
 
-            applications: jobs.length,
+            applications: applied,
 
             interviewScore:latestInterview?.overallScore || 0,
 
@@ -80,7 +89,6 @@ router.get("/", protect, async (req, res) => {
             analysesCount:user.analysisCount,
 
             applied,
-            interview,
             offer,
             rejected,
         });

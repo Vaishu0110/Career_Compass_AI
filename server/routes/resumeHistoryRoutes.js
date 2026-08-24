@@ -29,13 +29,14 @@ router.get("/download/:id", protect, async (req, res) => {
             user: req.user._id,
         });
 
-        if(!resume) {
+        if (!resume || !fs.existsSync(resume.fileUrl)) {
             return res.status(404).json({
                 message: "Resume file not found.",
             });
         }
 
-        res.download(fileURLToPath,resume.originalName);
+        const absolutePath = path.resolve(resume.fileUrl);
+        res.download(absolutePath, resume.originalName);
     } catch (error) {
         res.status(500).json({
             message: error.message,
