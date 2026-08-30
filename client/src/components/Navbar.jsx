@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 export default function Navbar() {
     const { user } = useContext(AuthContext);
     const [ showServices, setShowServices] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
 
     const logout = () => {
         localStorage.removeItem("token");
@@ -13,7 +14,7 @@ export default function Navbar() {
         window.location.href = "/login";
     };
 
-    const navLinks = [
+    const services = [
         { name: "Dashboard", path: "/dashboard" },
         { name: "Resume Analyzer", path: "/resume-analyzer" },
         { name: "ATS Checker", path: "/ats-checker" },
