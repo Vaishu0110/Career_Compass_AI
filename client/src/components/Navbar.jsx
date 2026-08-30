@@ -6,7 +6,6 @@ import { AuthContext } from "../context/AuthContext";
 export default function Navbar() {
     const { user } = useContext(AuthContext);
     const [ showServices, setShowServices] = useState(false);
-    const [showProfile, setShowProfile] = useState(false);
 
     const logout = () => {
         localStorage.removeItem("token");
@@ -29,8 +28,7 @@ export default function Navbar() {
         <header className="sticky top-0 z-50 bg-teal-900/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-teal-700/40 shadow-xl transition-all">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
                 
-                <Link to="/dashboard" className="flex items-center gap-2.5 group">
-                    
+                <Link to="/dashboard" className="flex items-center gap-2.5 group">     
                     <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-teal-100 via-emerald-200 to-teal-50 bg-clip-text text-transparent tracking-tight">
                         Career Compass AI
                     </span>
@@ -42,7 +40,7 @@ export default function Navbar() {
                         Dashboard
                     </NavLink>
 
-                    <div className="relative">
+                    <div className="relative" onMouseEnter={() => setShowServices(true)} onMouseLeave={() => setShowServices(false)}>
                         <button onClick={() => setShowServices(!showServices)} className="px-3 py-2 rounded-xl hover:bg-teal-800/60 hover:text-emerald-200 transition duration-150">
                             Services
                         </button>
@@ -58,6 +56,29 @@ export default function Navbar() {
                         )}
                     </div>
                 </nav>
+
+                <div className="flex items-center">
+
+                    {user && (
+                        <div className="relative" onMouseEnter={(e) => { e.currentTarget.querySelector(".profile-dropdown").classList.remove("hidden");}} onMouseLeave={(e) => { e.currentTarget.querySelector(".profile-dropdown").classList.add("hidden"); }}>
+                            <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-xl hover:bg-teal-800/60 transition cursor-pointer">
+                                <img src={user?.profilePicture ? `${import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || "https://localhost:5173"}/uploads/profile/${user.profilePicture}` : "/default-avatar.png"} alt="Profile" className="w-9 h-9 rounded-full object-cover border-2 border-emerald-400 shadow" />
+                                <span className="hidden sm:block text-xs font-semibold text-teal-100 max-w-[100px] truncate">
+                                    {user.name}
+                                </span>
+                            </div>
+                    
+                            <div className="profile-dropdown hidden absolute right-0 top-full mt-2 w-48 bg-teal-950 border border-teal-700/50 rounded-xl shadow-2xl overflow-hidden">
+                                <Link to="/edit-profile" className="block px-4 py-3 text-sm text-teal-100 hover:bg-teal-800/70 hover:text-emerald-300 transition">
+                                    Edit Profile
+                                </Link>
+                                <button onClick={logout} className="w-full text-left px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition">
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                        )}
+                </div>
             </div>
         </header>
     );
