@@ -34,7 +34,7 @@ export default function Navbar() {
 
                 <nav className="hidden lg:flex items-center gap-2 text-xs xl:text-sm font-medium text-teal-100">
 
-                    <NavLink to="/dashboard" className={({isActive}) => `px-3 py-2 rounded-xl transition duration-150 ${isActive ? "bg-teal-700/80 text-emerald-300 font-bold border border-teal-500/50 shadow-inner" : "hover:bg-teal-800/60 hover:text-emerald-200"}` }>
+                    <NavLink to="/dashboard" className={({isActive}) => `px-3 py-2 rounded-xl transition duration-150 ${isActive ? "bg-teal-700/80 text-teal-100 font-bold border border-teal-500/50 shadow-inner" : "text-teal-100 hover:bg-teal-800/60"}` }>
                         Dashboard
                     </NavLink>
 
