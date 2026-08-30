@@ -1,11 +1,10 @@
 // client/src/components/Navbar.jsx
 import { Link, NavLink } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
     const { user } = useContext(AuthContext);
-    const [ showServices, setShowServices] = useState(false);
 
     const logout = () => {
         localStorage.removeItem("token");
@@ -14,7 +13,6 @@ export default function Navbar() {
     };
 
     const services = [
-        { name: "Dashboard", path: "/dashboard" },
         { name: "Resume Analyzer", path: "/resume-analyzer" },
         { name: "ATS Checker", path: "/ats-checker" },
         { name: "Skill Gap", path: "/skill-gap" },
@@ -40,27 +38,31 @@ export default function Navbar() {
                         Dashboard
                     </NavLink>
 
-                    <div className="relative" onMouseEnter={() => setShowServices(true)} onMouseLeave={() => setShowServices(false)}>
-                        <button onClick={() => setShowServices(!showServices)} className="px-3 py-2 rounded-xl hover:bg-teal-800/60 hover:text-emerald-200 transition duration-150">
+                    <div className="relative group">
+                        <button className="px-3 py-2 rounded-xl hover:bg-teal-800/60 hover:text-emerald-200 transition duration-150">
                             Services
                         </button>
 
-                        {showServices && (
-                            <div className="absolute top-full left-0 mt-2 w-56 bg-teal-950 border border-teal-700/50 rounded-xl shadow-2xl overflow-hidden">
+                        <div className="absolute left-0 top-full pt-2 w-56 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150">
+                            <div className="bg-teal-950 border border-teal-700/50 rounded-xl shadow-2xl overflow-hidden">
                                 {services.map((service) => (
-                                    <Link key={service.path} to={service.path} onClick={() => setShowServices(false)} className="block px-4 py-3 text-sm text-teal-100 hover:bg-teal-800/70 hover:text-emerald-300 transition">
+                                    <Link
+                                        key={service.path}
+                                        to={service.path}
+                                        className="block px-4 py-3 text-sm text-teal-100 hover:bg-teal-800/70 hover:text-emerald-300 transition"
+                                    >
                                         {service.name}
                                     </Link>
                                 ))}
                             </div>
-                        )}
+                        </div>
                     </div>
                 </nav>
 
                 <div className="flex items-center">
 
                     {user && (
-                        <div className="relative" onMouseEnter={(e) => { e.currentTarget.querySelector(".profile-dropdown").classList.remove("hidden");}} onMouseLeave={(e) => { e.currentTarget.querySelector(".profile-dropdown").classList.add("hidden"); }}>
+                        <div className="relative group">
                             <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-xl hover:bg-teal-800/60 transition cursor-pointer">
                                 <img
                                     src={
@@ -76,13 +78,15 @@ export default function Navbar() {
                                 </span>
                             </div>
                     
-                            <div className="profile-dropdown hidden absolute right-0 top-full mt-2 w-48 bg-teal-950 border border-teal-700/50 rounded-xl shadow-2xl overflow-hidden">
-                                <Link to="/edit-profile" className="block px-4 py-3 text-sm text-teal-100 hover:bg-teal-800/70 hover:text-emerald-300 transition">
-                                    Edit Profile
-                                </Link>
-                                <button onClick={logout} className="w-full text-left px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition">
-                                    Logout
-                                </button>
+                            <div className="absolute right-0 top-full pt-2 w-48 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150">
+                                <div className="bg-teal-950 border border-teal-700/50 rounded-xl shadow-2xl overflow-hidden">
+                                    <Link to="/edit-profile" className="block px-4 py-3 text-sm text-teal-100 hover:bg-teal-800/70 hover:text-emerald-300 transition">
+                                        Edit Profile
+                                    </Link>
+                                    <button onClick={logout} className="w-full text-left px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition">
+                                        Logout
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         )}
