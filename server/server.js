@@ -36,7 +36,6 @@ try {
   console.warn("FS notice:", e.message);
 }
 
-// ✅ CORS Middleware
 app.use(cors({
   origin: true,
   credentials: true,
@@ -45,7 +44,6 @@ app.use(cors({
 app.use(express.json());
 app.use("/uploads", express.static(uploadsDir));
 
-// ✅ Serverless MongoDB Connection Cache
 let isConnected = false;
 const connectDB = async () => {
   if (isConnected || mongoose.connections[0].readyState) {
@@ -89,7 +87,6 @@ app.use("/api/resume-history", resumeHistoryRoutes);
 app.use("/api/generated-resume", generatedResumeRoutes);
 app.use("/api/interview-history", interviewHistoryRoutes);
 
-// Global Error Handler
 app.use((err, req, res, next) => {
   console.error("Unhandled Server Error:", err);
   res.status(err.status || 500).json({

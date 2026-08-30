@@ -62,7 +62,15 @@ export default function Navbar() {
                     {user && (
                         <div className="relative" onMouseEnter={(e) => { e.currentTarget.querySelector(".profile-dropdown").classList.remove("hidden");}} onMouseLeave={(e) => { e.currentTarget.querySelector(".profile-dropdown").classList.add("hidden"); }}>
                             <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-xl hover:bg-teal-800/60 transition cursor-pointer">
-                                <img src={user?.profilePicture ? `${import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || "https://localhost:5173"}/uploads/profile/${user.profilePicture}` : "/default-avatar.png"} alt="Profile" className="w-9 h-9 rounded-full object-cover border-2 border-emerald-400 shadow" />
+                                <img
+                                    src={
+                                        user?.profilePicture
+                                    ? `${import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || "http://localhost:5000"}/uploads/profile/${encodeURIComponent(user.profilePicture)}`
+                                    : "/default-avatar.png"
+                                    }
+                                    alt="Profile"
+                                    className="w-9 h-9 rounded-full object-cover border-2 border-emerald-400 shadow"
+                                />
                                 <span className="hidden sm:block text-xs font-semibold text-teal-100 max-w-[100px] truncate">
                                     {user.name}
                                 </span>
