@@ -29,11 +29,9 @@ export default function Navbar() {
                 
                 {/* BRAND LOGO */}
                 <Link to="/dashboard" className="flex items-center gap-2.5 group">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-white font-extrabold text-xl shadow-md group-hover:scale-105 transition transform">
-                        🧭
-                    </div>
+                    
                     <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-teal-100 via-emerald-200 to-teal-50 bg-clip-text text-transparent tracking-tight">
-                        Career Compass <span className="text-emerald-400 font-bold text-sm ml-1 uppercase px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/40">AI</span>
+                        Career Compass AI
                     </span>
                 </Link>
 
