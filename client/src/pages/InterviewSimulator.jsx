@@ -1,5 +1,6 @@
 import{ useState, useEffect, useRef }from "react";
 import axiosInstance from "../api/axiosInstance";
+import { Mic, MessageCircle, ChevronLeft, ChevronRight, Clock} from "lucide-react";
 
 export default function InterviewSimulator(){
     const [answers, setAnswers] = useState([]);
@@ -187,13 +188,13 @@ export default function InterviewSimulator(){
             
             {/* HERO HEADER */}
             <div className="text-center max-w-3xl mx-auto">
-                <span className="bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <span className="inline-bolck bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                     Voice & Technical Practice Engine
                 </span>
-                <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight">
-                    AI Interview Simulator 🎙️
+                <h1 className="text-3xl md:text-5xl font-black mt-3 tracking-tight text-slate-900">
+                    AI Interview Simulator
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mt-2">
+                <p className="text-teal-700 text-sm md:text-base mt-2 font-medium">
                     Simulate realistic technical and behavioral interviews with real-time speech recognition and AI evaluation feedback.
                 </p>
             </div>
@@ -201,14 +202,14 @@ export default function InterviewSimulator(){
             <div className="grid md:grid-cols-2 gap-8">
                 
                 {/* INTERVIEW SETUP SECTION */}
-                <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 dark:border-teal-900 flex flex-col justify-between space-y-6">
+                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 flex flex-col justify-between space-y-6">
                     <div>
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-800 dark:text-teal-200">
+                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-100">
                             Interview Session Setup
                         </h2>
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
+                                <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
                                     Target Position or Role *
                                 </label>
                                 <input
@@ -216,17 +217,17 @@ export default function InterviewSimulator(){
                                     placeholder="Enter Role (e.g., MERN Developer, Frontend Architect)"
                                     value={role}
                                     onChange={(e) => setRole(e.target.value)}
-                                    className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold"
+                                    className="w-full border border-teal-200 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold [&::placeholder]:opacity-20"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
+                                <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
                                     Question Difficulty Level
                                 </label>
                                 <select
                                     value={difficulty}
                                     onChange={(e) => setDifficulty(e.target.value)}
-                                    className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-bold"
+                                    className="w-full border border-teal-200 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-bold"
                                 >
                                     <option value="Beginner">Beginner Level</option>
                                     <option value="Intermediate">Intermediate Level</option>
@@ -238,23 +239,23 @@ export default function InterviewSimulator(){
                     <button
                         onClick={generateQuestions}
                         disabled={loading || !role.trim()}
-                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base"
+                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base flex items-center justify-center gap-2"
                     >
-                        {loading ? `Generating ${difficulty} Questions...` : "Start Mock Interview 🚀"}
+                        {loading ? `Generating ${difficulty} Questions...` : "Start Mock Interview"}
                     </button>
                 </div>
                 {/* ACTIVE QUESTION & EVALUATION REPORT SECTION */}
-                <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 dark:border-teal-900 flex flex-col justify-between">
+                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100  flex flex-col justify-between">
                     <div>
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-800 dark:text-teal-200">
+                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-100 ">
                             Active Interview Session
                         </h2>
                         {questions.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center h-[380px] text-center p-6 space-y-3 border-2 border-dashed border-teal-100 dark:border-teal-900 rounded-2xl">
-                                <div className="w-16 h-16 rounded-3xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-300 flex items-center justify-center text-3xl font-bold">
-                                    💬
+                            <div className="flex flex-col items-center justify-center h-[380px] text-center p-6 space-y-3 border-2 border-dashed border-teal-100 rounded-2xl">
+                                <div className="w-16 h-16 rounded-3xl bg-teal-50 text-teal-600 flex items-center justify-center shadow-md">
+                                    <MessageCircle size={30} />
                                 </div>
-                                <p className="text-gray-500 text-sm font-medium">
+                                <p className="text-teal-600 text-sm font-medium">
                                     Configure your position on the left to start answering AI mock interview questions.
                                 </p>
                             </div>
@@ -263,13 +264,13 @@ export default function InterviewSimulator(){
                                 
                                 {/* PROGRESS BAR & COUNTDOWN TIMER */}
                                 <div className="space-y-2">
-                                    <div className="flex justify-between items-center text-xs font-bold text-gray-500">
-                                        <span>Question {currentQuestion + 1} of {questions.length}</span>
-                                        <span className="text-teal-600 dark:text-teal-300 font-extrabold">
+                                    <div className="flex justify-between items-center text-xs font-bold text-teal-600">
+                                        <span>Question {currentQuestion + 1} of{" "}{questions.length}</span>
+                                        <span className="text-teal-600  font-extrabold">
                                             {Math.round(((currentQuestion + 1) / questions.length) * 100)}% Completed
                                         </span>
                                     </div>
-                                    <div className="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+                                    <div className="w-full bg-teal-100 h-2.5 rounded-full overflow-hidden">
                                         <div
                                             className="bg-emerald-500 h-2.5 rounded-full transition-all duration-300"
                                             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
@@ -277,26 +278,27 @@ export default function InterviewSimulator(){
                                     </div>
                                 </div>
                                 {/* QUESTION CARD */}
-                                <div className="bg-teal-50/60 dark:bg-teal-950/40 p-5 rounded-2xl border border-teal-200 dark:border-teal-800 space-y-4">
+                                <div className="bg-white p-5 rounded-2xl border border-teal-200 space-y-4">
                                     
                                     <div className="flex justify-between items-center">
-                                        <span className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200 font-bold px-3 py-1 rounded-full">
+                                        <span className="text-xs bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-full">
                                             {difficulty} Level
                                         </span>
                                         {/* COUNTDOWN TIMER BADGE */}
-                                        <div className="flex items-center gap-1.5 text-xs font-black text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800">
+                                        <div className="flex items-center gap-1.5 text-xs font-black text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                                            <Clock size={13} />
                                             <span>
                                                 {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, "0")}
                                             </span>
                                         </div>
                                     </div>
-                                    <p className="text-base font-extrabold text-gray-900 dark:text-gray-100 leading-snug">
+                                    <p className="text-base font-semibold text-teal-200 leading-snug">
                                         {questions[currentQuestion]?.question}
                                     </p>
                                     {/* ANSWER TEXTAREA */}
                                     <textarea
                                         rows="4"
-                                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed"
+                                        className="w-full border border-teal-200 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed [&::placeholder]:opacity-20"
                                         placeholder="Type or speak your answer here..."
                                         value={answers[currentQuestion] || ""}
                                         onChange={(e) => {
@@ -312,6 +314,7 @@ export default function InterviewSimulator(){
                                                 onClick={startListening}
                                                 className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center gap-1.5"
                                             >
+                                                <Mic size={15} />
                                                 Start Recording Voice
                                             </button>
                                         ) : (
@@ -319,6 +322,7 @@ export default function InterviewSimulator(){
                                                 onClick={stopListening}
                                                 className="bg-red-600 hover:bg-red-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow animate-pulse flex items-center gap-1.5"
                                             >
+                                                <Mic size={15} />
                                                 Stop Recording (Listening...)
                                             </button>
                                         )}
@@ -329,30 +333,32 @@ export default function InterviewSimulator(){
                                     <button
                                         disabled={currentQuestion === 0}
                                         onClick={() => setCurrentQuestion(currentQuestion - 1)}
-                                        className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold px-5 py-2.5 rounded-xl disabled:opacity-40 text-sm transition"
+                                        className="bg-teal-100 text-teal-800 font-bold px-5 py-2.5 rounded-xl disabled:opacity-40 text-sm transition flex items-center gap-1.5"
                                     >
-                                        ← Previous
+                                        <ChevronLeft size={16} />
+                                        Previous
                                     </button>
                                     {currentQuestion < questions.length - 1 ? (
                                         <button
                                             onClick={() => setCurrentQuestion(currentQuestion + 1)}
-                                            className="bg-teal-600 hover:bg-teal-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition"
+                                            className="bg-teal-100 text-teal-800 font-bold px-5 py-2.5 rounded-xl disabled:opacity-40 text-sm transition flex items-center gap-1.5"
                                         >
-                                            Next Question →
+                                            <ChevronRight size={16} />
+                                            Next Question
                                         </button>
                                     ) : (
                                         <button
                                             onClick={submitInterview}
                                             disabled={loading}
-                                            className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-extrabold px-6 py-2.5 rounded-xl text-sm shadow transition transform active:scale-95"
+                                            className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-extrabold px-6 py-2.5 rounded-xl text-sm shadow transition transform active:scale-95 flex itens-center gap-1.5"
                                         >
-                                            {loading ? "Evaluating Session..." : "Finish & Submit Interview 🚀"}
+                                            {loading ? "Evaluating Session..." : "Finish & Submit Interview"}
                                         </button>
                                     )}
                                 </div>
                                 {/* EVALUATION FEEDBACK REPORT */}
                                 {evaluation && (
-                                    <div className="mt-8 border-t border-teal-100 dark:border-teal-900 pt-6 space-y-4">
+                                    <div className="mt-8 border-t border-teal-100 pt-6 space-y-4">
                                         
                                         <div className="bg-gradient-to-br from-teal-700 to-emerald-800 text-white rounded-2xl p-6 text-center shadow-xl">
                                             <span className="text-xs font-extrabold uppercase tracking-widest text-teal-200">
@@ -363,21 +369,21 @@ export default function InterviewSimulator(){
                                             </p>
                                         </div>
                                         <div className="grid md:grid-cols-2 gap-4">
-                                            <div className="bg-emerald-50/80 dark:bg-emerald-950/40 p-4 rounded-2xl border-l-4 border-emerald-500">
-                                                <h4 className="font-bold text-xs text-emerald-800 dark:text-emerald-300 uppercase tracking-wider mb-2">
+                                            <div className="bg-emerald-50/80 p-4 rounded-2xl border-l-4 border-emerald-500">
+                                                <h4 className="font-bold text-xs text-emerald-800 uppercase tracking-wider mb-2">
                                                     Strengths
                                                 </h4>
-                                                <ul className="space-y-1 text-xs text-emerald-900 dark:text-emerald-100 font-medium">
+                                                <ul className="space-y-1 text-xs text-emerald-900 font-medium">
                                                     {evaluation.strengths?.map((item, idx) => (
                                                         <li key={idx}>• {item}</li>
                                                     ))}
                                                 </ul>
                                             </div>
-                                            <div className="bg-amber-50/80 dark:bg-amber-950/40 p-4 rounded-2xl border-l-4 border-amber-500">
-                                                <h4 className="font-bold text-xs text-amber-800 dark:text-amber-300 uppercase tracking-wider mb-2">
+                                            <div className="bg-emerald-50/80 p-4 rounded-2xl border-l-4 border-emerald-500">
+                                                <h4 className="font-bold text-xs text-emerald-800 uppercase tracking-wider mb-2">
                                                     Weaknesses
                                                 </h4>
-                                                <ul className="space-y-1 text-xs text-amber-900 dark:text-amber-100 font-medium">
+                                                <ul className="space-y-1 text-xs text-emerald-900 font-medium">
                                                     {evaluation.weaknesses?.map((item, idx) => (
                                                         <li key={idx}>• {item}</li>
                                                     ))}
