@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../api/axiosInstance";
-import { Loader2, Route, Target, Sparkles } from "lucide-react";
+import { Loader2, Route, Target, Sparkles, BarChart3, CheckCircle2, Circle, Clock3 } from "lucide-react";
 
 export default function LearningRoadmap()
 {
@@ -170,17 +170,18 @@ export default function LearningRoadmap()
                     </button>
                 </div>
                 {/* ROADMAP TRACKER SECTION */}
-                <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 dark:border-teal-900 flex flex-col justify-between">
+                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 flex flex-col justify-between">
                     <div>
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-800 dark:text-teal-200">
-                            <span>📈</span> Learning Journey & Progress
+                        <h2 className="text-xl font-bold mb-5 flex items-center gap-2 text-teal-500/90">
+                            <BarChart3 className="w-5 h-5" />
+                            Learning Journey & Progress
                         </h2>
                         {!roadmap ? (
-                            <div className="flex flex-col items-center justify-center h-[350px] text-center p-6 space-y-3 border-2 border-dashed border-teal-100 dark:border-teal-900 rounded-2xl">
-                                <div className="w-16 h-16 rounded-3xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-300 flex items-center justify-center text-3xl font-bold">
-                                    🗺️
+                            <div className="flex flex-col items-center justify-center h-[350px] text-center p-6 space-y-4 border-2 border-dashed border-teal-200  rounded-2xl">
+                                <div className="w-16 h-16 rounded-3xl bg-teal-50 text-teal-600 flex items-center justify-center text-3xl font-bold">
+                                    <Map className="w-8 h-8" />
                                 </div>
-                                <p className="text-gray-500 text-sm font-medium">
+                                <p className="text-teal-700 text-sm font-medium max-w-sm leading-relaxed">
                                     Enter your career goal on the left to generate your interactive learning roadmap.
                                 </p>
                             </div>
@@ -190,28 +191,28 @@ export default function LearningRoadmap()
                                 {/* TARGET ROLE BADGE */}
                                 <div className="bg-teal-50 dark:bg-teal-950/60 p-4 rounded-2xl border border-teal-200 dark:border-teal-800 flex justify-between items-center">
                                     <div>
-                                        <span className="text-xs font-bold text-teal-800 dark:text-teal-300 uppercase tracking-wider block">
+                                        <span className="text-xs font-bold text-teal-700 uppercase tracking-wider block">
                                             Current Target Goal
                                         </span>
-                                        <p className="text-lg font-black text-teal-900 dark:text-teal-100 mt-0.5">
+                                        <p className="text-lg font-black text-teal-900 mt-0.1 break-words">
                                             {roadmap.targetRole}
                                         </p>
                                     </div>
-                                    <span className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200 font-bold px-3 py-1 rounded-full">
+                                    <span className="text-xs bg-teal-100 text-teal-800 font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
                                         {roadmap.roadmap?.length || 0} Modules
                                     </span>
                                 </div>
                                 {/* PROGRESS BAR */}
                                 <div>
                                     <div className="flex justify-between items-center mb-1.5">
-                                        <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                        <span className="text-xs font-bold text-teal-700 uppercase tracking-wider">
                                             Overall Journey Completion
                                         </span>
-                                        <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">
+                                        <span className="text-sm font-black text-emerald-600">
                                             {roadmap.progress || 0}% Completed
                                         </span>
                                     </div>
-                                    <div className="w-full bg-gray-200 dark:bg-gray-700 h-3 rounded-full overflow-hidden">
+                                    <div className="w-full bg-teal-100 h-3 rounded-full overflow-hidden">
                                         <div
                                             className="bg-emerald-500 h-3 rounded-full transition-all duration-500"
                                             style={{ width: `${roadmap.progress || 0}%` }}
@@ -225,46 +226,48 @@ export default function LearningRoadmap()
                                             key={step._id || index}
                                             className={`p-4 rounded-2xl border transition duration-200 ${
                                                 step.completed
-                                                    ? "bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700 shadow-sm"
-                                                    : "bg-gray-50/80 dark:bg-slate-900/60 border-gray-200 dark:border-slate-700 hover:border-teal-300"
+                                                    ? "bg-emerald-200/80 border-emerald-300 shadow-sm"
+                                                    : "bg-emerald-50/80 border-emerald-300 hover:border-emerald-400"
                                             }`}
                                         >
                                             <div className="flex items-start gap-3">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={step.completed || false}
-                                                    onChange={() => toggleStep(index)}
-                                                    className="w-5 h-5 mt-1 text-teal-600 rounded-lg focus:ring-teal-500 cursor-pointer shrink-0 accent-teal-600"
-                                                />
-                                                <div className="flex-1">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => toggleStep(index)}
+                                                    className="mt-0.5 shrink-0 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 transition"
+                                                    aria-label={step.completed ? "Mark step incomplete" : "Mark step complete"}
+                                                >
+                                                    {step.completed ? ( <CheckCircle2 className="w-5 h-5" /> ) : ( <Circle className="w-5 h-5" /> )}
+                                                </button>
+                                                <div className="flex-1 min-w-0">
                                                     <div className="flex justify-between items-start gap-2">
                                                         <h3
                                                             className={`font-bold text-sm ${
                                                                 step.completed
-                                                                    ? "line-through text-gray-400 dark:text-gray-500"
-                                                                    : "text-gray-900 dark:text-gray-100"
+                                                                    ? "line-through text-slate-900"
+                                                                    : "text-slate-900"
                                                             }`}
                                                         >
-                                                            {index + 1}. {step.title}
+                                                            {index + 1}.{" "}{step.title}
                                                         </h3>
                                                         {step.duration && (
-                                                            <span className="text-[11px] bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 font-bold px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0">
-                                                                ⏱️ {step.duration}
+                                                            <span className="text-[11px] bg-teal-100 text-teal-800 font-bold px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 flex items-center gap-1">
+                                                                <Clock3 className="w-3 h-3" />{step.duration}
                                                             </span>
                                                         )}
                                                     </div>
                                                     {step.description && (
-                                                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
+                                                        <p className="text-xs text-teal-700 mt-1.5 leading-relaxed">
                                                             {step.description}
                                                         </p>
                                                     )}
                                                     <p className="text-[11px] font-bold mt-2">
                                                         {step.completed ? (
-                                                            <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                                                            <span className="text-slate-900 flex items-center gap-1">
                                                                 <span>✓</span> Completed
                                                             </span>
                                                         ) : (
-                                                            <span className="text-gray-400">In Progress</span>
+                                                            <span className="text-slate-900">In Progress</span>
                                                         )}
                                                     </p>
                                                 </div>
