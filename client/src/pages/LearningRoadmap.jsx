@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../api/axiosInstance";
-import { Loader2, Route } from "lucide-react";
+import { Loader2, Route, Target, Sparkles } from "lucide-react";
 
 export default function LearningRoadmap()
 {
@@ -140,22 +140,23 @@ export default function LearningRoadmap()
             <div className="grid md:grid-cols-2 gap-8">
                 
                 {/* INPUT SECTION */}
-                <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 dark:border-teal-900 flex flex-col justify-between space-y-6">
+                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 flex flex-col justify-between space-y-6">
                     <div>
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-800 dark:text-teal-200">
-                            <span>🎯</span> Target Career Goal
+                        <h2 className="text-xl font-bold mb-5 flex items-center gap-2 text-teal-500/90">
+                            <Target className="w-5 h-5" />
+                            Target Career Goal
                         </h2>
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                                    Target Position or Technology *
+                                <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
+                                    Target Position or Technology
                                 </label>
                                 <input
                                     type="text"
                                     placeholder="Example: Full Stack MERN Developer, DevOps Engineer"
                                     value={targetRole}
                                     onChange={(e) => setTargetRole(e.target.value)}
-                                    className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold"
+                                    className="w-full border border-teal-200 bg-white rounded-2xl p-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold transition [&:: placeholder]"
                                 />
                             </div>
                         </div>
@@ -163,9 +164,9 @@ export default function LearningRoadmap()
                     <button
                         onClick={generateRoadmap}
                         disabled={loading || !targetRole.trim()}
-                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base"
+                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base flex items-center justify-center gap-2"
                     >
-                        {loading ? "Building Custom AI Roadmap..." : "Generate AI Learning Roadmap 🚀"}
+                        {loading ? (<><Loader2 className="w-5 h-5 animate-spin" /> "Building Custom AI Roadmap..."</>) :( <><Sparkles className="w-5 h-5" /> "Generate AI Learning Roadmap" </>)}
                     </button>
                 </div>
                 {/* ROADMAP TRACKER SECTION */}
