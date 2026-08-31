@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { Loader2, Route } from "lucide-react";
 
 export default function LearningRoadmap()
 {
@@ -108,12 +109,13 @@ export default function LearningRoadmap()
 
     if(fetching) {
         return (
-            <div className="flex justify-center items-center min-h-[60vh]">
-
-                <p className="text-lg text-gray-600">
-                    Loading your learning roadmap...
-                </p>
-
+            <div className="flex min-h-[60vh] items-center justify-center">
+                <div className="flex items-center gap-3 text-teal-700">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <p className="text-sm font-semibold">
+                        Loading your learning roadmap...
+                    </p>
+                </div>
             </div>
         );
     }
@@ -123,13 +125,14 @@ export default function LearningRoadmap()
             
             {/* HERO HEADER */}
             <div className="text-center max-w-3xl mx-auto">
-                <span className="bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <span className="inline-flex items-center gap-2 bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    <Route className="w-3.5 h-3.5" />
                     Interactive Learning Tracker
                 </span>
-                <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight">
-                    Learning Roadmap Generator 🗺️
+                <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight text-slate-900">
+                    Learning Roadmap Generator
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mt-2">
+                <p className="text-teal-700  text-sm md:text-base mt-3 leading-relaxed font-medium">
                     Generate an AI-powered learning path for your career goal and track your step-by-step progress interactively.
                 </p>
             </div>
