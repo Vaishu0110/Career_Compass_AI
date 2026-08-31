@@ -343,8 +343,8 @@ export default function InterviewSimulator(){
                                             onClick={() => setCurrentQuestion(currentQuestion + 1)}
                                             className="bg-teal-100 text-teal-800 font-bold px-5 py-2.5 rounded-xl disabled:opacity-40 text-sm transition flex items-center gap-1.5"
                                         >
-                                            <ChevronRight size={16} />
                                             Next Question
+                                            <ChevronRight size={16} />
                                         </button>
                                     ) : (
                                         <button
