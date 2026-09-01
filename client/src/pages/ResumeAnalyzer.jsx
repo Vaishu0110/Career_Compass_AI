@@ -1,6 +1,8 @@
 // client/src/pages/ResumeAnalyzer.jsx
 import { useState } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { FileText, Upload, Brain, CheckCircle2, AlertCircle, Target, Briefcase, Download, FileDown, Sparkles } from "lucide-react";
+
 
 export default function ResumeAnalyzer() {
     const [file, setFile] = useState(null);
@@ -71,21 +73,22 @@ export default function ResumeAnalyzer() {
             
             {/* HERO HEADER */}
             <div className="text-center max-w-3xl mx-auto">
-                <span className="bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    <Brain size={13} />
                     AI Intelligence Suite
                 </span>
-                <h1 className="text-3xl md:text-5xl font-black mt-3 tracking-tight">
+                <h1 className="text-3xl md:text-5xl font-black mt-3 tracking-tight text-slate-900">
                     AI Resume Analyzer 
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mt-2">
+                <p className="text-teal-700 text-sm md:text-base mt-2">
                     Upload your resume to get instant ATS scores, breakdown of strengths & weaknesses, and actionable career suggestions.
                 </p>
             </div>
 
             {/* DRAG AND DROP FILE UPLOAD CARD */}
-            <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl border border-teal-100 dark:border-teal-900 max-w-3xl mx-auto">
+            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 max-w-3xl mx-auto">
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="border-2 border-dashed border-teal-300 dark:border-teal-700 hover:border-teal-500 bg-teal-50/50 dark:bg-teal-950/30 rounded-2xl p-8 text-center cursor-pointer transition duration-200 relative">
+                    <div className="border-2 border-dashed border-teal-300 hover:border-teal-500 bg-teal-50/50 rounded-2xl p-8 text-center cursor-pointer transition duration-200 relative">
                         <input
                             type="file"
                             accept=".pdf,.doc,.docx"
@@ -93,24 +96,24 @@ export default function ResumeAnalyzer() {
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         />
                         <div className="space-y-3 pointer-events-none">
-                            <div className="w-14 h-14 mx-auto rounded-2xl bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300 flex items-center justify-center text-2xl font-bold">
-                                📄
+                            <div className="w-14 h-14 mx-auto rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
+                                {file ? ( <FileText size={28} /> ) : ( <Upload size={28} /> )}
                             </div>
                             {file ? (
                                 <div>
-                                    <p className="text-teal-700 dark:text-teal-300 font-extrabold text-base">
-                                        Selected: {file.name}
+                                    <p className="text-teal-700 font-extrabold text-base break-all">
+                                        {file.name}
                                     </p>
-                                    <p className="text-xs text-gray-500 mt-1">
+                                    <p className="text-xs text-teal-600 mt-1">
                                         {(file.size / (1024 * 1024)).toFixed(2)} MB
                                     </p>
                                 </div>
                             ) : (
                                 <div>
-                                    <p className="text-base font-bold text-gray-700 dark:text-gray-200">
+                                    <p className="text-base font-bold text-teal-800">
                                         Click to browse or drop your resume file here
                                     </p>
-                                    <p className="text-xs text-gray-500 mt-1">
+                                    <p className="text-xs text-teal-600 mt-1">
                                         Supports PDF, DOC, and DOCX (Max 10MB)
                                     </p>
                                 </div>
@@ -121,9 +124,9 @@ export default function ResumeAnalyzer() {
                     <button
                         type="submit"
                         disabled={loading || !file}
-                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 text-white font-extrabold py-4 rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base"
+                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base flex items-center justify-center gap-2"
                     >
-                        {loading ? "Analyzing Resume with AI..." : "Upload & Analyze Resume 🚀"}
+                        {loading ?<> <Brain size={19} className="animate-pulse" /> Analyzing Resume with AI... </>: <> <Sparkles size={19} /> Upload & Analyze Resume </>}
                     </button>
                 </form>
             </div>
@@ -135,9 +138,14 @@ export default function ResumeAnalyzer() {
                     {/* DUAL SCORE GAUGE CARDS */}
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-gradient-to-br from-teal-700 to-teal-900 text-white rounded-3xl p-8 shadow-xl relative overflow-hidden text-center">
-                            <span className="text-xs font-extrabold uppercase tracking-widest text-teal-200">
-                                Overall Quality Score
-                            </span>
+                            
+                            <div className="flex items-center justify-center gap-2 text-teal-200">
+                                <FileText size={17} />
+                                <span className="text-xs font-extrabold uppercase tracking-widest text-teal-200">
+                                    Overall Quality Score
+                                </span>
+                            </div>
+
                             <p className="text-6xl font-black mt-3 text-emerald-300">
                                 {analysis.resumeScore}<span className="text-2xl font-normal text-teal-200">/100</span>
                             </p>
@@ -145,9 +153,14 @@ export default function ResumeAnalyzer() {
                         </div>
 
                         <div className="bg-gradient-to-br from-emerald-600 to-teal-800 text-white rounded-3xl p-8 shadow-xl relative overflow-hidden text-center">
-                            <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-200">
-                                ATS Match Rate
-                            </span>
+                            
+                            <div className="flex items-center justify-center gap-2 text-xs font-extrabold uppercase tracking-widest">
+                                <Target size={17} />
+                                <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-200">
+                                    ATS Match Rate
+                                </span>
+                            </div>
+
                             <p className="text-6xl font-black mt-3 text-teal-200">
                                 {analysis.atsScore}<span className="text-2xl font-normal text-emerald-200">%</span>
                             </p>
@@ -158,13 +171,14 @@ export default function ResumeAnalyzer() {
                     {/* SIDE-BY-SIDE STRENGTHS VS WEAKNESSES */}
                     <div className="grid md:grid-cols-2 gap-6">
                         {/* STRENGTHS */}
-                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-emerald-100 dark:border-emerald-900">
-                            <h2 className="text-xl font-bold mb-4 text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
+                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-emerald-100">
+                            <h2 className="text-xl font-bold mb-4 text-emerald-500 flex items-center gap-2">
+                                <CheckCircle2 size={20} />
                                 Key Strengths
                             </h2>
                             <ul className="space-y-2.5">
                                 {analysis.strengths?.map((item, idx) => (
-                                    <li key={idx} className="bg-emerald-50/80 dark:bg-emerald-950/40 p-3.5 rounded-xl border-l-4 border-emerald-500 text-sm font-medium text-emerald-900 dark:text-emerald-100">
+                                    <li key={idx} className="bg-emerald-50/80 p-3.5 rounded-xl border border-emerald-100 text-sm font-medium text-emerald-900">
                                         {item}
                                     </li>
                                 ))}
@@ -172,13 +186,14 @@ export default function ResumeAnalyzer() {
                         </div>
 
                         {/* WEAKNESSES */}
-                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-amber-100 dark:border-amber-900">
-                            <h2 className="text-xl font-bold mb-4 text-amber-700 dark:text-amber-300 flex items-center gap-2">
+                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-emerald-100">
+                            <h2 className="text-xl font-bold mb-4 text-emerald-500 flex items-center gap-2">
+                                <AlertCircle size={20} />
                                 Areas for Improvement
                             </h2>
                             <ul className="space-y-2.5">
                                 {analysis.weaknesses?.map((item, idx) => (
-                                    <li key={idx} className="bg-amber-50/80 dark:bg-amber-950/40 p-3.5 rounded-xl border-l-4 border-amber-500 text-sm font-medium text-amber-900 dark:text-amber-100">
+                                    <li key={idx} className="bg-emerald-50/80 p-3.5 rounded-xl border border-emerald-100 text-sm font-medium text-emerald-900">
                                         {item}
                                     </li>
                                 ))}
@@ -188,27 +203,29 @@ export default function ResumeAnalyzer() {
 
                     {/* MISSING SKILLS & RECOMMENDED ROLES */}
                     <div className="grid md:grid-cols-2 gap-6">
-                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-teal-100 dark:border-teal-900">
-                            <h2 className="text-xl font-bold mb-4 text-teal-800 dark:text-teal-200">
+                        <div className="bg-white rounded-3xl p-6 shadow-md border border-teal-100">
+                            <h2 className="text-xl font-bold mb-4 text-teal-500 flex items-center gap-2">
+                                <Target size={20} />
                                 Missing Key Skills
                             </h2>
                             <div className="flex flex-wrap gap-2">
                                 {analysis.missingSkills?.map((skill, idx) => (
-                                    <span key={idx} className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border border-red-200 dark:border-red-800 text-xs font-bold px-3 py-1.5 rounded-xl">
-                                        + {skill}
+                                    <span key={idx} className="bg-teal-50 text-teal-700 border border-teal-200 text-xs font-bold px-3 py-1.5 rounded-xl">
+                                        {skill}
                                     </span>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-teal-100 dark:border-teal-900">
-                            <h2 className="text-xl font-bold mb-4 text-teal-800 dark:text-teal-200">
+                        <div className="bg-white rounded-3xl p-6 shadow-md border border-teal-100">
+                            <h2 className="text-xl font-bold mb-4 text-teal-500 flex items-center gap-2">
+                                <Briefcase size={20} />
                                 Best Matching Roles
                             </h2>
                             <ul className="space-y-2">
                                 {analysis.recommendedRoles?.map((role, idx) => (
-                                    <li key={idx} className="bg-teal-50/60 dark:bg-teal-950/40 px-3.5 py-2 rounded-xl text-sm font-semibold text-teal-900 dark:text-teal-100 border border-teal-100 dark:border-teal-800">
-                                        • {role}
+                                    <li key={idx} className="bg-teal-50/60 px-3.5 py-2 rounded-xl text-sm font-semibold text-teal-900 border border-teal-100">
+                                        {role}
                                     </li>
                                 ))}
                             </ul>
@@ -216,31 +233,15 @@ export default function ResumeAnalyzer() {
                     </div>
 
                     {/* EXECUTIVE SUMMARY */}
-                    <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-teal-100 dark:border-teal-900">
-                        <h2 className="text-xl font-bold mb-3">
+                    <div className="bg-white  rounded-3xl p-6 shadow-md border border-teal-100">
+                        <h2 className="text-xl font-bold mb-3 text-teal-400 flex items-center gap-2">
+                            <Brain size={20} />
                             AI Executive Summary
                         </h2>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm md:text-base">
+                        <p className="text-teal-500 leading-relaxed text-sm md:text-base">
                             {analysis.summary}
                         </p>
                     </div>
-
-                    {/* DOWNLOAD ACTION BAR */}
-                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <button
-                            onClick={downloadReport}
-                            className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3.5 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2"
-                        >
-                            Download DOCX Report
-                        </button>
-                        <button
-                            onClick={downloadPDF}
-                            className="flex-1 bg-teal-700 hover:bg-teal-800 text-white font-extrabold py-3.5 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2"
-                        >
-                            Download PDF Report
-                        </button>
-                    </div>
-
                 </div>
             )}
         </div>
