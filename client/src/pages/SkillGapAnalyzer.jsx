@@ -5,6 +5,7 @@ import { Target, Wrench, Search, Map, Clock, Save, Sparkles } from "lucide-react
 export default function SkillGapAnalyzer(){
     const [skills, setSkills] = useState("");
     const [targetRole, setTargetRole] = useState("");
+    const [roadmapGenerated, setRoadmapGenerated] = useState(false);
 
     const [result,setResult] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ export default function SkillGapAnalyzer(){
         }
         try {
             setLoading(true);
+            setRoadmapGenerated(false);
             const res= await axiosInstance.post("/skill-gap/analyze",{
                 skills, targetRole,}
             );
@@ -47,6 +49,8 @@ export default function SkillGapAnalyzer(){
                 roadmap: res.data.result.roadmap,
                 estimatedTime: res.data.result.estimatedTime,
             }));
+
+            setRoadmapGenerated(true);
 
         } catch (error) {
             console.error("Roadmap generation error:", error);
@@ -195,27 +199,28 @@ export default function SkillGapAnalyzer(){
                                     <Sparkles size={17} />
                                     {loading ? "Generating Personalized Roadmap..." : "Generate AI Learning Roadmap"}
                                 </button>
-                                {/* ROADMAP STEP LIST */}
-                                {result.roadmap?.length > 0 && (
+                                {/* ROADMAP */}
+                                {roadmapGenerated && result.roadmap?.length > 0 && (
                                     <div className="space-y-4 pt-2">
-                                        <h3 className="font-bold text-sm text-teal-800 dark:text-teal-200 uppercase tracking-wider flex items-center gap-1.5">
+                                        <h3 className="font-bold text-sm text-teal-600 uppercase tracking-wider flex items-center gap-1.5">
                                             Step-by-Step Learning Timeline
                                         </h3>
                                         
                                         <div className="space-y-3">
                                             {result.roadmap.map((step, index) => (
-                                                <div key={index} className="bg-gray-50/80 dark:bg-slate-900/60 p-4 rounded-2xl border border-gray-200 dark:border-slate-700 flex justify-between items-start gap-3">
+                                                <div key={index} className="bg-teal-50/80 p-4 rounded-2xl border border-gray-200 flex justify-between items-start gap-3">
                                                     <div className="space-y-1">
-                                                        <h4 className="font-extrabold text-sm text-gray-900 dark:text-gray-100">
+                                                        <h4 className="font-extrabold text-sm text-slate-900">
                                                             <span className="text-teal-600 dark:text-teal-400 mr-2">#{index + 1}</span> {step.title}
                                                         </h4>
-                                                        <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                                                        <p className="text-xs text-teal-700 leading-relaxed">
                                                             {step.description}
                                                         </p>
                                                     </div>
                                                     {step.duration && (
-                                                        <span className="text-[11px] bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 font-bold px-2.5 py-1 rounded-full whitespace-nowrap shrink-0">
-                                                            ⏱{step.duration}
+                                                        <span className="text-[11px] bg-teal-100 text-teal-800 font-bold px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 flex items-center gap-1">
+                                                            <Clock size={12} />
+                                                            {step.duration}
                                                         </span>
                                                     )}
                                                 </div>
@@ -223,16 +228,16 @@ export default function SkillGapAnalyzer(){
                                         </div>
                                         {/* ESTIMATED TIME */}
                                         {result.estimatedTime && (
-                                            <div className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 p-4 rounded-2xl text-emerald-900 dark:text-emerald-100 font-bold text-sm flex items-center justify-between">
+                                            <div className="bg-emerald-50 border border-emerald-300 p-4 rounded-2xl text-emerald-900 font-bold text-sm flex items-center justify-between">
                                                 <span>Total Estimated Completion:</span>
-                                                <span className="text-emerald-700 dark:text-emerald-300 font-black">{result.estimatedTime}</span>
+                                                <span className="text-emerald-700 font-black">{result.estimatedTime}</span>
                                             </div>
                                         )}
                                         {/* SAVE ROADMAP BUTTON */}
                                         <button
                                             onClick={saveRoadmap}
                                             disabled={loading}
-                                            className="w-full bg-teal-700 hover:bg-teal-800 disabled:opacity-50 text-white font-extrabold py-3.5 rounded-2xl shadow-md transition transform active:scale-95 text-sm"
+                                            className="w-full bg-teal-700 hover:bg-teal-800 disabled:opacity-50 text-white font-extrabold py-3.5 rounded-2xl shadow-md transition transform active:scale-95 text-sm flex items-center justify-center gap-2"
                                         >
                                             {loading ? "Saving..." : "Save Learning Roadmap to Profile"}
                                         </button>
