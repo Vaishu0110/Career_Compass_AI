@@ -37,10 +37,10 @@ export default function DashboardCharts ({ stats }) {
                     stats.rejected,
                 ],
                 backgroundColor: [
-                    "#0d9488",
-                    "#14b8a6",
-                    "#10b981",
-                    "#64748b",
+                    "#94700d",
+                    "#00bfff",
+                    "#00704b",
+                    "#860200",
                 ],
                 borderWidth: 3,
                 borderColor: "#ffffff",
@@ -62,10 +62,10 @@ export default function DashboardCharts ({ stats }) {
                     stats?.learningProgress || 0,
                 ],
                 backgroundColor: [
-                    "#0d9488", 
-                    "#10b981", 
-                    "#14b8a6", 
-                    "#34d399", 
+                    "rgb(232, 156, 205)",
+                    "rgb(176, 219, 199)",
+                    "#00bfff",
+                    "rgb(227, 228, 162)",
                 ],
                 borderRadius: 8,
                 borderSkipped: false,
@@ -90,13 +90,13 @@ export default function DashboardCharts ({ stats }) {
         scales: {
             x: {
                 grid: { display: false },
-                ticks: { color: "#091d17", font: { weight: "600", size: 12 } },
+                ticks: { color: "#fafafa", font: { weight: "600", size: 12 } },
             },
             y: {
                 beginAtZero: true,
                 max:100,
                 grid: { color: "#e2e8f0", strokeDash: [4, 4] },
-                ticks: { color: "#64748b", font: { size: 12 } },
+                ticks: { color: "#f5f7fa", font: { size: 12 } },
             },
         },
     };
@@ -111,8 +111,8 @@ export default function DashboardCharts ({ stats }) {
                 labels: {
                     usePointStyle: true,
                     pointStyle: "circle",
-                    padding: 20,
-                    color: "#04150f",
+                    padding: 40,
+                    color: "#f3f8f8",
                     font: { weight: "600", size: 12 },
                 },
             },
