@@ -15,7 +15,7 @@ export default function ResumePreview({
 }) {
     if(!generatedResume) {
         return (
-            <div className="flex items-center justify-center h-full text-gray-500">
+            <div className="flex items-center justify-center h-full text-teal-800">
                 Your AI generated resume will appear here.
             </div>
         );

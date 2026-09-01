@@ -21,16 +21,16 @@ export default function ResumePhotoUpload({ setPhoto }) {
     return(
         <div className="mt-6">
 
-            <label className="block font-semibold mb-2">
+            <label className="block font-semibold text-teal-600 mb-2">
                 Professional Photo (Optional)
             </label>
             
             { preview ? (
                 <div className="flex flex-col items-center">
                     
-                    <img src={preview} alt="Preview" className="w-36 h-36 rounded-full object-cover border-4 border-gray-300" />
+                    <img src={preview} alt="Preview" className="w-36 h-36 rounded-full object-cover border-4 border-teal-300" />
 
-                    <button type="button" onClick={removePhoto} className="mt-3 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    <button type="button" onClick={removePhoto} className="mt-3 bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">
                         Remove Photo
                     </button>
                 </div>

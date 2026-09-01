@@ -247,13 +247,13 @@ export default function ResumeGenerator() {
             
             {/* HERO HEADER */}
             <div className="text-center max-w-3xl mx-auto">
-                <span className="bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <span className="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                     ATS Resume Builder & Editor
                 </span>
                 <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight">
-                    AI Resume Generator 📄
+                    AI Resume Generator
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mt-2">
+                <p className="text-teal-600 text-sm md:text-base mt-2">
                     Enter your details below to generate an ATS-optimized, high-impact resume in your choice of 6 executive templates.
                 </p>
             </div>

@@ -8,60 +8,60 @@ export default function ResumeForm({
     setPhoto,
 }) {
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 dark:border-teal-900 space-y-6">
-            <h2 className="text-xl font-bold text-teal-800 dark:text-teal-200 flex items-center gap-2">
-                <span>📝</span> Personal & Professional Details
+        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 space-y-6">
+            <h2 className="text-xl font-bold text-teal-500 flex items-center gap-2">
+                Personal & Professional Details
             </h2>
             <form onSubmit={handleGenerate} className="space-y-4">
                 
                 {/* NAME & EMAIL */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
-                            Full Name *
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
+                            Full Name
                         </label>
                         <input
                             type="text"
                             name="fullName"
-                            placeholder="e.g. John Doe"
+                            placeholder="e.g. Rubina Shastri"
                             value={formData.fullName}
                             onChange={handleChange}
                             required
-                            className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
                             Email Address
                         </label>
                         <input
                             type="email"
                             name="email"
-                            placeholder="john@example.com"
+                            placeholder="rubinashastri@example.com"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
                 </div>
                 {/* PHONE & TARGET ROLE */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
                             Phone Number
                         </label>
                         <input
                             type="text"
                             name="phone"
-                            placeholder="+1 (555) 000-0000"
+                            placeholder="+91 9876556789"
                             value={formData.phone}
                             onChange={handleChange}
-                            className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
-                            Target Role *
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
+                            Target Role
                         </label>
                         <input
                             type="text"
@@ -70,20 +70,20 @@ export default function ResumeForm({
                             value={formData.targetRole}
                             onChange={handleChange}
                             required
-                            className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
                 </div>
                 {/* TEMPLATE PICKER */}
                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
                         Resume Design Template
                     </label>
                     <select
                         name="template"
                         value={formData.template}
                         onChange={handleChange}
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full border border-teal-200 rounded-2xl p-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-500"
                     >
                         <option value="Modern">Modern Design</option>
                         <option value="Professional">Professional Corporate</option>
@@ -101,7 +101,7 @@ export default function ResumeForm({
                         placeholder="LinkedIn URL"
                         value={formData.linkedin}
                         onChange={handleChange}
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="[&::placeholder]:opacity-30 w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                     <input
                         type="text"
@@ -109,7 +109,7 @@ export default function ResumeForm({
                         placeholder="GitHub URL"
                         value={formData.github}
                         onChange={handleChange}
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="[&::placeholder]:opacity-30 w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                     <input
                         type="text"
@@ -117,12 +117,12 @@ export default function ResumeForm({
                         placeholder="Portfolio URL"
                         value={formData.portfolio}
                         onChange={handleChange}
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="[&::placeholder]:opacity-30 w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                 </div>
                 {/* TEXTAREAS */}
                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
                         Education History
                     </label>
                     <textarea
@@ -131,12 +131,12 @@ export default function ResumeForm({
                         placeholder="e.g. B.S. in Computer Science - University of Tech (2020-2024)"
                         value={formData.education}
                         onChange={handleChange}
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
-                        Skills *
+                    <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
+                        Skills
                     </label>
                     <textarea
                         rows="3"
@@ -145,12 +145,12 @@ export default function ResumeForm({
                         value={formData.skills}
                         onChange={handleChange}
                         required
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
-                        Projects *
+                    <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
+                        Projects
                     </label>
                     <textarea
                         rows="3"
@@ -159,11 +159,11 @@ export default function ResumeForm({
                         value={formData.projects}
                         onChange={handleChange}
                         required
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1">
                         Work Experience
                     </label>
                     <textarea
@@ -172,16 +172,16 @@ export default function ResumeForm({
                         placeholder="Describe prior roles, responsibilities, and achievements..."
                         value={formData.experience}
                         onChange={handleChange}
-                        className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="[&::placeholder]:opacity-20 w-full border border-teal-200 rounded-2xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                 </div>
                 <ResumePhotoUpload setPhoto={setPhoto} />
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base mt-4"
+                    className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base mt-4"
                 >
-                    {loading ? "Generating Resume with AI..." : "Generate AI Resume 🚀"}
+                    {loading ? "Generating Resume with AI..." : "Generate AI Resume"}
                 </button>
             </form>
         </div>
