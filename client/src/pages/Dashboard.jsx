@@ -47,9 +47,6 @@ export default function Dashboard(){
                     </div>
 
                     <div className="flex gap-3">
-                        <Link to="/edit-profile" className="bg-white text-teal-800 hover:bg-teal-50 px-5 py-3 rounded-xl font-bold transition shadow-lg hover:shadow-xl text-sm">
-                            Edit Profile
-                        </Link>
                         <Link to="/career-coach" className="bg-emerald-500 hover:bg-emerald-400 text-white px-5 py-3 rounded-xl font-bold transition shadow-lg text-sm">
                             Ask AI Coach
                         </Link>
@@ -60,70 +57,70 @@ export default function Dashboard(){
             {/* Dashboard Stats */}
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 dark:border-teal-900 relative">
+                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 relative">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm font-semibold text-gray-500">
+                        <span className="text-sm font-semibold text-teal-500">
                             Resume Strength
                         </span>
-                        <span className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 dark:border dark:border-teal-700/60 font-bold px-2.5 py-1 rounded-full">
+                        <span className="text-xs bg-teal-100 text-teal-800 font-bold px-2.5 py-1 rounded-full">
                             Score
                         </span>
                     </div>
-                    <p className="text-4xl font-extrabold text-teal-600 dark:text-teal-400 mt-3">
-                        {stats.resumeScore || 0}<span className="text-base text-gray-400 font-normal">/100</span>
+                    <p className="text-4xl font-extrabold text-teal-400 mt-3">
+                        {stats.resumeScore || 0}<span className="text-base text-teal-600 font-normal">/100</span>
                     </p>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full mt-4">
+                    <div className="w-full bg-gray-200 h-2 rounded-full mt-4">
                         <div className="bg-teal-500 h-2 rounded-full transition-all duration-500" style={{ width: `${stats.resumeScore || 0}%` }} />
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 dark:border-teal-900 relative">
+                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 relative">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm font-semibold text-gray-500">
+                        <span className="text-sm font-semibold text-emerald-500">
                             ATS Match Rate
                         </span>
-                        <span className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 dark:border dark:border-teal-700/60 font-bold px-2.5 py-1 rounded-full">
+                        <span className="text-xs bg-teal-100 text-teal-800 font-bold px-2.5 py-1 rounded-full">
                             Optimization
                         </span>
                     </div>
-                    <p className="text-4xl font-extrabold text-teal-600 dark:text-teal-400 mt-3">
-                        {stats.atsScore || 0}<span className="text-base text-gray-400 font-normal">%</span>
+                    <p className="text-4xl font-extrabold text-emerald-400 mt-3">
+                        {stats.atsScore || 0}<span className="text-base text-emerald-600 font-normal">%</span>
                     </p>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full mt-4">
+                    <div className="w-full bg-gray-200 h-2 rounded-full mt-4">
                         <div className="bg-emerald-500 h-2 rounded-full transition-all duration-500" style={{ width: `${stats.atsScore || 0}%` }} />
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 dark:border-teal-900 relative">
+                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 relative">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm font-semibold text-gray-500">
+                        <span className="text-sm font-semibold text-teal-500">
                            Mock Interview Score
                         </span>
-                        <span className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 dark:border dark:border-teal-700/60 font-bold px-2.5 py-1 rounded-full">
+                        <span className="text-xs bg-teal-100 text-teal-800 font-bold px-2.5 py-1 rounded-full">
                             Readiness
                         </span>
                     </div>
-                    <p className="text-4xl font-extrabold text-teal-600 dark:text-teal-400 mt-3">
-                        {stats.interviewScore || 0}<span className="text-base text-gray-400 font-normal">/100</span>
+                    <p className="text-4xl font-extrabold text-teal-400 mt-3">
+                        {stats.interviewScore || 0}<span className="text-base text-teal-600 font-normal">/100</span>
                     </p>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full mt-4">
+                    <div className="w-full bg-gray-200 h-2 rounded-full mt-4">
                         <div className="bg-teal-500 h-2 rounded-full transition-all duration-500" style={{ width: `${stats.resumeScore || 0}%` }} />
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 dark:border-teal-900 relative">
+                <div className="bg-white rounded-2xl p-6 shadow-md border border-teal-100 relative">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm font-semibold text-gray-500">
+                        <span className="text-sm font-semibold text-emerald-500">
                             Roadmap Progress
                         </span>
-                        <span className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 dark:border dark:border-teal-700/60 font-bold px-2.5 py-1 rounded-full">
+                        <span className="text-xs bg-teal-100 text-teal-800 font-bold px-2.5 py-1 rounded-full">
                            Journey
                         </span>
                     </div>
-                    <p className="text-4xl font-extrabold text-teal-600 dark:text-teal-400 mt-3">
-                        {stats.learningProgress || 0}<span className="text-base text-gray-400 font-normal">%</span>
+                    <p className="text-4xl font-extrabold text-emerald-400 mt-3">
+                        {stats.learningProgress || 0}<span className="text-base text-emerald-600 font-normal">%</span>
                     </p>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full mt-4">
+                    <div className="w-full bg-gray-200 h-2 rounded-full mt-4">
                         <div className="bg-emerald-500 h-2 rounded-full transition-all duration-500" style={{ width: `${stats.learningProgress || 0}%` }} />
                     </div>
                 </div>
@@ -170,65 +167,65 @@ export default function Dashboard(){
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     <Link to="/resume-analyzer">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">Resume Analyzer</h3>
-                            <p className="text-xs text-gray-500 mt-1">Get AI Resume Feedback and ATS score optimization.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">Resume Analyzer</h3>
+                            <p className="text-xs text-teal-600 mt-1">Get AI Resume Feedback and ATS score optimization.</p>
                         </div>
                     </Link>
 
                     <Link to="/resume-generator">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">Resume Builder</h3>
-                            <p className="text-xs text-gray-500 mt-1">Generate professional, ATS-ready resumes with AI.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">Resume Builder</h3>
+                            <p className="text-xs text-teal-600 mt-1">Generate professional, ATS-ready resumes with AI.</p>
                         </div>
                     </Link>
 
                     <Link to="/ats-checker">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">ATS Checker</h3>
-                            <p className="text-xs text-gray-500 mt-1">Test your resume against job description keywords.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">ATS Checker</h3>
+                            <p className="text-xs text-teal-600 mt-1">Test your resume against job description keywords.</p>
                         </div>
                     </Link>
 
                     <Link to="/skill-gap">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">Skill Gap Analyzer</h3>
-                            <p className="text-xs text-gray-500 mt-1">Find missing skills required for your target role.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">Skill Gap Analyzer</h3>
+                            <p className="text-xs text-teal-600 mt-1">Find missing skills required for your target role.</p>
                         </div>
                     </Link>
 
                     <Link to="/learning-roadmap">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">Learning Roadmap</h3>
-                            <p className="text-xs text-gray-500 mt-1">Track your personalized step-by-step learning plan.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">Learning Roadmap</h3>
+                            <p className="text-xs text-teal-600 mt-1">Track your personalized step-by-step learning plan.</p>
                         </div>
                     </Link>
 
                     <Link to="/interview-simulator">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">Interview Simulator</h3>
-                            <p className="text-xs text-gray-500 mt-1">Practice AI mock interviews with instant scoring.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">Interview Simulator</h3>
+                            <p className="text-xs text-teal-600 mt-1">Practice AI mock interviews with instant scoring.</p>
                         </div>
                     </Link>
 
                     <Link to="/job-tracker">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">Job Tracker</h3>
-                            <p className="text-xs text-gray-500 mt-1">Manage applications, interviews, and job offers.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">Job Tracker</h3>
+                            <p className="text-xs text-teal-600 mt-1">Manage applications, interviews, and job offers.</p>
                         </div>
                     </Link>
 
                     <Link to="/job-recommendations">
-                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 dark:border-teal-900 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg font-bold">Job Matches</h3>
-                            <p className="text-xs text-gray-500 mt-1">Explore personalized AI-matched job opportunities.</p>
+                        <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
+                            <h3 className="text-lg text-teal-400 font-bold">Job Matches</h3>
+                            <p className="text-xs text-teal-600 mt-1">Explore personalized AI-matched job opportunities.</p>
                         </div>
                     </Link>
 
                 </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 shadow-md border border-teal-10 dark:border-teal-900">
+            <div className="bg-white rounded-3xl p-6 shadow-md border border-teal-10">
                 <DashboardCharts stats={stats} />
             </div>
         </div>
