@@ -83,7 +83,7 @@ export default function Navbar() {
                                     <Link to="/edit-profile" className="block px-4 py-3 text-sm text-teal-100 hover:bg-teal-800/70 hover:text-emerald-300 transition">
                                         Edit Profile
                                     </Link>
-                                    <button onClick={logout} className="w-full text-left px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition">
+                                    <button onClick={logout} className="cursor-pointer w-full text-left px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition">
                                         Logout
                                     </button>
                                 </div>
