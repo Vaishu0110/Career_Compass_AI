@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../api/axiosInstance";
-import { Loader2, Route, Target, Sparkles, BarChart3, CheckCircle2, Circle, Clock3 } from "lucide-react";
+import { Map, Loader2, Route, Target, Sparkles, BarChart3, CheckCircle2, Circle, Clock3 } from "lucide-react";
 
 export default function LearningRoadmap()
 {
