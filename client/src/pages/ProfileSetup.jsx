@@ -90,13 +90,10 @@ export default function ProfileSetup(){
                 
                 {/* BRAND HEADER */}
                 <div className="text-center space-y-3">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-white font-black text-2xl shadow-lg mx-auto">
-                        🧭
-                    </div>
                     <h1 className="text-2xl md:text-4xl font-black bg-gradient-to-r from-teal-100 via-emerald-200 to-teal-50 bg-clip-text text-transparent">
                         Complete Your Profile
                     </h1>
-                    <p className="text-xs text-gray-400 font-medium">
+                    <p className="text-xs text-teal-600 font-medium">
                         Set up your career goals and technical profile to unlock AI recommendations.
                     </p>
                 </div>
@@ -105,8 +102,8 @@ export default function ProfileSetup(){
                     
                     {/* ROLE SELECTOR */}
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
-                            Candidate Status / Role *
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
+                            Candidate Status / Role
                         </label>
                         <select
                             name="role"
@@ -124,7 +121,7 @@ export default function ProfileSetup(){
                     {/* NAME & PHONE */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
                                 Full Name
                             </label>
                             <input
@@ -133,28 +130,28 @@ export default function ProfileSetup(){
                                 placeholder="Full Name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold"
+                                className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
                                 Phone Number
                             </label>
                             <input
                                 type="text"
                                 name="phone"
-                                placeholder="+1 (555) 000-0000"
+                                placeholder="+91 9123412345"
                                 value={formData.phone}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                     </div>
                     {/* TARGET ROLE & COLLEGE */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
-                                Target Position / Role *
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
+                                Target Position / Role
                             </label>
                             <input
                                 type="text"
@@ -163,12 +160,12 @@ export default function ProfileSetup(){
                                 value={formData.targetRole}
                                 onChange={handleChange}
                                 required
-                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 font-bold"
+                                className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 font-bold"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
-                                College / University
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
+                                College / School
                             </label>
                             <input
                                 type="text"
@@ -176,14 +173,14 @@ export default function ProfileSetup(){
                                 placeholder="University Name"
                                 value={formData.college}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                     </div>
                     {/* EDUCATION & SKILLS */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
                                 Degree / Education
                             </label>
                             <input
@@ -192,11 +189,11 @@ export default function ProfileSetup(){
                                 placeholder="B.S. Computer Science"
                                 value={formData.education}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
                                 Core Skills (Comma Separated)
                             </label>
                             <input
@@ -205,7 +202,7 @@ export default function ProfileSetup(){
                                 placeholder="React, Node.js, Python..."
                                 value={formData.skills}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                     </div>
@@ -217,7 +214,7 @@ export default function ProfileSetup(){
                             placeholder="Portfolio URL"
                             value={formData.portfolio}
                             onChange={handleChange}
-                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                         <input
                             type="text"
@@ -225,7 +222,7 @@ export default function ProfileSetup(){
                             placeholder="GitHub URL"
                             value={formData.github}
                             onChange={handleChange}
-                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                         <input
                             type="text"
@@ -233,12 +230,12 @@ export default function ProfileSetup(){
                             placeholder="LinkedIn URL"
                             value={formData.linkedin}
                             onChange={handleChange}
-                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
                     {/* EXPERIENCE */}
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
                             Experience & Projects Summary
                         </label>
                         <textarea
@@ -247,7 +244,7 @@ export default function ProfileSetup(){
                             value={formData.experience}
                             onChange={handleChange}
                             rows="3"
-                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed"
+                            className="w-full [&::placeholder]:opacity-20 bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed"
                         />
                     </div>
                     {/* PROFILE PICTURE PICKER */}
