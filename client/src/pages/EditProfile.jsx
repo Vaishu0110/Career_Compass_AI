@@ -88,7 +88,7 @@ export default function EditProfile() {
                     Candidate Profile Settings
                 </span>
                 <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight">
-                    Edit Profile 👤
+                    Edit Profile
                 </h1>
                 <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mt-2">
                     Update your target career goal, core skill set, and profile photo used across AI recommendations.
@@ -117,7 +117,7 @@ export default function EditProfile() {
                             <h3 className="font-bold text-base text-gray-900 dark:text-gray-100">
                                 Profile Picture
                             </h3>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-teal-700">
                                 PNG, JPG or WebP up to 5MB. Displayed across your dashboard.
                             </p>
                             <input
@@ -131,8 +131,8 @@ export default function EditProfile() {
                     {/* NAME & EMAIL GRID */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                                Full Name *
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-500 mb-1.5">
+                                Full Name
                             </label>
                             <input
                                 type="text"
@@ -141,12 +141,12 @@ export default function EditProfile() {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                                Email Address *
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-500 mb-1.5">
+                                Email Address
                             </label>
                             <input
                                 type="email"
@@ -155,15 +155,15 @@ export default function EditProfile() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                     </div>
                     {/* TARGET ROLE & EDUCATION GRID */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                                Target Career Role *
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-500 mb-1.5">
+                                Target Career Role
                             </label>
                             <input
                                 type="text"
@@ -171,11 +171,11 @@ export default function EditProfile() {
                                 placeholder="e.g. Full Stack Developer"
                                 value={formData.targetRole}
                                 onChange={handleChange}
-                                className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-teal-500 mb-1.5">
                                 Education
                             </label>
                             <input
@@ -184,13 +184,13 @@ export default function EditProfile() {
                                 placeholder="e.g. B.Tech Computer Science"
                                 value={formData.education}
                                 onChange={handleChange}
-                                className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="w-full [&::placeholder]:opacity-20 border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                         </div>
                     </div>
                     {/* SKILLS */}
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-500 mb-1.5">
                             Core Skills (Comma Separated)
                         </label>
                         <input
@@ -199,12 +199,12 @@ export default function EditProfile() {
                             placeholder="React, Node.js, Express, MongoDB, Tailwind, Python..."
                             value={formData.skills}
                             onChange={handleChange}
-                            className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="w-full [&::placeholder]:opacity-20 border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
                     {/* EXPERIENCE */}
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-500 mb-1.5">
                             Professional Experience
                         </label>
                         <textarea
@@ -213,7 +213,7 @@ export default function EditProfile() {
                             value={formData.experience}
                             onChange={handleChange}
                             rows={4}
-                            className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed"
+                            className="w-full [&::placeholder]:opacity-20 border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed"
                         />
                     </div>
                     {/* SAVE BUTTON */}
@@ -221,7 +221,7 @@ export default function EditProfile() {
                         type="submit"
                         className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base"
                     >
-                        Save Profile Changes 💾
+                        Save Profile Changes
                     </button>
                 </form>
             </div>
