@@ -140,23 +140,24 @@ export default function SkillGapAnalyzer(){
                     <button
                         onClick={analyzeSkillGap}
                         disabled={loading || !skills.trim() || !targetRole.trim()}
-                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base"
+                        className="w-full bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 text-base flex items-center justify-center gap-2"
                     >
-                        {loading ? "Analyzing Skill Gaps..." : "Analyze Skill Gap 🔍"}
+                        <Search size={19} />
+                        {loading ? "Analyzing Skill Gaps..." : "Analyze Skill Gap "}
                     </button>
                 </div>
                 {/* RESULT REPORT SECTION */}
-                <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 dark:border-teal-900 flex flex-col justify-between">
+                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 flex flex-col justify-between">
                     <div>
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-800 dark:text-teal-200">
+                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-500 dark:text-teal-200">
                             Gap Breakdown & Learning Plan
                         </h2>
                         {!result ? (
                             <div className="flex flex-col items-center justify-center h-[380px] text-center p-6 space-y-3 border-2 border-dashed border-teal-100 dark:border-teal-900 rounded-2xl">
-                                <div className="w-16 h-16 rounded-3xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-300 flex items-center justify-center text-3xl font-bold">
-                                    🗺️
+                                <div className="w-16 h-16 rounded-3xl bg-teal-50 text-teal-600 flex items-center justify-center">
+                                    <Map size={30} />
                                 </div>
-                                <p className="text-gray-500 text-sm font-medium">
+                                <p className="text-teal-600 text-sm font-medium">
                                     Your missing skills and personalized learning roadmap will appear here.
                                 </p>
                             </div>
@@ -164,23 +165,23 @@ export default function SkillGapAnalyzer(){
                             <div className="space-y-6 animate-fadeIn">
                                 
                                 {/* TARGET ROLE BADGE */}
-                                <div className="bg-teal-50 dark:bg-teal-950/60 p-4 rounded-2xl border border-teal-200 dark:border-teal-800">
-                                    <span className="text-xs font-bold text-teal-800 dark:text-teal-300 uppercase tracking-wider block">
+                                <div className="bg-teal-50 p-4 rounded-2xl border border-teal-200">
+                                    <span className="text-xs font-bold text-teal-800 uppercase tracking-wider block">
                                         Target Position
                                     </span>
-                                    <p className="text-lg font-black text-teal-900 dark:text-teal-100 mt-1">
+                                    <p className="text-lg font-black text-teal-900 mt-1">
                                         {result.targetRole || targetRole}
                                     </p>
                                 </div>
                                 {/* MISSING SKILLS */}
                                 <div>
-                                    <h3 className="font-bold text-sm text-red-600 dark:text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                                        Missing Skills Required ({result.missingSkills?.length || 0})
+                                    <h3 className="font-bold text-sm text-teal-600 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                        <Wrench size={16} /> Missing Skills Required ({result.missingSkills?.length || 0})
                                     </h3>
                                     <div className="flex flex-wrap gap-2">
                                         {result.missingSkills?.map((skill, index) => (
-                                            <span key={index} className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border border-red-200 dark:border-red-800 text-xs font-bold px-3 py-1.5 rounded-full">
-                                                + {skill}
+                                            <span key={index} className="bg-teal-50 text-teal-700 border border-teal-200 text-xs font-bold px-3 py-1.5 rounded-full">
+                                                {skill}
                                             </span>
                                         ))}
                                     </div>
@@ -189,9 +190,10 @@ export default function SkillGapAnalyzer(){
                                 <button
                                     onClick={generateRoadmap}
                                     disabled={loading}
-                                    className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-extrabold py-3.5 rounded-2xl shadow-md transition transform active:scale-95 text-sm"
+                                    className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-extrabold py-3.5 rounded-2xl shadow-md transition transform active:scale-95 text-sm flex items-center justify-center gap-2"
                                 >
-                                    {loading ? "Generating Personalized Roadmap..." : "✨ Generate AI Learning Roadmap"}
+                                    <Sparkles size={17} />
+                                    {loading ? "Generating Personalized Roadmap..." : "Generate AI Learning Roadmap"}
                                 </button>
                                 {/* ROADMAP STEP LIST */}
                                 {result.roadmap?.length > 0 && (
