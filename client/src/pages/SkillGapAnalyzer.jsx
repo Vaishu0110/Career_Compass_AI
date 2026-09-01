@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { Target, Wrench, Search, Map, Clock, Save, Sparkles } from "lucide-react";
 
 export default function SkillGapAnalyzer(){
     const [skills, setSkills] = useState("");
@@ -89,13 +90,14 @@ export default function SkillGapAnalyzer(){
             
             {/* HERO HEADER */}
             <div className="text-center max-w-3xl mx-auto">
-                <span className="bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    <Sparkles size={13} />
                     Career Advancement AI
                 </span>
-                <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight">
-                    Skill Gap Analyzer 🔍
+                <h1 className="text-3xl md:text-5xl font-black mt-2 tracking-tight text-slate-900">
+                    Skill Gap Analyzer
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mt-2">
+                <p className="text-slate-500 text-sm md:text-base mt-2">
                     Discover missing skills for your dream role and generate a personalized step-by-step learning journey.
                 </p>
             </div>
@@ -103,34 +105,34 @@ export default function SkillGapAnalyzer(){
             <div className="grid md:grid-cols-2 gap-8">
                 
                 {/* INPUT SECTION */}
-                <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 dark:border-teal-900 flex flex-col justify-between space-y-6">
+                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-teal-100 flex flex-col justify-between space-y-6">
                     <div>
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-800 dark:text-teal-200">
-                            <span>🛠️</span> Current Skills & Target Role
+                        <h2 className="text-xl font-bold mb-5 flex items-center gap-2 text-teal-500">
+                            <Wrench size={21} />Current Skills & Target Role
                         </h2>
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                                    Your Current Skills *
+                                <label className="block text-xs font-bold uppercase tracking-wider text-teal-600 mb-1.5">
+                                    Your Current Skills
                                 </label>
                                 <textarea
                                     rows="7"
                                     value={skills}
                                     onChange={(e) => setSkills(e.target.value)}
                                     placeholder="Enter your skills e.g., JavaScript, React, HTML, CSS, Git..."
-                                    className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed"
+                                    className="w-full border border-teal-200 bg-white rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed [&::placeholder]:opacity-20 resize-none"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                                    Desired Target Role *
+                                <label className="block text-xs font-bold uppercase tracking-wider text-teal-500 mb-1.5">
+                                    Desired Target Role
                                 </label>
                                 <input
                                     type="text"
                                     value={targetRole}
                                     onChange={(e) => setTargetRole(e.target.value)}
                                     placeholder="Target Role e.g., Senior Full Stack Engineer"
-                                    className="w-full border border-teal-200 dark:border-teal-800 dark:bg-slate-900 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold"
+                                    className="w-full border border-teal-200 bg-white rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold [&::placeholder]:opacity-20"
                                 />
                             </div>
                         </div>
