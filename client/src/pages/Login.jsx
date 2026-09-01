@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import axiosInstance from "../api/axiosInstance";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Compass, Mail, Lock } from "lucide-react";
 
 export default function Login() {
   const { setUser } = useContext(AuthContext);
@@ -64,45 +65,51 @@ export default function Login() {
                 
                 {/* BRAND HEADER */}
                 <div className="text-center space-y-3">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-white font-black text-2xl shadow-lg mx-auto">
-                        🧭
-                    </div>
                     <h1 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-teal-100 via-emerald-200 to-teal-50 bg-clip-text text-transparent">
                         Career Compass AI
                     </h1>
-                    <p className="text-xs text-gray-400 font-medium">
+                    <p className="text-xs text-teal-300 font-medium">
                         Welcome back! Sign in to access your dashboard.
                     </p>
                 </div>
                 {/* FORM */}
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
-                            Email Address *
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-300 mb-1.5">
+                            Email Address
                         </label>
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="name@example.com"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                            required
-                        />
+
+                        <div className="relative">
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-500 pointer-events-none" />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="name@example.com"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl py-4 pl-11 text-sm text-white [&::placeholder]:opacity-20 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                required
+                            />
+                        </div>
                     </div>
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">
-                            Password *
+                        <label className="block text-xs font-bold uppercase tracking-wider text-teal-300 mb-1.5">
+                            Password
                         </label>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="••••••••"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl p-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                            required
-                        />
+
+                        <div className="relative">
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-500 pointer-events-none" />
+                            
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="w-full bg-slate-950 border border-teal-800/80 rounded-2xl py-4 pl-11 text-sm text-white [&::placeholder]:opacity-20 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                required
+                            />
+                        </div>
                     </div>
                     <button
                         type="submit"
