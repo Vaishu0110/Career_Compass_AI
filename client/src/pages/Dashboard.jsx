@@ -168,57 +168,57 @@ export default function Dashboard(){
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     <Link to="/resume-analyzer">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">Resume Analyzer</h3>
-                            <p className="text-xs text-teal-600 mt-1">Get AI Resume Feedback and ATS score optimization.</p>
+                            <h3 className="text-lg text-white-400 font-bold">Resume Analyzer</h3>
+                            <p className="text-xs text-teal-500 mt-1">Get AI Resume Feedback and ATS score optimization.</p>
                         </div>
                     </Link>
 
                     <Link to="/resume-generator">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">Resume Builder</h3>
-                            <p className="text-xs text-teal-600 mt-1">Generate professional, ATS-ready resumes with AI.</p>
+                            <h3 className="text-lg text-white-400 font-bold">Resume Builder</h3>
+                            <p className="text-xs text-teal-500 mt-1">Generate professional, ATS-ready resumes with AI.</p>
                         </div>
                     </Link>
 
                     <Link to="/ats-checker">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">ATS Checker</h3>
-                            <p className="text-xs text-teal-600 mt-1">Test your resume against job description keywords.</p>
+                            <h3 className="text-lg text-white-400 font-bold">ATS Checker</h3>
+                            <p className="text-xs text-teal-500 mt-1">Test your resume against job description keywords.</p>
                         </div>
                     </Link>
 
                     <Link to="/skill-gap">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">Skill Gap Analyzer</h3>
-                            <p className="text-xs text-teal-600 mt-1">Find missing skills required for your target role.</p>
+                            <h3 className="text-lg text-white-400 font-bold">Skill Gap Analyzer</h3>
+                            <p className="text-xs text-teal-500 mt-1">Find missing skills required for your target role.</p>
                         </div>
                     </Link>
 
                     <Link to="/learning-roadmap">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">Learning Roadmap</h3>
-                            <p className="text-xs text-teal-600 mt-1">Track your personalized step-by-step learning plan.</p>
+                            <h3 className="text-lg text-white-400 font-bold">Learning Roadmap</h3>
+                            <p className="text-xs text-teal-500 mt-1">Track your personalized step-by-step learning plan.</p>
                         </div>
                     </Link>
 
                     <Link to="/interview-simulator">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">Interview Simulator</h3>
-                            <p className="text-xs text-teal-600 mt-1">Practice AI mock interviews with instant scoring.</p>
+                            <h3 className="text-lg text-white-400 font-bold">Interview Simulator</h3>
+                            <p className="text-xs text-teal-500 mt-1">Practice AI mock interviews with instant scoring.</p>
                         </div>
                     </Link>
 
                     <Link to="/job-tracker">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">Job Tracker</h3>
-                            <p className="text-xs text-teal-600 mt-1">Manage applications, interviews, and job offers.</p>
+                            <h3 className="text-lg text-white-400 font-bold">Job Tracker</h3>
+                            <p className="text-xs text-teal-500 mt-1">Manage applications, interviews, and job offers.</p>
                         </div>
                     </Link>
 
                     <Link to="/job-recommendations">
                         <div className="p-6 bg-white rounded-2xl shadow-md border border-teal-100 hover:-translate-y-1 hover:border-teal-500 transition duration-200 group">
-                            <h3 className="text-lg text-teal-400 font-bold">Job Matches</h3>
-                            <p className="text-xs text-teal-600 mt-1">Explore personalized AI-matched job opportunities.</p>
+                            <h3 className="text-lg text-white-400 font-bold">Job Matches</h3>
+                            <p className="text-xs text-teal-500 mt-1">Explore personalized AI-matched job opportunities.</p>
                         </div>
                     </Link>
 
