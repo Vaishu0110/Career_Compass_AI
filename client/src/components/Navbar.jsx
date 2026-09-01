@@ -65,11 +65,7 @@ export default function Navbar() {
                         <div className="relative group">
                             <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-xl hover:bg-teal-800/60 transition cursor-pointer">
                                 <img
-                                    src={
-                                        user?.profilePicture
-                                    ? `${import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || "http://localhost:5000"}/uploads/profile/${encodeURIComponent(user.profilePicture)}`
-                                    : "/default-avatar.png"
-                                    }
+                                    src={user?.profilePicture || "/default-avatar.png"}
                                     alt="Profile"
                                     className="w-9 h-9 rounded-full object-cover border-2 border-emerald-400 shadow"
                                 />
