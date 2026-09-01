@@ -156,7 +156,7 @@ export default function LearningRoadmap()
                                     placeholder="Example: Full Stack MERN Developer, DevOps Engineer"
                                     value={targetRole}
                                     onChange={(e) => setTargetRole(e.target.value)}
-                                    className="w-full border border-teal-200 bg-white rounded-2xl p-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold transition [&:: placeholder]"
+                                    className="w-full border border-teal-200 bg-white rounded-2xl p-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold transition [&::placeholder]:opacity-20"
                                 />
                             </div>
                         </div>
