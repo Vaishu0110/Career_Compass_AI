@@ -230,3 +230,12 @@ npm run dev
 
 Open you browser with the link provided in client terminal
 
+## PROJECT SCREENSHOTS:
+
+<img width="1470" height="956" alt="Screenshot 2026-09-03 at 12 13 58 AM" src="https://github.com/user-attachments/assets/e7c30dfb-622c-4e5b-a7ed-256d129acc8e" />
+<img width="1470" height="956" alt="Screenshot 2026-09-03 at 12 13 00 AM" src="https://github.com/user-attachments/assets/e7e97cc3-2ea6-4c96-80da-5b3c7008902f" />
+<img width="1470" height="956" alt="Screenshot 2026-09-03 at 12 12 28 AM" src="https://github.com/user-attachments/assets/b70776e8-7aa3-488a-9453-d0132dcf07c5" />
+<img width="1470" height="956" alt="Screenshot 2026-09-03 at 12 12 04 AM" src="https://github.com/user-attachments/assets/4e066d4f-9855-44e8-81aa-8d84b9bd0747" />
+<img width="1470" height="956" alt="Screenshot 2026-09-03 at 12 11 59 AM" src="https://github.com/user-attachments/assets/a62a53db-7887-443e-91e7-357d329e02e7" />
+
+
