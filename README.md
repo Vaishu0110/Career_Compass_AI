@@ -1,16 +1,71 @@
 # Career Compass AI
 
-Overview
+## Overview
 
 Career Compass AI is an intelligent career guidance and development platform designed to help students, fresh graduates,and job seekers make informed career decisions and improve their employability.The platform acts as a virtual career mentor by analyzing user's resumes, skills, intrests, and career goals to provide personalized recommendations, learning paths, and job preparation assistance.
 
 Built using the MERN Stack with Artificial Intelligence and Machine Learning integration, Career Compass AI bridges the gap between a candidate's current skills and industry requirements. The system provides real-time insights, career suggestions, and actionable roadmaps that helps users progress toward their dream career.
 
-Key Features
+## Not Working and Problems:
+
+Mic Button in Interview Simulator sometimes stop working
+
+Theme toggle even though not present works abnormally.
+
+I have removed dark mode from project but still it is present in a few places so the web page opens automatically based on system's theme.
+
+Please run project in light mode of web browser.
+
+## AI USAGE:
+
+AI was used to setup the whole project like npm and cloudinary.
+
+Resume Builder Backend : AI was used in live demo preview of project and when the template is updated changes are made automatically to the live preview.
+
+Resume Analyzer : AI was used to gain the functionality of extracting text from the pdf, doc, docx files for the purpose of analyzing the resume.
+
+Interview Simulator : After submitting responses to all question there was AI usage to bring the functionality of evaluatation of the answers for the corresponding question.
+
+
+Deployment : The deployment of the project was going through a lot of issue which i was unable to fix so i used antigravity to deploy the project and antigravity changes files and made git commmit from ID : 63991d7 to ID : c920b83
+
+Initially I was working on my server part and i got carried away doing the backend and i got lazy and made the frontend form AI and later i made significant changes to frontend. The changes include removal of gray text, proper alignment for hero text, removal of dark mode, better visibility to text, reduced opacity of placeholders, removed all emoji and added lucide icons, redesigning the dashboard, fixing profile image not visible error, etc.
+
+
+
+## INSTRUCTIONS TO RUN:
+
+// Prefer using Google Chrome in light mode.
+
+Use Signup to create new user
+Complete the profile setup
+Login using Signup details
+
+Dashboard will open
+
+Start by analysing a resume.
+
+Followed by Ats Analyzer.
+
+Use the skill gap feature.
+
+Use the learning roadmap feature.
+
+Take the interview simulator to check your progress.
+
+// Use Google Chrome, Voice Recognition does not work properly in Brave.
+
+Get your answers from career coach feature.
+
+Then see out the job recommendations feature.
+
+Followed by job tracker to keep record of applied jobs.
+
+## Key Features
 
 1. Resume Analyzer
 
-The Resumw Analyzer evaluates a user's resume using AI and Natural Language Processing techniques.It identifies grammatical errors, formating issues, missing keywords, and weak descriptions.The system then generates suggestions to improve the resume's quality and ATS compatibility.
+The Resume Analyzer evaluates a user's resume using AI.It identifies grammatical errors, formating issues, missing keywords, and weak descriptions.The system then generates suggestions to improve the resume's quality and ATS compatibility.
 
 Benefits:
 
@@ -21,7 +76,7 @@ Better chances of shortlisting by recruiters
 
 2. ATS Score Checker
 
-Many companies use Applicant Tracking Systems (ATS) to filter resumes before they reach recruiters.The ATS Score Checkerr analyzes resume against industry standards and job descriptions to calculate an ATS score.
+Many companies use Applicant Tracking Systems (ATS) to filter resumes before they reach recruiters.The ATS Score Checker analyzes resume against industry standards and job descriptions to calculate an ATS score.
 
 Features:
 
@@ -112,7 +167,7 @@ Continuous guidance
 Data-driven career decisions
 
 
-Technology Stack 
+## Technology Stack 
 
 Frontend:
 React.js
@@ -131,61 +186,47 @@ MongoDB
 AI & Machine Learning:
 OpenAI/ Gemini APIs
 
-
-INSTRUCTIONS TO RUN:
-
-// Prefer using Google Chrome
-
-Use Signup to create new user
-Complete the profile setup
-Login using Signup details
-
-Dashboard will open
-Start by analysing a resume.
-followed by Ats Analyzer.
-
-Use the skill gap feature.
-Use the learning roadmap feature.
-
-Take the interview simulator to check your progress.
-// Use Google Chrome, Brave does not support voice recoginition.
-
-Get your answers from career coach feature.
-
-Then see out the job recommendations feature.
-
-Followed by job tracker to keep record of applied jobs.
-
-You can also use resume builder to generate and save new AI-powered resumes.
-
-
-AI Usage:
-AI was used in this project for:
--Purpose of dubbing.
--Refinement of Prompts.
--Solving project related queries.
-
-HOW TO RUN LOCALLY:
+## HOW TO RUN LOCALLY:
 
 Create .env file inside srever/ directory with this structure,
+
 PORT=5000
+
 MONGO_URI=XXXX
+
 JWT_SECRET=XXXX
+
 OPENROUTER_API_KEY=XXXX
+
+CLOUDINARY_CLOUD_NAME=XXXX
+
+CLOUDINARY_API_KEY=XXXX
+
+CLOUDINARY_API_SECRET=XXXX
+
 CLIENT_URL=http://localhost:5173
 
 Start backend server:
+
 cd server
+
 npm install
+
 npm start
 
 Your expected output should be:
+
 Server running on Port 5000
+
 MongoDB Connected
 
 Start frontend server:
+
 cd client
+
 npm install
+
 npm run dev
 
 Open you browser with the link provided in client terminal
+
